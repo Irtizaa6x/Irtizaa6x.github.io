@@ -2,7 +2,7 @@
 
 A modern, responsive personal portfolio website for **Md. Irtija Azad Talha**, a Computer Science & Engineering student passionate about cybersecurity, ethical hacking, and network defense.
 
-> 🔗 **Live Demo:** [https://irtizaa6x.github.io/your-repo-name/](https://irtizaa6x.github.io/your-repo-name/)  
+> 🔗 **Live Demo:** [https://irtizaa6x.github.io/](https://irtizaa6x.github.io/)  
 > *(Replace `your-repo-name` with your actual GitHub repository name)*
 
 ---
