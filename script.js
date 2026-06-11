@@ -18,7 +18,7 @@ function switchPage(pageId) {
   });
   // Auto-close sidebar on mobile after navigation
   if (window.innerWidth <= 768) {
-    document.getElementById('sidebar').classList.add('hidden-sidebar');
+    document.getElementById('sidebar').classList.remove('open');
   }
 }
 
@@ -95,21 +95,22 @@ if (discordBtn) {
   });
 }
 
-// Sidebar toggle functionality
-const toggleBtn = document.getElementById('sidebarToggle');
+// Hamburger toggle
+const toggleBtn = document.getElementById('hamburgerToggle');
 const sidebar = document.getElementById('sidebar');
 
 if (toggleBtn && sidebar) {
   toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('hidden-sidebar');
+    sidebar.classList.toggle('open');
   });
   
   // Close sidebar when clicking outside on mobile
   document.addEventListener('click', function(event) {
-    if (window.innerWidth <= 768 && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && !sidebar.classList.contains('hidden-sidebar')) {
-      sidebar.classList.add('hidden-sidebar');
+    if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
+        !sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+      sidebar.classList.remove('open');
     }
   });
 }
 
-console.log("Portfolio ready — Irtija Talha Cybersecurity (with collapsible sidebar)");
+console.log("Portfolio ready — Irtija Talha Cybersecurity (timeline + renamed section)");
