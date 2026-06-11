@@ -11,7 +11,12 @@
 </head>
 <body>
 <div class="app-wrapper">
-  <aside class="sidebar">
+  <!-- Sidebar toggle button (mobile) -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <i class="fas fa-shield-haltered" style="font-size: 2.5rem; color: #2c5a9e;"></i>
     </div>
@@ -141,7 +146,7 @@
     <div id="skills-page" class="page">
       <h2 class="section-title"><i class="fas fa-code-branch"></i> Skills & Expertise</h2>
       <div class="grid-2col">
-        <!-- Cybersecurity with GUCC logo (fa-user-secret) -->
+        <!-- Cybersecurity with GUCC logo -->
         <div class="skill-category">
           <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
           <div class="skills-list">
@@ -265,10 +270,10 @@
       </div>
     </div>
 
-    <!-- ========== CAREER HISTORY (inline meta) ========== -->
+    <!-- ========== CAREER HISTORY ========== -->
     <div id="experience-page" class="page">
       <h2 class="section-title"><i class="fas fa-briefcase"></i> Experiences</h2>
-      
+
       <div class="career-objective-professional">
         <div class="obj-icon"><i class="fas fa-bullseye"></i></div>
         <div class="obj-content">
@@ -278,7 +283,6 @@
       </div>
 
       <div class="exp-container">
-        <!-- GUCC -->
         <div class="timeline-item">
           <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
           <div class="meta-inline">
@@ -290,7 +294,6 @@
           <div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>Green University Computer Club (GUCC)</strong> of Green University of Bangladesh.</div>
         </div>
 
-        <!-- BNCC -->
         <div class="timeline-item">
           <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
           <div class="meta-inline">
@@ -302,7 +305,6 @@
           <p class="bncc-status inside-bncc"><i class="fas fa-flag-checkered"></i> Active Cadet of Bangladesh National Cadet Corps, 51 Naval Flotilla.</p>
         </div>
 
-        <!-- Certifications -->
         <div class="cert-highlight">
           <h4><i class="fas fa-certificate"></i> Certifications & Achievements</h4>
           <div class="cert-buttons">
