@@ -16,6 +16,10 @@ function switchPage(pageId) {
     if (val === pageId) btn.classList.add('active');
     else btn.classList.remove('active');
   });
+  // Auto-close sidebar on mobile after navigation
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.add('hidden-sidebar');
+  }
 }
 
 navItems.forEach(btn => {
@@ -55,11 +59,8 @@ expandTriggers.forEach(trigger => {
     const extraDiv = parentList.querySelector('.extra-skills');
     if (!extraDiv) return;
 
-    const isExpanded = !extraDiv.classList.contains('hidden');
-
-    if (!isExpanded) {
+    if (extraDiv.classList.contains('hidden')) {
       extraDiv.classList.remove('hidden');
-
       const newSpan = document.createElement('span');
       newSpan.className = 'expand-trigger expanded-trigger skill-tag';
       newSpan.style.display = 'inline-flex';
@@ -68,9 +69,7 @@ expandTriggers.forEach(trigger => {
       newSpan.style.padding = '0.3rem 0.9rem';
       newSpan.style.margin = '0.35rem 0.5rem 0.35rem 0';
       newSpan.innerHTML = `${iconHTML} ${baseText} <button class="show-less-btn">Show less</button>`;
-
       this.replaceWith(newSpan);
-
       const showLessBtn = newSpan.querySelector('.show-less-btn');
       showLessBtn.addEventListener('click', (ev) => {
         ev.stopPropagation();
@@ -96,4 +95,21 @@ if (discordBtn) {
   });
 }
 
-console.log("Portfolio ready — Irtija Talha Cybersecurity");
+// Sidebar toggle functionality
+const toggleBtn = document.getElementById('sidebarToggle');
+const sidebar = document.getElementById('sidebar');
+
+if (toggleBtn && sidebar) {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('hidden-sidebar');
+  });
+  
+  // Close sidebar when clicking outside on mobile
+  document.addEventListener('click', function(event) {
+    if (window.innerWidth <= 768 && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && !sidebar.classList.contains('hidden-sidebar')) {
+      sidebar.classList.add('hidden-sidebar');
+    }
+  });
+}
+
+console.log("Portfolio ready — Irtija Talha Cybersecurity (with collapsible sidebar)");
