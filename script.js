@@ -1,5 +1,6 @@
 // Navigation
 const navItems = document.querySelectorAll('.nav-item');
+const mainContent = document.getElementById('mainContent');
 const pages = {
   home: document.getElementById('home-page'),
   education: document.getElementById('education-page'),
@@ -16,7 +17,12 @@ function switchPage(pageId) {
     if (val === pageId) btn.classList.add('active');
     else btn.classList.remove('active');
   });
-  // Auto-close sidebar on mobile after navigation
+  
+  if (mainContent) {
+    mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
   if (window.innerWidth <= 768) {
     document.getElementById('sidebar').classList.remove('open');
   }
@@ -44,41 +50,55 @@ function updateDhakaTime() {
 updateDhakaTime();
 setInterval(updateDhakaTime, 1000);
 
-// Expand/collapse with "Show less"
-const expandTriggers = document.querySelectorAll('.expand-trigger');
-
-expandTriggers.forEach(trigger => {
-  const originalHTML = trigger.innerHTML;
-  const baseText = trigger.getAttribute('data-base-text') || trigger.innerText.replace('⋯', '').trim();
-  const iconHTML = trigger.querySelector('i') ? trigger.querySelector('i').outerHTML : '';
-
-  trigger.addEventListener('click', function(e) {
-    if (e.target.classList && e.target.classList.contains('show-less-btn')) return;
-
-    const parentList = this.closest('.skills-list');
-    const extraDiv = parentList.querySelector('.extra-skills');
-    if (!extraDiv) return;
-
-    if (extraDiv.classList.contains('hidden')) {
-      extraDiv.classList.remove('hidden');
-      const newSpan = document.createElement('span');
-      newSpan.className = 'expand-trigger expanded-trigger skill-tag';
-      newSpan.style.display = 'inline-flex';
-      newSpan.style.alignItems = 'center';
-      newSpan.style.gap = '0.3rem';
-      newSpan.style.padding = '0.3rem 0.9rem';
-      newSpan.style.margin = '0.35rem 0.5rem 0.35rem 0';
-      newSpan.innerHTML = `${iconHTML} ${baseText} <button class="show-less-btn">Show less</button>`;
-      this.replaceWith(newSpan);
-      const showLessBtn = newSpan.querySelector('.show-less-btn');
-      showLessBtn.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        extraDiv.classList.add('hidden');
-        newSpan.replaceWith(trigger);
-        trigger.innerHTML = originalHTML;
-      });
-    }
+// Collapsible skills – click on the fade overlay to expand/collapse
+document.querySelectorAll('.skill-category[data-collapsible]').forEach(category => {
+  const wrapper = category.querySelector('.skills-list-wrapper');
+  const skillsList = category.querySelector('.skills-list');
+  const overlay = category.querySelector('.fade-overlay');
+  
+  if (!skillsList || !overlay) return;
+  
+  // Expand on overlay click
+  overlay.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Expand: remove fade class and add expanded class
+    skillsList.classList.remove('fade-gradient');
+    category.classList.add('expanded');
   });
+  
+  // Collapse when clicking on the expanded area? We'll use a second click on a "show less" indicator.
+  // To keep it clean, we add a "Show less" button inside the overlay when expanded.
+  // But simpler: when expanded, clicking again on the whole category will collapse.
+  // However, we need a clear "show less" signal. Let's add a small "⋯ less" text that appears after expansion.
+  
+  // After expansion, we'll insert a "show less" link inside the skill-category.
+  // We'll use a mutation observer or simply add the element on expansion.
+  // For simplicity, we'll listen for click on the expanded category and collapse if the click target is the "show less" area.
+  
+  // Create a "show less" element but hide it initially
+  const showLess = document.createElement('div');
+  showLess.className = 'show-less-btn-inline';
+  showLess.innerHTML = '<i class="fas fa-chevron-up"></i> Show less';
+  showLess.style.cssText = 'display: none; text-align: center; margin-top: 0.8rem; cursor: pointer; font-size: 0.75rem; color: #2c5a9e; background: #eef2ff; width: fit-content; padding: 0.2rem 0.8rem; border-radius: 20px; margin-left: auto; margin-right: auto;';
+  wrapper.appendChild(showLess);
+  
+  showLess.addEventListener('click', (e) => {
+    e.stopPropagation();
+    skillsList.classList.add('fade-gradient');
+    category.classList.remove('expanded');
+    showLess.style.display = 'none';
+  });
+  
+  // Override the expand to also show the "show less" button
+  const originalExpand = overlay.click;
+  overlay.addEventListener('click', () => {
+    skillsList.classList.remove('fade-gradient');
+    category.classList.add('expanded');
+    showLess.style.display = 'block';
+  });
+  
+  // Also, if the category is expanded and user clicks on the overlay again (which is hidden), we don't want conflict.
+  // The 'show less' button handles collapsing.
 });
 
 // Discord copy
@@ -104,7 +124,6 @@ if (toggleBtn && sidebar) {
     sidebar.classList.toggle('open');
   });
   
-  // Close sidebar when clicking outside on mobile
   document.addEventListener('click', function(event) {
     if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
         !sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
@@ -113,4 +132,4 @@ if (toggleBtn && sidebar) {
   });
 }
 
-console.log("Portfolio ready — Irtija Talha Cybersecurity (timeline + renamed section)");
+console.log("Portfolio ready — Irtija Talha Cybersecurity (fade‑out expand on click)");
