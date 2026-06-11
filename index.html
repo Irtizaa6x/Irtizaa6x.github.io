@@ -11,11 +11,12 @@
 </head>
 <body>
 <div class="app-wrapper">
-  <!-- Sidebar toggle button (mobile) -->
-  <button class="sidebar-toggle" id="sidebarToggle">
+  <!-- Hamburger toggle button (mobile only) -->
+  <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
     <i class="fas fa-bars"></i>
   </button>
 
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <i class="fas fa-shield-haltered" style="font-size: 2.5rem; color: #2c5a9e;"></i>
@@ -24,7 +25,7 @@
       <button class="nav-item active" data-page="home"><i class="fas fa-user-astronaut"></i> <span>Profile</span></button>
       <button class="nav-item" data-page="education"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></button>
       <button class="nav-item" data-page="skills"><i class="fas fa-code-branch"></i> <span>Capabilities</span></button>
-      <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Career History</span></button>
+      <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Activities & Experience</span></button>
       <button class="nav-item" data-page="contact"><i class="fas fa-paper-plane"></i> <span>Connect</span></button>
     </div>
     <div class="sidebar-footer">
@@ -146,7 +147,6 @@
     <div id="skills-page" class="page">
       <h2 class="section-title"><i class="fas fa-code-branch"></i> Skills & Expertise</h2>
       <div class="grid-2col">
-        <!-- Cybersecurity with GUCC logo -->
         <div class="skill-category">
           <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
           <div class="skills-list">
@@ -175,7 +175,6 @@
             </div>
           </div>
         </div>
-        <!-- Web Dev & Programming -->
         <div class="skill-category">
           <h3><i class="fab fa-html5"></i> Web Dev & Programming</h3>
           <div class="skills-list">
@@ -202,7 +201,6 @@
             </div>
           </div>
         </div>
-        <!-- Networking & Web Tech -->
         <div class="skill-category">
           <h3><i class="fas fa-cloud-arrow-up"></i> Networking & Web Tech</h3>
           <div class="skills-list">
@@ -220,7 +218,6 @@
             </div>
           </div>
         </div>
-        <!-- Soft Skills & Mindset -->
         <div class="skill-category">
           <h3><i class="fas fa-brain"></i> Soft Skills & Mindset</h3>
           <div class="skills-list">
@@ -238,7 +235,6 @@
             </div>
           </div>
         </div>
-        <!-- Academic Coursework -->
         <div class="skill-category">
           <h3><i class="fas fa-book-open"></i> Academic Coursework</h3>
           <div class="skills-list full-list">
@@ -256,7 +252,6 @@
             <span class="skill-tag"><i class="fas fa-language"></i> Academic English I & II</span>
           </div>
         </div>
-        <!-- Tools & Productivity -->
         <div class="skill-category">
           <h3><i class="fas fa-tools"></i> Tools & Productivity</h3>
           <div class="skills-list full-list">
@@ -270,9 +265,9 @@
       </div>
     </div>
 
-    <!-- ========== CAREER HISTORY ========== -->
+    <!-- ========== ACTIVITIES & EXPERIENCE ========== -->
     <div id="experience-page" class="page">
-      <h2 class="section-title"><i class="fas fa-briefcase"></i> Experiences</h2>
+      <h2 class="section-title"><i class="fas fa-briefcase"></i> Activities & Experience</h2>
 
       <div class="career-objective-professional">
         <div class="obj-icon"><i class="fas fa-bullseye"></i></div>
@@ -282,35 +277,49 @@
         </div>
       </div>
 
-      <div class="exp-container">
-        <div class="timeline-item">
-          <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
-          <div class="meta-inline">
-            <span><i class="fas fa-calendar-alt"></i> October 2025 – Present</span>
-            <span><i class="fas fa-user-check"></i> Member</span>
-            <span><i class="fas fa-hourglass-half"></i> 5+ months</span>
+      <!-- Timeline container -->
+      <div class="timeline-container">
+        <!-- GUCC -->
+        <div class="timeline-entry">
+          <div class="timeline-date">Oct 2025 – Present</div>
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
+            <div class="meta-inline">
+              <span><i class="fas fa-user-check"></i> Member</span>
+              <span><i class="fas fa-hourglass-half"></i> 5+ months</span>
+            </div>
+            <p class="key-points-single">Active member of Green University Cyber Security Society — participating in workshops, CTF culture, threat modeling, and security awareness.</p>
+            <div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>Green University Computer Club (GUCC)</strong> of Green University of Bangladesh.</div>
           </div>
-          <p class="key-points-single">Active member of Green University Cyber Security Society — participating in workshops, CTF culture, threat modeling, and security awareness.</p>
-          <div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>Green University Computer Club (GUCC)</strong> of Green University of Bangladesh.</div>
         </div>
 
-        <div class="timeline-item">
-          <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
-          <div class="meta-inline">
-            <span><i class="fas fa-anchor"></i> 51 Naval Flotilla</span>
-            <span><i class="fas fa-map-marker-alt"></i> Green University BNCC Platoon, Dhaka</span>
+        <!-- BNCC (only one mention of cadet status) -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2025 – Present</div>
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
+            <div class="meta-inline">
+              <span><i class="fas fa-anchor"></i> 51 Naval Flotilla</span>
+              <span><i class="fas fa-map-marker-alt"></i> Green University BNCC Platoon, Dhaka</span>
+            </div>
+            <p class="key-points-single">Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.</p>
+            <div class="parent-club"><i class="fas fa-medal"></i> Extra Activities: Cadet Corps Excellence</div>
           </div>
-          <p class="key-points-single">Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.</p>
-          <div class="parent-club"><i class="fas fa-medal"></i> Extra Activities: Cadet Corps Excellence</div>
-          <p class="bncc-status inside-bncc"><i class="fas fa-flag-checkered"></i> Active Cadet of Bangladesh National Cadet Corps, 51 Naval Flotilla.</p>
         </div>
 
-        <div class="cert-highlight">
-          <h4><i class="fas fa-certificate"></i> Certifications & Achievements</h4>
-          <div class="cert-buttons">
-            <a href="https://www.codecademy.com/users/Irtija.Talha/achievements" target="_blank" class="btn-outline"><img src="https://www.codecademy.com/favicon.ico" class="official-icon" alt="Codecademy"> Codecademy</a>
-            <a href="https://app.cybrary.it/browse/Irtija_talha" target="_blank" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybrary</a>
-            <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="btn-outline"><img src="https://tryhackme.com/favicon.ico" class="official-icon" alt="TryHackMe"> TryHackMe</a>
+        <!-- Certifications -->
+        <div class="timeline-entry">
+          <div class="timeline-date">Ongoing</div>
+          <div class="timeline-marker"></div>
+          <div class="timeline-content cert-highlight">
+            <h4><i class="fas fa-certificate"></i> Certifications & Achievements</h4>
+            <div class="cert-buttons">
+              <a href="https://www.codecademy.com/users/Irtija.Talha/achievements" target="_blank" class="btn-outline"><img src="https://www.codecademy.com/favicon.ico" class="official-icon" alt="Codecademy"> Codecademy</a>
+              <a href="https://app.cybrary.it/browse/Irtija_talha" target="_blank" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybrary</a>
+              <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="btn-outline"><img src="https://tryhackme.com/favicon.ico" class="official-icon" alt="TryHackMe"> TryHackMe</a>
+            </div>
           </div>
         </div>
       </div>
