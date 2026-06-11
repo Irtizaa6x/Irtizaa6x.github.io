@@ -11,12 +11,10 @@
 </head>
 <body>
 <div class="app-wrapper">
-  <!-- Hamburger toggle button (mobile only) -->
   <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
     <i class="fas fa-bars"></i>
   </button>
 
-  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <i class="fas fa-shield-haltered" style="font-size: 2.5rem; color: #2c5a9e;"></i>
@@ -24,8 +22,8 @@
     <div class="nav-menu">
       <button class="nav-item active" data-page="home"><i class="fas fa-user-astronaut"></i> <span>Profile</span></button>
       <button class="nav-item" data-page="education"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></button>
+      <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Activities</span></button>
       <button class="nav-item" data-page="skills"><i class="fas fa-code-branch"></i> <span>Capabilities</span></button>
-      <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Activities & Experience</span></button>
       <button class="nav-item" data-page="contact"><i class="fas fa-paper-plane"></i> <span>Connect</span></button>
     </div>
     <div class="sidebar-footer">
@@ -33,7 +31,7 @@
     </div>
   </aside>
 
-  <main class="main-content">
+  <main class="main-content" id="mainContent">
     <!-- ========== PROFILE ========== -->
     <div id="home-page" class="page active-page">
       <div class="home-two-columns">
@@ -112,178 +110,26 @@
             <div class="qual-board">Board: Dhaka</div>
           </div>
         </div>
-        <div class="qual-card">
-          <div class="qual-icon"><i class="fas fa-school"></i></div>
-          <div class="qual-content">
-            <div class="qual-degree-name">Junior School Certificate (JSC)</div>
-            <div class="qual-institution">Sanarpar Sheik Mortoza Ali High School</div>
-            <div class="qual-meta">
-              <span class="qual-gpa">GPA: 3.21 / 5.00</span>
-            </div>
-            <div class="qual-subject-passing">
-              <span class="qual-label">Passing Year:</span> 2019
-            </div>
-            <div class="qual-board">Board: Dhaka</div>
-          </div>
-        </div>
-        <div class="qual-card">
-          <div class="qual-icon"><i class="fas fa-school"></i></div>
-          <div class="qual-content">
-            <div class="qual-degree-name">Primary School Certificate (PSC)</div>
-            <div class="qual-institution">Holy Touch Model School</div>
-            <div class="qual-meta">
-              <span class="qual-gpa">GPA: 5.00 / 5.00</span>
-            </div>
-            <div class="qual-subject-passing">
-              <span class="qual-label">Passing Year:</span> 2016
-            </div>
-            <div class="qual-board">Board: Dhaka</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========== CAPABILITIES ========== -->
-    <div id="skills-page" class="page">
-      <h2 class="section-title"><i class="fas fa-code-branch"></i> Skills & Expertise</h2>
-      <div class="grid-2col">
-        <div class="skill-category">
-          <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
-          <div class="skills-list">
-            <span class="skill-tag"><i class="fas fa-crosshairs"></i> Penetration Testing Fundamentals</span>
-            <span class="skill-tag"><i class="fas fa-bullhorn"></i> Offensive Security Intro</span>
-            <span class="skill-tag"><i class="fas fa-shield"></i> Defensive Security Intro</span>
-            <span class="skill-tag expand-trigger" data-base-text="Web Security Basics"><i class="fas fa-globe"></i> Web Security Basics & more ⋯</span>
-            <div class="extra-skills hidden">
-              <span class="skill-tag"><i class="fab fa-linux"></i> Linux Basics (Ubuntu, BlackArch)</span>
-              <span class="skill-tag"><i class="fas fa-user-secret"></i> Ethical Hacking Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-balance-scale"></i> Cybersecurity Ethics & Legal</span>
-              <span class="skill-tag"><i class="fas fa-chalkboard-user"></i> Cybrary: Orientation & Careers in Cyber</span>
-              <span class="skill-tag"><i class="fas fa-flag-checkered"></i> TryHackMe: How Websites Work</span>
-              <span class="skill-tag"><i class="fas fa-dns"></i> DNS in Detail (THM)</span>
-              <span class="skill-tag"><i class="fas fa-plug"></i> HTTP in Detail</span>
-              <span class="skill-tag"><i class="fas fa-network-wired"></i> What is Networking? (THM)</span>
-              <span class="skill-tag"><i class="fas fa-user-ninja"></i> Pentesting Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-shield-virus"></i> Defensive Security Intro (THM)</span>
-              <span class="skill-tag"><i class="fas fa-briefcase"></i> Careers in Cyber (THM)</span>
-              <span class="skill-tag"><i class="fas fa-arrow-trend-up"></i> Offensive Security Intro (THM)</span>
-              <span class="skill-tag"><i class="fas fa-tools"></i> Security Tools Awareness</span>
-              <span class="skill-tag"><i class="fas fa-layer-group"></i> Putting It All Together (THM)</span>
-              <span class="skill-tag"><i class="fas fa-shield-alt"></i> Networking Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-dns"></i> DNS & HTTP Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-code"></i> Website Architecture & Web Communication</span>
-            </div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fab fa-html5"></i> Web Dev & Programming</h3>
-          <div class="skills-list">
-            <span class="skill-tag"><i class="fab fa-html5"></i> HTML5 (Semantic, Forms, Tables)</span>
-            <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3 (Flex/Grid, Box Model)</span>
-            <span class="skill-tag"><i class="fab fa-js"></i> JavaScript (Variables, Conditionals)</span>
-            <span class="skill-tag expand-trigger" data-base-text="Full Codecademy & Dev toolkit"><i class="fas fa-laptop-code"></i> Full Codecademy & Dev toolkit ⋯</span>
-            <div class="extra-skills hidden">
-              <span class="skill-tag"><i class="fas fa-code"></i> Learn HTML: Elements & Structure</span>
-              <span class="skill-tag"><i class="fas fa-table"></i> HTML Tables & Document Standards</span>
-              <span class="skill-tag"><i class="fas fa-check-circle"></i> HTML Forms & Form Validation</span>
-              <span class="skill-tag"><i class="fas fa-palette"></i> CSS Typography, Colors & Visual Rules</span>
-              <span class="skill-tag"><i class="fas fa-square"></i> CSS Box Model & Positioning</span>
-              <span class="skill-tag"><i class="fas fa-laptop"></i> Front-End Development Intro</span>
-              <span class="skill-tag"><i class="fas fa-globe"></i> Overview of the Internet & Web Development</span>
-              <span class="skill-tag"><i class="fas fa-language"></i> Languages for Web Development</span>
-              <span class="skill-tag"><i class="fab fa-js"></i> JavaScript Variables & Conditionals</span>
-              <span class="skill-tag"><i class="fas fa-dog"></i> Dog Years Project</span>
-              <span class="skill-tag"><i class="fas fa-temperature-high"></i> Kelvin Weather Project</span>
-              <span class="skill-tag"><i class="fas fa-code"></i> Structured Programming (C)</span>
-              <span class="skill-tag"><i class="fas fa-database"></i> Data Structures & Lab</span>
-              <span class="skill-tag"><i class="fas fa-brain"></i> Computational Thinking</span>
-              <span class="skill-tag"><i class="fas fa-puzzle-piece"></i> Problem Solving</span>
-            </div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fas fa-cloud-arrow-up"></i> Networking & Web Tech</h3>
-          <div class="skills-list">
-            <span class="skill-tag"><i class="fas fa-dns"></i> DNS Fundamentals</span>
-            <span class="skill-tag"><i class="fas fa-lock"></i> HTTP/HTTPS Protocol</span>
-            <span class="skill-tag"><i class="fas fa-server"></i> Client-Server Architecture</span>
-            <span class="skill-tag expand-trigger" data-base-text="Core networking & infra"><i class="fas fa-chalkboard"></i> Core networking & infra ⋯</span>
-            <div class="extra-skills hidden">
-              <span class="skill-tag"><i class="fas fa-network-wired"></i> Basic Computer Networking</span>
-              <span class="skill-tag"><i class="fas fa-globe"></i> Internet Protocol Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-question-circle"></i> How Websites Work</span>
-              <span class="skill-tag"><i class="fas fa-shield-alt"></i> Security Principles & Best Practices</span>
-              <span class="skill-tag"><i class="fas fa-sync-alt"></i> Client-Server Communication</span>
-              <span class="skill-tag"><i class="fas fa-wifi"></i> Internet & Web Fundamentals</span>
-            </div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fas fa-brain"></i> Soft Skills & Mindset</h3>
-          <div class="skills-list">
-            <span class="skill-tag"><i class="fas fa-chart-line"></i> Analytical Thinking</span>
-            <span class="skill-tag"><i class="fas fa-cogs"></i> Complex Problem Solving</span>
-            <span class="skill-tag"><i class="fas fa-book"></i> Self-Learning & Research</span>
-            <span class="skill-tag expand-trigger" data-base-text="Growth attributes"><i class="fas fa-adjust"></i> Growth attributes ⋯</span>
-            <div class="extra-skills hidden">
-              <span class="skill-tag"><i class="fas fa-sync-alt"></i> Continuous Learning Mindset</span>
-              <span class="skill-tag"><i class="fas fa-file-alt"></i> Technical Documentation</span>
-              <span class="skill-tag"><i class="fas fa-users"></i> Team Collaboration</span>
-              <span class="skill-tag"><i class="fas fa-clock"></i> Time Management (BNCC)</span>
-              <span class="skill-tag"><i class="fas fa-hand-sparkles"></i> Adaptability & Leadership</span>
-              <span class="skill-tag"><i class="fas fa-flask"></i> Technical Research</span>
-            </div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fas fa-book-open"></i> Academic Coursework</h3>
-          <div class="skills-list full-list">
-            <span class="skill-tag"><i class="fas fa-brain"></i> Computational Thinking & Problem Solving</span>
-            <span class="skill-tag"><i class="fas fa-calculator"></i> Discrete Mathematics</span>
-            <span class="skill-tag"><i class="fas fa-code"></i> Structured Programming</span>
-            <span class="skill-tag"><i class="fas fa-flask"></i> Structured Programming Lab</span>
-            <span class="skill-tag"><i class="fas fa-chart-line"></i> Calculus for Computing</span>
-            <span class="skill-tag"><i class="fas fa-database"></i> Data Structures</span>
-            <span class="skill-tag"><i class="fas fa-microchip"></i> Data Structures Lab</span>
-            <span class="skill-tag"><i class="fas fa-vector-square"></i> Linear Algebra & Vector Analysis</span>
-            <span class="skill-tag"><i class="fas fa-bolt"></i> Intro to Electrical Engineering + Lab</span>
-            <span class="skill-tag"><i class="fas fa-atom"></i> Physics I</span>
-            <span class="skill-tag"><i class="fas fa-flask"></i> Chemistry + Lab</span>
-            <span class="skill-tag"><i class="fas fa-language"></i> Academic English I & II</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fas fa-tools"></i> Tools & Productivity</h3>
-          <div class="skills-list full-list">
-            <span class="skill-tag"><i class="fas fa-file-excel"></i> Microsoft Office (Word, Excel, Sheets)</span>
-            <span class="skill-tag"><i class="fab fa-google"></i> Google Docs / Sheets</span>
-            <span class="skill-tag"><i class="fas fa-paintbrush"></i> Logo Design (Canva)</span>
-            <span class="skill-tag"><i class="fas fa-video"></i> Video Editing (Wondershare Filmora)</span>
-            <span class="skill-tag"><i class="fab fa-git-alt"></i> Git/GitHub Fundamentals</span>
-          </div>
-        </div>
       </div>
     </div>
 
     <!-- ========== ACTIVITIES & EXPERIENCE ========== -->
     <div id="experience-page" class="page">
-      <h2 class="section-title"><i class="fas fa-briefcase"></i> Activities & Experience</h2>
-
-      <div class="career-objective-professional">
+      <div class="career-objective-highlight">
         <div class="obj-icon"><i class="fas fa-bullseye"></i></div>
         <div class="obj-content">
-          <h3>Career Objectives</h3>
+          <h3>Career Objective</h3>
           <p>To gain practical experience in cybersecurity, learn about protecting systems and networks, and develop skills to build a successful career in this field. I aim to merge academic research with real-world cybersecurity operations, threat hunting, and vulnerability assessment to contribute to resilient digital ecosystems.</p>
         </div>
       </div>
 
-      <!-- Timeline container -->
+      <h2 class="section-title"><i class="fas fa-briefcase"></i> Activities & Experience</h2>
+
       <div class="timeline-container">
-        <!-- GUCC -->
         <div class="timeline-entry">
-          <div class="timeline-date">Oct 2025 – Present</div>
           <div class="timeline-marker"></div>
           <div class="timeline-content">
+            <div class="timeline-date">Oct 2025 – Present</div>
             <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
             <div class="meta-inline">
               <span><i class="fas fa-user-check"></i> Member</span>
@@ -294,11 +140,10 @@
           </div>
         </div>
 
-        <!-- BNCC (only one mention of cadet status) -->
         <div class="timeline-entry">
-          <div class="timeline-date">2025 – Present</div>
           <div class="timeline-marker"></div>
           <div class="timeline-content">
+            <div class="timeline-date">2025 – Present</div>
             <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
             <div class="meta-inline">
               <span><i class="fas fa-anchor"></i> 51 Naval Flotilla</span>
@@ -309,22 +154,125 @@
           </div>
         </div>
 
-        <!-- Certifications -->
         <div class="timeline-entry">
-          <div class="timeline-date">Ongoing</div>
           <div class="timeline-marker"></div>
           <div class="timeline-content cert-highlight">
+            <div class="timeline-date">Ongoing</div>
             <h4><i class="fas fa-certificate"></i> Certifications & Achievements</h4>
             <div class="cert-buttons">
               <a href="https://www.codecademy.com/users/Irtija.Talha/achievements" target="_blank" class="btn-outline"><img src="https://www.codecademy.com/favicon.ico" class="official-icon" alt="Codecademy"> Codecademy</a>
               <a href="https://app.cybrary.it/browse/Irtija_talha" target="_blank" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybrary</a>
               <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="btn-outline"><img src="https://tryhackme.com/favicon.ico" class="official-icon" alt="TryHackMe"> TryHackMe</a>
             </div>
+            <p class="helper-text"><i class="fas fa-mouse-pointer"></i> Click to view my progress on each platform</p>
           </div>
         </div>
       </div>
     </div>
 
+   <!-- ========== CAPABILITIES (fade-out + click to expand) ========== -->
+<div id="skills-page" class="page">
+  <h2 class="section-title"><i class="fas fa-code-branch"></i> Capabilities</h2>
+  <div class="grid-2col">
+    <!-- Cybersecurity -->
+    <div class="skill-category" data-expandable>
+      <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
+      <div class="skills-list-wrapper">
+        <div class="skills-list fade-gradient">
+          <span class="skill-tag"><i class="fas fa-crosshairs"></i> Penetration Testing Fundamentals</span>
+          <span class="skill-tag"><i class="fas fa-bullhorn"></i> Offensive Security Intro</span>
+          <span class="skill-tag"><i class="fas fa-shield"></i> Defensive Security Intro</span>
+          <span class="skill-tag hidden-skill"><i class="fab fa-linux"></i> Linux Basics (Ubuntu, BlackArch)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-user-secret"></i> Ethical Hacking Fundamentals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-balance-scale"></i> Cybersecurity Ethics & Legal</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-chalkboard-user"></i> Cybrary: Orientation & Careers in Cyber</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-flag-checkered"></i> TryHackMe: How Websites Work</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-dns"></i> DNS in Detail (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-plug"></i> HTTP in Detail</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-network-wired"></i> What is Networking? (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-user-ninja"></i> Pentesting Fundamentals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-shield-virus"></i> Defensive Security Intro (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-briefcase"></i> Careers in Cyber (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-arrow-trend-up"></i> Offensive Security Intro (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-tools"></i> Security Tools Awareness</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-layer-group"></i> Putting It All Together (THM)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-shield-alt"></i> Networking Fundamentals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-dns"></i> DNS & HTTP Fundamentals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-code"></i> Website Architecture & Web Communication</span>
+        </div>
+        <div class="expand-hint">⋮ more</div>
+      </div>
+    </div>
+    <!-- Web Dev & Programming -->
+    <div class="skill-category" data-expandable>
+      <h3><i class="fab fa-html5"></i> Web Dev & Programming</h3>
+      <div class="skills-list-wrapper">
+        <div class="skills-list fade-gradient">
+          <span class="skill-tag"><i class="fab fa-html5"></i> HTML5 (Semantic, Forms, Tables)</span>
+          <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3 (Flex/Grid, Box Model)</span>
+          <span class="skill-tag"><i class="fab fa-js"></i> JavaScript (Variables, Conditionals)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-code"></i> Learn HTML: Elements & Structure</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-table"></i> HTML Tables & Document Standards</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-check-circle"></i> HTML Forms & Form Validation</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-palette"></i> CSS Typography, Colors & Visual Rules</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-square"></i> CSS Box Model & Positioning</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-laptop"></i> Front-End Development Intro</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-globe"></i> Overview of the Internet & Web Development</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-language"></i> Languages for Web Development</span>
+          <span class="skill-tag hidden-skill"><i class="fab fa-js"></i> JavaScript Variables & Conditionals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-dog"></i> Dog Years Project</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-temperature-high"></i> Kelvin Weather Project</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-code"></i> Structured Programming (C)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-database"></i> Data Structures & Lab</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-brain"></i> Computational Thinking</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-puzzle-piece"></i> Problem Solving</span>
+        </div>
+        <div class="expand-hint">⋮ more</div>
+      </div>
+    </div>
+    <!-- Networking & Web Tech -->
+    <div class="skill-category" data-expandable>
+      <h3><i class="fas fa-cloud-arrow-up"></i> Networking & Web Tech</h3>
+      <div class="skills-list-wrapper">
+        <div class="skills-list fade-gradient">
+          <span class="skill-tag"><i class="fas fa-dns"></i> DNS Fundamentals</span>
+          <span class="skill-tag"><i class="fas fa-lock"></i> HTTP/HTTPS Protocol</span>
+          <span class="skill-tag"><i class="fas fa-server"></i> Client-Server Architecture</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-network-wired"></i> Basic Computer Networking</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-globe"></i> Internet Protocol Fundamentals</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-question-circle"></i> How Websites Work</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-shield-alt"></i> Security Principles & Best Practices</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-sync-alt"></i> Client-Server Communication</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-wifi"></i> Internet & Web Fundamentals</span>
+        </div>
+        <div class="expand-hint">⋮ more</div>
+      </div>
+    </div>
+    <!-- Professional Skills & Tools -->
+    <div class="skill-category" data-expandable>
+      <h3><i class="fas fa-briefcase"></i> Professional Skills & Tools</h3>
+      <div class="skills-list-wrapper">
+        <div class="skills-list fade-gradient">
+          <span class="skill-tag"><i class="fas fa-chart-line"></i> Analytical Thinking</span>
+          <span class="skill-tag"><i class="fas fa-cogs"></i> Complex Problem Solving</span>
+          <span class="skill-tag"><i class="fas fa-book"></i> Self-Learning & Research</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-sync-alt"></i> Continuous Learning Mindset</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-file-alt"></i> Technical Documentation</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-users"></i> Team Collaboration</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-clock"></i> Time Management (BNCC)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-hand-sparkles"></i> Adaptability & Leadership</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-flask"></i> Technical Research</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-file-excel"></i> Microsoft Office (Word, Excel, Sheets)</span>
+          <span class="skill-tag hidden-skill"><i class="fab fa-google"></i> Google Docs / Sheets</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-paintbrush"></i> Logo Design (Canva)</span>
+          <span class="skill-tag hidden-skill"><i class="fas fa-video"></i> Video Editing (Wondershare Filmora)</span>
+          <span class="skill-tag hidden-skill"><i class="fab fa-git-alt"></i> Git/GitHub Fundamentals</span>
+        </div>
+        <div class="expand-hint">⋮ more</div>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- ========== CONNECT ========== -->
     <div id="contact-page" class="page">
       <h2 class="section-title"><i class="fas fa-paper-plane"></i> Contact Informations</h2>
@@ -349,6 +297,7 @@
         </div>
       </div>
       <h3 class="social-heading"><i class="fas fa-share-alt"></i> Social Media</h3>
+      <p class="helper-text social-helper"><i class="fas fa-fingerprint"></i> Tap any platform below to connect with me</p>
       <div class="contact-grid social-grid">
         <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
         <a href="https://www.instagram.com/7d6_nev" target="_blank" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
