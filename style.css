@@ -36,7 +36,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   transition: 0.2s;
 }
 
@@ -69,7 +69,7 @@ body {
     top: 0;
     left: 0;
     transform: translateX(-100%);
-    box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
   }
   .sidebar.open {
     transform: translateX(0);
@@ -231,7 +231,8 @@ body {
   flex-wrap: wrap;
 }
 
-.home-left, .home-right {
+.home-left,
+.home-right {
   flex: 1;
   min-width: 260px;
 }
@@ -371,7 +372,170 @@ body {
   margin-top: 0.3rem;
 }
 
-/* Skills – collapsible with fade overlay */
+/* --- Expandable Academic Details --- */
+.btn-toggle-details {
+  background: transparent;
+  border: 1px solid #2c5a9e;
+  border-radius: 2rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2c5a9e;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+}
+
+.btn-toggle-details:hover {
+  background: #2c5a9e;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(44, 90, 158, 0.2);
+}
+
+.btn-toggle-details i {
+  transition: transform 0.3s ease;
+  font-size: 0.7rem;
+}
+
+.btn-toggle-details.open i {
+  transform: rotate(180deg);
+}
+
+.details-content {
+  display: none;
+  padding-top: 1rem;
+  border-top: 1px solid #eef2f8;
+  margin-top: 0.8rem;
+  animation: fade 0.3s ease;
+}
+
+.details-content.open {
+  display: block;
+}
+
+.details-inner {
+  background: #f8fafc;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid #eef2f8;
+}
+
+.details-note {
+  font-size: 0.8rem;
+  color: #4a627a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.details-note i {
+  color: #2c5a9e;
+}
+
+.semester-group {
+  margin-bottom: 1.5rem;
+}
+
+.semester-group:last-of-type {
+  margin-bottom: 0.5rem;
+}
+
+.semester-group h4 {
+  font-size: 0.9rem;
+  color: #1f3b62;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background: white;
+}
+
+.academic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  min-width: 480px;
+}
+
+.academic-table thead th {
+  background: #2c5a9e;
+  color: white;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.academic-table tbody td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eef2f8;
+  color: #1f2e4b;
+}
+
+.academic-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.academic-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.academic-table tbody tr:hover {
+  background: #eef4ff;
+}
+
+.details-footer {
+  font-size: 0.75rem;
+  color: #6c7f99;
+  margin-top: 0.8rem;
+  text-align: right;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.details-footer i {
+  color: #2c5a9e;
+}
+
+/* Small screens table tweaks */
+@media (max-width: 600px) {
+  .academic-table {
+    font-size: 0.7rem;
+    min-width: 420px;
+  }
+  .academic-table thead th,
+  .academic-table tbody td {
+    padding: 0.4rem 0.5rem;
+  }
+  .details-inner {
+    padding: 0.75rem;
+  }
+  .btn-toggle-details {
+    font-size: 0.7rem;
+    padding: 0.3rem 1rem;
+  }
+}
+
+/* --- Skills --- */
 .grid-2col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -419,7 +583,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Fade gradient effect when collapsed */
 .skills-list.fade-gradient {
   position: relative;
   max-height: 120px;
@@ -428,7 +591,6 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
-/* Clickable overlay (triggers expand) */
 .fade-overlay {
   position: absolute;
   bottom: 0;
@@ -450,11 +612,10 @@ body {
   pointer-events: none;
 }
 
-/* Show overlay only when collapsed */
-.skills-list.fade-gradient ~ .fade-overlay {
+.skills-list.fade-gradient~.fade-overlay {
   opacity: 1;
   pointer-events: auto;
-  background: linear-gradient(to top, rgba(255,255,255,0.95), transparent);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
 }
 
 .fade-overlay::after {
@@ -467,7 +628,6 @@ body {
   color: #2c5a9e;
 }
 
-/* Expanded state */
 .skill-category.expanded .skills-list {
   max-height: none;
   mask-image: none;
@@ -495,7 +655,6 @@ body {
   color: #2c5a9e;
 }
 
-/* Helper texts (certifications & social) */
 .helper-text {
   font-size: 0.7rem;
   color: #6c7f99;
@@ -511,7 +670,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Career Objective Highlight */
+/* --- Career Objective --- */
 .career-objective-highlight {
   background: linear-gradient(135deg, #f1f5fe 0%, #ffffff 100%);
   border-radius: 1.2rem;
@@ -534,7 +693,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 60px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .obj-content h3 {
@@ -558,7 +717,7 @@ body {
   }
 }
 
-/* Timeline */
+/* --- Timeline --- */
 .timeline-container {
   position: relative;
   padding-left: 2rem;
@@ -611,7 +770,7 @@ body {
 
 .timeline-content:hover {
   background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transform: translateX(4px);
 }
 
@@ -708,7 +867,8 @@ body {
   color: white;
 }
 
-.official-icon, .thm-icon {
+.official-icon,
+.thm-icon {
   width: 16px;
   height: 16px;
   vertical-align: middle;
@@ -730,7 +890,7 @@ body {
   }
 }
 
-/* Contact */
+/* --- Contact --- */
 .contact-grid {
   display: grid;
   gap: 1.2rem;
@@ -746,7 +906,8 @@ body {
 }
 
 @media (max-width: 550px) {
-  .primary, .social-grid {
+  .primary,
+  .social-grid {
     grid-template-columns: 1fr;
   }
 }
