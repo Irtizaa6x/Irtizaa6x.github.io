@@ -1,333 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Irtija Talha | Cybersecurity Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="irtija.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Irtija Talha | Cybersecurity Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="irtija.png" />
 </head>
 <body>
-<div class="app-wrapper">
-  <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
-    <i class="fas fa-bars"></i>
-  </button>
+    <div class="app-wrapper">
+        <!-- Hamburger toggle -->
+        <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
+            <i class="fas fa-bars"></i>
+        </button>
 
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <i class="fas fa-shield-haltered" style="font-size: 2.5rem; color: #2c5a9e;"></i>
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <i class="fas fa-shield-haltered" style="font-size: 2.5rem; color: #2c5a9e;"></i>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" data-page="home"><i class="fas fa-user-astronaut"></i> <span>Profile</span></button>
+                <button class="nav-item" data-page="education"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></button>
+                <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Activities</span></button>
+                <button class="nav-item" data-page="skills"><i class="fas fa-code-branch"></i> <span>Capabilities</span></button>
+                <button class="nav-item" data-page="contact"><i class="fas fa-paper-plane"></i> <span>Connect</span></button>
+            </div>
+            <div class="sidebar-footer">
+                <i class="fas fa-shield-alt"></i> ethical mindset
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- ========== HOME / PROFILE ========== -->
+            <div id="home-page" class="page active-page">
+                <div class="home-two-columns">
+                    <div class="home-left">
+                        <div class="glass-card about-text-card">
+                            <h2 class="section-title"><i class="fas fa-user-astronaut"></i> About Me</h2>
+                            <p>My name is <strong>Md. Irtija Azad Talha</strong>. Currently I am studying in CSE at Green University of Bangladesh. Besides my academic studies, I have joined cyber security with great passion and interest. Now I am a member of the GUCC Cyber Security Society. I like learning how systematically networks are protected and how they technically work. Cyber security focuses on analyzing cyber attacks, discovering threats and recovery system. Because of these challenges I chose cyber security as my field of interest. I am also a cadet in BNCC Green University Platoon. Through BNCC, I have developed skills like time management, discipline, teamwork, leadership and responsibility. However, my mission is to set up a dynamic technical knowledge and real life experience to improve into a skilled cyber security professional.</p>
+                        </div>
+                    </div>
+                    <div class="home-right">
+                        <div class="glass-card personal-card">
+                            <div class="profile-pic-placeholder">
+                                <img src="Talha.jpg" alt="Irtija Talha" />
+                            </div>
+                            <div class="personal-details">
+                                <p><i class="fas fa-user"></i> <strong>Name:</strong> Md. Irtija Azad Talha</p>
+                                <p><i class="fas fa-user-tie"></i> <strong>Father’s Name:</strong> Md. Abul Kalam Azad</p>
+                                <p><i class="fas fa-female"></i> <strong>Mother’s Name:</strong> Nurjahan Begum</p>
+                                <p><i class="fas fa-calendar-alt"></i> <strong>Date of Birth:</strong> 14 September, 2006</p>
+                                <p><i class="fas fa-mosque"></i> <strong>Religion:</strong> Islam</p>
+                                <p><i class="fas fa-heart"></i> <strong>Marital Status:</strong> Single</p>
+                                <p><i class="fas fa-flag"></i> <strong>Nationality:</strong> Bangladeshi</p>
+                                <p class="local-time-line"><i class="fas fa-clock"></i> <strong>Local Time:</strong> <span id="dhaka-time">--:--:--</span> (Asia/Dhaka UTC+6:00)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== QUALIFICATIONS ========== -->
+            <div id="education-page" class="page">
+                <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Educational Qualifications</h2>
+
+                <div class="qualifications-grid">
+
+                    <!-- ===== B.Sc. CARD ===== -->
+                    <div class="qual-card">
+                        <div class="qual-icon"><i class="fas fa-university"></i></div>
+                        <div class="qual-content">
+                            <div class="qual-degree-name">B.Sc. in CSE</div>
+                            <div class="qual-institution">Green University of Bangladesh</div>
+                            <div class="qual-major">Major: Computer Science &amp; Engineering (CSE)</div>
+                            <div class="qual-meta">
+                                <span class="qual-gpa">CGPA: 3.14</span>
+                                <span class="qual-year-range">2025 – Present</span>
+                            </div>
+                            <div class="qual-note">4<sup>th</sup> semester (Trimester) • Ongoing</div>
+
+                            <!-- Toggle button -->
+                            <button class="btn-toggle-details" data-target="bsc-details">
+                                <i class="fas fa-chevron-down"></i> View Semester Details
+                            </button>
+
+                            <!-- Details: B.Sc. semester-wise table -->
+                            <div id="bsc-details" class="details-content">
+                                <div class="details-inner">
+                                    <p class="details-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        Detailed academic transcript — semester-wise course breakdown with credits, grades, and grade points.
+                                    </p>
+
+                                    <!-- Semester 250 -->
+                                    <div class="semester-group">
+                                        <h4><i class="fas fa-calendar-alt"></i> Semester 250</h4>
+                                        <div class="table-responsive">
+                                            <table class="academic-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course Code</th>
+                                                        <th>Course Title</th>
+                                                        <th>Credits</th>
+                                                        <th>Grade</th>
+                                                        <th>Grade Point</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>CSE 100</td>
+                                                        <td>Computational Thinking and Problem Solving</td>
+                                                        <td>1.5</td>
+                                                        <td>A+</td>
+                                                        <td>4.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CSE 101-CSE(181)</td>
+                                                        <td>Discrete Mathematics</td>
+                                                        <td>3</td>
+                                                        <td>A-</td>
+                                                        <td>3.50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ESP 009</td>
+                                                        <td>Academic English</td>
+                                                        <td>0</td>
+                                                        <td>A</td>
+                                                        <td>3.75</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Semester 252 -->
+                                    <div class="semester-group">
+                                        <h4><i class="fas fa-calendar-alt"></i> Semester 252</h4>
+                                        <div class="table-responsive">
+                                            <table class="academic-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course Code</th>
+                                                        <th>Course Title</th>
+                                                        <th>Credits</th>
+                                                        <th>Grade</th>
+                                                        <th>Grade Point</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>CSE 103-CSE(181)</td>
+                                                        <td>Structured Programming</td>
+                                                        <td>3</td>
+                                                        <td>C+</td>
+                                                        <td>2.50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CHE 101-CSE(181)</td>
+                                                        <td>Chemistry</td>
+                                                        <td>3</td>
+                                                        <td>B</td>
+                                                        <td>3.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CSE 104-CSE(181)</td>
+                                                        <td>Structured Programming Lab</td>
+                                                        <td>1.5</td>
+                                                        <td>A-</td>
+                                                        <td>3.50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ESP 101</td>
+                                                        <td>Academic English I</td>
+                                                        <td>3</td>
+                                                        <td>B-</td>
+                                                        <td>2.75</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MAT 101(V1)</td>
+                                                        <td>Calculus for Computing</td>
+                                                        <td>3</td>
+                                                        <td>C+</td>
+                                                        <td>2.50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CHE 102-CSE(181)</td>
+                                                        <td>Chemistry Lab</td>
+                                                        <td>1</td>
+                                                        <td>A+</td>
+                                                        <td>4.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Semester 261 -->
+                                    <div class="semester-group">
+                                        <h4><i class="fas fa-calendar-alt"></i> Semester 261</h4>
+                                        <div class="table-responsive">
+                                            <table class="academic-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course Code</th>
+                                                        <th>Course Title</th>
+                                                        <th>Credits</th>
+                                                        <th>Grade</th>
+                                                        <th>Grade Point</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>CSE 205 (V1)</td>
+                                                        <td>Data Structures</td>
+                                                        <td>3</td>
+                                                        <td>A-</td>
+                                                        <td>3.50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>EEE 101</td>
+                                                        <td>Introduction to Electrical Engineering</td>
+                                                        <td>3</td>
+                                                        <td>B</td>
+                                                        <td>3.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>MAT 103(V1)</td>
+                                                        <td>Linear Algebra and Vector Analysis</td>
+                                                        <td>3</td>
+                                                        <td>B</td>
+                                                        <td>3.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CSE 206 (V1)</td>
+                                                        <td>Data Structures Lab</td>
+                                                        <td>1.5</td>
+                                                        <td>B+</td>
+                                                        <td>3.25</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PHY 101-CSE(181)</td>
+                                                        <td>Physics I</td>
+                                                        <td>3</td>
+                                                        <td>B+</td>
+                                                        <td>3.25</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>EEE 102 (V1)</td>
+                                                        <td>Introduction to Electrical Engineering Lab</td>
+                                                        <td>1</td>
+                                                        <td>A+</td>
+                                                        <td>4.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <p class="details-footer"><i class="fas fa-file-alt"></i> Complete transcripts available upon request.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== HSC CARD ===== -->
+                    <div class="qual-card">
+                        <div class="qual-icon"><i class="fas fa-school"></i></div>
+                        <div class="qual-content">
+                            <div class="qual-degree-name">Higher Secondary Certificate (HSC)</div>
+                            <div class="qual-institution">Giasuddin Islamic Model College</div>
+                            <div class="qual-meta">
+                                <span class="qual-gpa">GPA: 5.00 / 5.00</span>
+                            </div>
+                            <div class="qual-subject-passing">
+                                <span class="qual-label">Subject Background:</span> Science
+                                <span class="qual-sep">|</span>
+                                <span class="qual-label">Passing Year:</span> 2024
+                            </div>
+                            <div class="qual-board">Board: Dhaka</div>
+
+                            <!-- Toggle button -->
+                            <button class="btn-toggle-details" data-target="hsc-details">
+                                <i class="fas fa-chevron-down"></i> View Subject Details
+                            </button>
+
+                            <!-- Details: HSC subject-wise -->
+                            <div id="hsc-details" class="details-content">
+                                <div class="details-inner">
+                                    <p class="details-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        Subject-wise grade breakdown for Higher Secondary Certificate (HSC).
+                                    </p>
+                                    <div class="table-responsive">
+                                        <table class="academic-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subject Code</th>
+                                                    <th>Subject Name</th>
+                                                    <th>Grade</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
+                                                <tr><td>107</td><td>ENGLISH</td><td>A</td></tr>
+                                                <tr><td>275</td><td>INFORMATION &amp; COMMUNICATION TECHNOLOGY</td><td>A+</td></tr>
+                                                <tr><td>174</td><td>PHYSICS</td><td>A+</td></tr>
+                                                <tr><td>176</td><td>CHEMISTRY</td><td>A+</td></tr>
+                                                <tr><td>178</td><td>BIOLOGY</td><td>A+</td></tr>
+                                                <tr><td>265</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p class="details-footer"><i class="fas fa-check-circle"></i> HSC result published by Dhaka Board, 2024.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== SSC CARD ===== -->
+                    <div class="qual-card">
+                        <div class="qual-icon"><i class="fas fa-school"></i></div>
+                        <div class="qual-content">
+                            <div class="qual-degree-name">Secondary School Certificate (SSC)</div>
+                            <div class="qual-institution">Rafiqul Islam School &amp; College</div>
+                            <div class="qual-meta">
+                                <span class="qual-gpa">GPA: 4.72 / 5.00</span>
+                            </div>
+                            <div class="qual-subject-passing">
+                                <span class="qual-label">Subject Background:</span> Science
+                                <span class="qual-sep">|</span>
+                                <span class="qual-label">Passing Year:</span> 2022
+                            </div>
+                            <div class="qual-board">Board: Dhaka</div>
+
+                            <!-- Toggle button -->
+                            <button class="btn-toggle-details" data-target="ssc-details">
+                                <i class="fas fa-chevron-down"></i> View Subject Details
+                            </button>
+
+                            <!-- Details: SSC subject-wise -->
+                            <div id="ssc-details" class="details-content">
+                                <div class="details-inner">
+                                    <p class="details-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        Subject-wise grade breakdown for Secondary School Certificate (SSC).
+                                    </p>
+                                    <div class="table-responsive">
+                                        <table class="academic-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subject Code</th>
+                                                    <th>Subject Name</th>
+                                                    <th>Grade</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
+                                                <tr><td>107</td><td>ENGLISH</td><td>A+</td></tr>
+                                                <tr><td>109</td><td>MATHEMATICS</td><td>A+</td></tr>
+                                                <tr><td>150</td><td>BANGLADESH AND GLOBAL STUDIES</td><td>B</td></tr>
+                                                <tr><td>111</td><td>ISLAM AND MORAL EDUCATION</td><td>A-</td></tr>
+                                                <tr><td>136</td><td>PHYSICS</td><td>A+</td></tr>
+                                                <tr><td>137</td><td>CHEMISTRY</td><td>A+</td></tr>
+                                                <tr><td>126</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
+                                                <tr><td>154</td><td>INFORMATION AND COMMUNICATION TECHNOLOGY</td><td>A</td></tr>
+                                                <tr><td>138</td><td>BIOLOGY</td><td>A+</td></tr>
+                                                <tr><td>147</td><td>PHYSICAL EDUCATION, HEALTH AND SPORTS</td><td>A+</td></tr>
+                                                <tr><td>156</td><td>CAREER EDUCATION</td><td>A+</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p class="details-footer"><i class="fas fa-check-circle"></i> SSC result published by Dhaka Board, 2022.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end qualifications-grid -->
+            </div>
+
+            <!-- ========== ACTIVITIES & EXPERIENCE ========== -->
+            <div id="experience-page" class="page">
+                <div class="career-objective-highlight">
+                    <div class="obj-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="obj-content">
+                        <h3>Career Objective</h3>
+                        <p>To gain practical experience in cybersecurity, learn about protecting systems and networks, and develop skills to build a successful career in this field. I aim to merge academic research with real-world cybersecurity operations, threat hunting, and vulnerability assessment to contribute to resilient digital ecosystems.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-briefcase"></i> Activities &amp; Experience</h2>
+
+                <div class="timeline-container">
+
+                    <div class="timeline-entry">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Oct 2025 – Present</div>
+                            <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
+                            <div class="meta-inline">
+                                <span><i class="fas fa-user-check"></i> Member</span>
+                                <span><i class="fas fa-hourglass-half"></i> 5+ months</span>
+                            </div>
+                            <p class="key-points-single">Active member of Green University Cyber Security Society — participating in workshops, CTF culture, threat modeling, and security awareness.</p>
+                            <div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>Green University Computer Club (GUCC)</strong> of Green University of Bangladesh.</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025 – Present</div>
+                            <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
+                            <div class="meta-inline">
+                                <span><i class="fas fa-anchor"></i> 51 Naval Flotilla</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Green University BNCC Platoon, Dhaka</span>
+                            </div>
+                            <p class="key-points-single">Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.</p>
+                            <div class="parent-club"><i class="fas fa-medal"></i> Extra Activities: Cadet Corps Excellence</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content cert-highlight">
+                            <div class="timeline-date">Ongoing</div>
+                            <h4><i class="fas fa-certificate"></i> Certifications &amp; Achievements</h4>
+                            <div class="cert-buttons">
+                                <a href="https://www.codecademy.com/users/Irtija.Talha/achievements" target="_blank" class="btn-outline"><img src="https://www.codecademy.com/favicon.ico" class="official-icon" alt="Codecademy" /> Codecademy</a>
+                                <a href="https://app.cybrary.it/browse/Irtija_talha" target="_blank" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybrary</a>
+                                <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="btn-outline"><img src="https://tryhackme.com/favicon.ico" class="official-icon" alt="TryHackMe" /> TryHackMe</a>
+                            </div>
+                            <p class="helper-text"><i class="fas fa-mouse-pointer"></i> Click to view my progress on each platform</p>
+                        </div>
+                    </div>
+
+                </div><!-- end timeline-container -->
+            </div>
+
+            <!-- ========== SKILLS ========== -->
+            <div id="skills-page" class="page">
+                <h2 class="section-title"><i class="fas fa-code-branch"></i> Capabilities</h2>
+                <div class="grid-2col">
+
+                    <!-- Cybersecurity -->
+                    <div class="skill-category" data-collapsible>
+                        <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
+                        <div class="skills-list-wrapper">
+                            <div class="skills-list fade-gradient">
+                                <span class="skill-tag"><i class="fas fa-crosshairs"></i> Penetration Testing Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-bullhorn"></i> Offensive Security Intro</span>
+                                <span class="skill-tag"><i class="fas fa-shield"></i> Defensive Security Intro</span>
+                                <span class="skill-tag"><i class="fab fa-linux"></i> Linux Basics (Ubuntu, BlackArch)</span>
+                                <span class="skill-tag"><i class="fas fa-user-secret"></i> Ethical Hacking Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-balance-scale"></i> Cybersecurity Ethics &amp; Legal</span>
+                                <span class="skill-tag"><i class="fas fa-chalkboard-user"></i> Cybrary: Orientation &amp; Careers in Cyber</span>
+                                <span class="skill-tag"><i class="fas fa-flag-checkered"></i> TryHackMe: How Websites Work</span>
+                                <span class="skill-tag"><i class="fas fa-dns"></i> DNS in Detail (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-plug"></i> HTTP in Detail</span>
+                                <span class="skill-tag"><i class="fas fa-network-wired"></i> What is Networking? (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-user-ninja"></i> Pentesting Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-shield-virus"></i> Defensive Security Intro (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-briefcase"></i> Careers in Cyber (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-arrow-trend-up"></i> Offensive Security Intro (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-tools"></i> Security Tools Awareness</span>
+                                <span class="skill-tag"><i class="fas fa-layer-group"></i> Putting It All Together (THM)</span>
+                                <span class="skill-tag"><i class="fas fa-shield-alt"></i> Networking Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-dns"></i> DNS &amp; HTTP Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-code"></i> Website Architecture &amp; Web Communication</span>
+                            </div>
+                            <div class="fade-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Web Dev & Programming -->
+                    <div class="skill-category" data-collapsible>
+                        <h3><i class="fab fa-html5"></i> Web Dev &amp; Programming</h3>
+                        <div class="skills-list-wrapper">
+                            <div class="skills-list fade-gradient">
+                                <span class="skill-tag"><i class="fab fa-html5"></i> HTML5 (Semantic, Forms, Tables)</span>
+                                <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3 (Flex/Grid, Box Model)</span>
+                                <span class="skill-tag"><i class="fab fa-js"></i> JavaScript (Variables, Conditionals)</span>
+                                <span class="skill-tag"><i class="fas fa-code"></i> Learn HTML: Elements &amp; Structure</span>
+                                <span class="skill-tag"><i class="fas fa-table"></i> HTML Tables &amp; Document Standards</span>
+                                <span class="skill-tag"><i class="fas fa-check-circle"></i> HTML Forms &amp; Form Validation</span>
+                                <span class="skill-tag"><i class="fas fa-palette"></i> CSS Typography, Colors &amp; Visual Rules</span>
+                                <span class="skill-tag"><i class="fas fa-square"></i> CSS Box Model &amp; Positioning</span>
+                                <span class="skill-tag"><i class="fas fa-laptop"></i> Front-End Development Intro</span>
+                                <span class="skill-tag"><i class="fas fa-globe"></i> Overview of the Internet &amp; Web Development</span>
+                                <span class="skill-tag"><i class="fas fa-language"></i> Languages for Web Development</span>
+                                <span class="skill-tag"><i class="fab fa-js"></i> JavaScript Variables &amp; Conditionals</span>
+                                <span class="skill-tag"><i class="fas fa-dog"></i> Dog Years Project</span>
+                                <span class="skill-tag"><i class="fas fa-temperature-high"></i> Kelvin Weather Project</span>
+                                <span class="skill-tag"><i class="fas fa-code"></i> Structured Programming (C)</span>
+                                <span class="skill-tag"><i class="fas fa-database"></i> Data Structures &amp; Lab</span>
+                                <span class="skill-tag"><i class="fas fa-brain"></i> Computational Thinking</span>
+                                <span class="skill-tag"><i class="fas fa-puzzle-piece"></i> Problem Solving</span>
+                            </div>
+                            <div class="fade-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Networking & Web Tech -->
+                    <div class="skill-category" data-collapsible>
+                        <h3><i class="fas fa-cloud-arrow-up"></i> Networking &amp; Web Tech</h3>
+                        <div class="skills-list-wrapper">
+                            <div class="skills-list fade-gradient">
+                                <span class="skill-tag"><i class="fas fa-dns"></i> DNS Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-lock"></i> HTTP/HTTPS Protocol</span>
+                                <span class="skill-tag"><i class="fas fa-server"></i> Client-Server Architecture</span>
+                                <span class="skill-tag"><i class="fas fa-network-wired"></i> Basic Computer Networking</span>
+                                <span class="skill-tag"><i class="fas fa-globe"></i> Internet Protocol Fundamentals</span>
+                                <span class="skill-tag"><i class="fas fa-question-circle"></i> How Websites Work</span>
+                                <span class="skill-tag"><i class="fas fa-shield-alt"></i> Security Principles &amp; Best Practices</span>
+                                <span class="skill-tag"><i class="fas fa-sync-alt"></i> Client-Server Communication</span>
+                                <span class="skill-tag"><i class="fas fa-wifi"></i> Internet &amp; Web Fundamentals</span>
+                            </div>
+                            <div class="fade-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Skills & Tools -->
+                    <div class="skill-category" data-collapsible>
+                        <h3><i class="fas fa-briefcase"></i> Professional Skills &amp; Tools</h3>
+                        <div class="skills-list-wrapper">
+                            <div class="skills-list fade-gradient">
+                                <span class="skill-tag"><i class="fas fa-chart-line"></i> Analytical Thinking</span>
+                                <span class="skill-tag"><i class="fas fa-cogs"></i> Complex Problem Solving</span>
+                                <span class="skill-tag"><i class="fas fa-book"></i> Self-Learning &amp; Research</span>
+                                <span class="skill-tag"><i class="fas fa-sync-alt"></i> Continuous Learning Mindset</span>
+                                <span class="skill-tag"><i class="fas fa-file-alt"></i> Technical Documentation</span>
+                                <span class="skill-tag"><i class="fas fa-users"></i> Team Collaboration</span>
+                                <span class="skill-tag"><i class="fas fa-clock"></i> Time Management (BNCC)</span>
+                                <span class="skill-tag"><i class="fas fa-hand-sparkles"></i> Adaptability &amp; Leadership</span>
+                                <span class="skill-tag"><i class="fas fa-flask"></i> Technical Research</span>
+                                <span class="skill-tag"><i class="fas fa-file-excel"></i> Microsoft Office (Word, Excel, Sheets)</span>
+                                <span class="skill-tag"><i class="fab fa-google"></i> Google Docs / Sheets</span>
+                                <span class="skill-tag"><i class="fas fa-paintbrush"></i> Logo Design (Canva)</span>
+                                <span class="skill-tag"><i class="fas fa-video"></i> Video Editing (Wondershare Filmora)</span>
+                                <span class="skill-tag"><i class="fab fa-git-alt"></i> Git/GitHub Fundamentals</span>
+                            </div>
+                            <div class="fade-overlay"></div>
+                        </div>
+                    </div>
+
+                </div><!-- end grid-2col -->
+            </div>
+
+            <!-- ========== CONTACT ========== -->
+            <div id="contact-page" class="page">
+                <h2 class="section-title"><i class="fas fa-paper-plane"></i> Contact Informations</h2>
+
+                <div class="contact-grid primary">
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email</h4>
+                        <p>irtija.x.k6@hotmail.com</p>
+                        <a href="mailto:irtija.x.k6@hotmail.com" class="btn-outline">Send Message</a>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fab fa-github"></i>
+                        <h4>GitHub</h4>
+                        <p>Irtizaa6x</p>
+                        <a href="https://github.com/Irtizaa6x" target="_blank" class="btn-outline">Repositories</a>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fab fa-linkedin-in"></i>
+                        <h4>LinkedIn</h4>
+                        <p>Md Irtija Azad Talha</p>
+                        <a href="https://linkedin.com/in/irtija-talha" target="_blank" class="btn-outline">Connect</a>
+                    </div>
+                </div>
+
+                <h3 class="social-heading"><i class="fas fa-share-alt"></i> Social Media</h3>
+                <p class="helper-text social-helper"><i class="fas fa-fingerprint"></i> Tap any platform below to connect with me</p>
+
+                <div class="contact-grid social-grid">
+                    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://www.instagram.com/7d6_nev" target="_blank" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.x.com/irtijaXtalha" target="_blank" class="social-btn"><i class="fab fa-x-twitter"></i> X (Twitter)</a>
+                    <a href="https://www.threads.com/7d6_nev" target="_blank" class="social-btn"><i class="fab fa-threads"></i> Threads</a>
+                    <a href="https://wa.me/qr/H3R2HPTW66G3P1" target="_blank" class="social-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="social-btn"><img src="https://tryhackme.com/favicon.ico" class="thm-icon" alt="THM" /> TryHackMe</a>
+                    <a href="#" class="social-btn discord-copy"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+
+                <!-- Phone card -->
+                <div class="phone-card glass-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <strong>Call:</strong>
+                    <a href="tel:+8801518940566">+880 151 894 0566</a>
+                    <span style="margin:0 4px">|</span>
+                    <i class="fas fa-mobile-alt"></i>
+                    <strong>Secondary:</strong>
+                    <a href="tel:+8801886940566">+880 188 694 0566</a>
+                    <hr />
+                    <span>Open for cybersecurity collaborations, internships, and networking.</span>
+                </div>
+            </div>
+
+            <!-- ===== FOOTER ===== -->
+            <footer>
+                <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Built with <strong>AI</strong>
+            </footer>
+
+        </main>
     </div>
-    <div class="nav-menu">
-      <button class="nav-item active" data-page="home"><i class="fas fa-user-astronaut"></i> <span>Profile</span></button>
-      <button class="nav-item" data-page="education"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></button>
-      <button class="nav-item" data-page="experience"><i class="fas fa-briefcase"></i> <span>Activities</span></button>
-      <button class="nav-item" data-page="skills"><i class="fas fa-code-branch"></i> <span>Capabilities</span></button>
-      <button class="nav-item" data-page="contact"><i class="fas fa-paper-plane"></i> <span>Connect</span></button>
-    </div>
-    <div class="sidebar-footer">
-      <i class="fas fa-shield-alt"></i> ethical mindset
-    </div>
-  </aside>
 
-  <main class="main-content" id="mainContent">
-    <!-- ========== PROFILE ========== -->
-    <div id="home-page" class="page active-page">
-      <div class="home-two-columns">
-        <div class="home-left">
-          <div class="glass-card about-text-card">
-            <h2 class="section-title"><i class="fas fa-user-astronaut"></i> About Me</h2>
-            <p>My name is <strong>Md. Irtija Azad Talha</strong>. Currently I am studying in CSE at Green University of Bangladesh. Besides my academic studies, I have joined cyber security with great passion and interest. Now I am a member of the GUCC Cyber Security Society. I like learning how systematically networks are protected and how they technically work. Cyber security focuses on analyzing cyber attacks, discovering threats and recovery system. Because of these challenges I chose cyber security as my field of interest. I am also a cadet in BNCC Green University Platoon. Through BNCC, I have developed skills like time management, discipline, teamwork, leadership and responsibility. However, my mission is to set up a dynamic technical knowledge and real life experience to improve into a skilled cyber security professional.</p>
-          </div>
-        </div>
-        <div class="home-right">
-          <div class="glass-card personal-card">
-            <div class="profile-pic-placeholder">
-              <img src="Talha.jpg" alt="Irtija Talha">
-            </div>
-            <div class="personal-details">
-              <p><i class="fas fa-user"></i> <strong>Name:</strong> Md. Irtija Azad Talha</p>
-              <p><i class="fas fa-user-tie"></i> <strong>Father’s Name:</strong> Md. Abul Kalam Azad</p>
-              <p><i class="fas fa-female"></i> <strong>Mother’s Name:</strong> Nurjahan Begum</p>
-              <p><i class="fas fa-calendar-alt"></i> <strong>Date of Birth:</strong> 14 September, 2006</p>
-              <p><i class="fas fa-mosque"></i> <strong>Religion:</strong> Islam</p>
-              <p><i class="fas fa-heart"></i> <strong>Marital Status:</strong> Single</p>
-              <p><i class="fas fa-flag"></i> <strong>Nationality:</strong> Bangladeshi</p>
-              <p class="local-time-line"><i class="fas fa-clock"></i> <strong>Local Time:</strong> <span id="dhaka-time">--:--:--</span> (Asia/Dhaka UTC+6:00)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========== QUALIFICATIONS ========== -->
-    <div id="education-page" class="page">
-      <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Educational Qualifications</h2>
-      <div class="qualifications-grid">
-        <div class="qual-card">
-          <div class="qual-icon"><i class="fas fa-university"></i></div>
-          <div class="qual-content">
-            <div class="qual-degree-name">B.Sc. in CSE</div>
-            <div class="qual-institution">Green University of Bangladesh</div>
-            <div class="qual-major">Major: Computer Science & Engineering (CSE)</div>
-            <div class="qual-meta">
-              <span class="qual-gpa">CGPA: 3.14</span>
-              <span class="qual-year-range">2025 – Present</span>
-            </div>
-            <div class="qual-note">4<sup>th</sup> semester (Trimester) • Ongoing</div>
-          </div>
-        </div>
-        <div class="qual-card">
-          <div class="qual-icon"><i class="fas fa-school"></i></div>
-          <div class="qual-content">
-            <div class="qual-degree-name">Higher Secondary Certificate (HSC)</div>
-            <div class="qual-institution">Giasuddin Islamic Model College</div>
-            <div class="qual-meta">
-              <span class="qual-gpa">GPA: 5.00 / 5.00</span>
-            </div>
-            <div class="qual-subject-passing">
-              <span class="qual-label">Subject Background:</span> Science 
-              <span class="qual-sep">|</span> 
-              <span class="qual-label">Passing Year:</span> 2024
-            </div>
-            <div class="qual-board">Board: Dhaka</div>
-          </div>
-        </div>
-        <div class="qual-card">
-          <div class="qual-icon"><i class="fas fa-school"></i></div>
-          <div class="qual-content">
-            <div class="qual-degree-name">Secondary School Certificate (SSC)</div>
-            <div class="qual-institution">Rafiqul Islam School & College</div>
-            <div class="qual-meta">
-              <span class="qual-gpa">GPA: 4.72 / 5.00</span>
-            </div>
-            <div class="qual-subject-passing">
-              <span class="qual-label">Subject Background:</span> Science 
-              <span class="qual-sep">|</span> 
-              <span class="qual-label">Passing Year:</span> 2022
-            </div>
-            <div class="qual-board">Board: Dhaka</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========== ACTIVITIES & EXPERIENCE ========== -->
-    <div id="experience-page" class="page">
-      <div class="career-objective-highlight">
-        <div class="obj-icon"><i class="fas fa-bullseye"></i></div>
-        <div class="obj-content">
-          <h3>Career Objective</h3>
-          <p>To gain practical experience in cybersecurity, learn about protecting systems and networks, and develop skills to build a successful career in this field. I aim to merge academic research with real-world cybersecurity operations, threat hunting, and vulnerability assessment to contribute to resilient digital ecosystems.</p>
-        </div>
-      </div>
-
-      <h2 class="section-title"><i class="fas fa-briefcase"></i> Activities & Experience</h2>
-
-      <div class="timeline-container">
-        <div class="timeline-entry">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">Oct 2025 – Present</div>
-            <h4><i class="fas fa-user-secret"></i> GUCC Cyber Security Society</h4>
-            <div class="meta-inline">
-              <span><i class="fas fa-user-check"></i> Member</span>
-              <span><i class="fas fa-hourglass-half"></i> 5+ months</span>
-            </div>
-            <p class="key-points-single">Active member of Green University Cyber Security Society — participating in workshops, CTF culture, threat modeling, and security awareness.</p>
-            <div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>Green University Computer Club (GUCC)</strong> of Green University of Bangladesh.</div>
-          </div>
-        </div>
-
-        <div class="timeline-entry">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">2025 – Present</div>
-            <h4><i class="fas fa-shield-alt"></i> Bangladesh National Cadet Corps (BNCC)</h4>
-            <div class="meta-inline">
-              <span><i class="fas fa-anchor"></i> 51 Naval Flotilla</span>
-              <span><i class="fas fa-map-marker-alt"></i> Green University BNCC Platoon, Dhaka</span>
-            </div>
-            <p class="key-points-single">Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.</p>
-            <div class="parent-club"><i class="fas fa-medal"></i> Extra Activities: Cadet Corps Excellence</div>
-          </div>
-        </div>
-
-        <div class="timeline-entry">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content cert-highlight">
-            <div class="timeline-date">Ongoing</div>
-            <h4><i class="fas fa-certificate"></i> Certifications & Achievements</h4>
-            <div class="cert-buttons">
-              <a href="https://www.codecademy.com/users/Irtija.Talha/achievements" target="_blank" class="btn-outline"><img src="https://www.codecademy.com/favicon.ico" class="official-icon" alt="Codecademy"> Codecademy</a>
-              <a href="https://app.cybrary.it/browse/Irtija_talha" target="_blank" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybrary</a>
-              <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="btn-outline"><img src="https://tryhackme.com/favicon.ico" class="official-icon" alt="TryHackMe"> TryHackMe</a>
-            </div>
-            <p class="helper-text"><i class="fas fa-mouse-pointer"></i> Click to view my progress on each platform</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========== CAPABILITIES (fade-out on click, no button) ========== -->
-    <div id="skills-page" class="page">
-      <h2 class="section-title"><i class="fas fa-code-branch"></i> Capabilities</h2>
-      <div class="grid-2col">
-        <!-- Cybersecurity -->
-        <div class="skill-category" data-collapsible>
-          <h3><i class="fas fa-user-secret"></i> Cybersecurity</h3>
-          <div class="skills-list-wrapper">
-            <div class="skills-list fade-gradient">
-              <span class="skill-tag"><i class="fas fa-crosshairs"></i> Penetration Testing Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-bullhorn"></i> Offensive Security Intro</span>
-              <span class="skill-tag"><i class="fas fa-shield"></i> Defensive Security Intro</span>
-              <span class="skill-tag"><i class="fab fa-linux"></i> Linux Basics (Ubuntu, BlackArch)</span>
-              <span class="skill-tag"><i class="fas fa-user-secret"></i> Ethical Hacking Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-balance-scale"></i> Cybersecurity Ethics & Legal</span>
-              <span class="skill-tag"><i class="fas fa-chalkboard-user"></i> Cybrary: Orientation & Careers in Cyber</span>
-              <span class="skill-tag"><i class="fas fa-flag-checkered"></i> TryHackMe: How Websites Work</span>
-              <span class="skill-tag"><i class="fas fa-dns"></i> DNS in Detail (THM)</span>
-              <span class="skill-tag"><i class="fas fa-plug"></i> HTTP in Detail</span>
-              <span class="skill-tag"><i class="fas fa-network-wired"></i> What is Networking? (THM)</span>
-              <span class="skill-tag"><i class="fas fa-user-ninja"></i> Pentesting Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-shield-virus"></i> Defensive Security Intro (THM)</span>
-              <span class="skill-tag"><i class="fas fa-briefcase"></i> Careers in Cyber (THM)</span>
-              <span class="skill-tag"><i class="fas fa-arrow-trend-up"></i> Offensive Security Intro (THM)</span>
-              <span class="skill-tag"><i class="fas fa-tools"></i> Security Tools Awareness</span>
-              <span class="skill-tag"><i class="fas fa-layer-group"></i> Putting It All Together (THM)</span>
-              <span class="skill-tag"><i class="fas fa-shield-alt"></i> Networking Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-dns"></i> DNS & HTTP Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-code"></i> Website Architecture & Web Communication</span>
-            </div>
-            <div class="fade-overlay"></div>
-          </div>
-        </div>
-        <!-- Web Dev & Programming -->
-        <div class="skill-category" data-collapsible>
-          <h3><i class="fab fa-html5"></i> Web Dev & Programming</h3>
-          <div class="skills-list-wrapper">
-            <div class="skills-list fade-gradient">
-              <span class="skill-tag"><i class="fab fa-html5"></i> HTML5 (Semantic, Forms, Tables)</span>
-              <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS3 (Flex/Grid, Box Model)</span>
-              <span class="skill-tag"><i class="fab fa-js"></i> JavaScript (Variables, Conditionals)</span>
-              <span class="skill-tag"><i class="fas fa-code"></i> Learn HTML: Elements & Structure</span>
-              <span class="skill-tag"><i class="fas fa-table"></i> HTML Tables & Document Standards</span>
-              <span class="skill-tag"><i class="fas fa-check-circle"></i> HTML Forms & Form Validation</span>
-              <span class="skill-tag"><i class="fas fa-palette"></i> CSS Typography, Colors & Visual Rules</span>
-              <span class="skill-tag"><i class="fas fa-square"></i> CSS Box Model & Positioning</span>
-              <span class="skill-tag"><i class="fas fa-laptop"></i> Front-End Development Intro</span>
-              <span class="skill-tag"><i class="fas fa-globe"></i> Overview of the Internet & Web Development</span>
-              <span class="skill-tag"><i class="fas fa-language"></i> Languages for Web Development</span>
-              <span class="skill-tag"><i class="fab fa-js"></i> JavaScript Variables & Conditionals</span>
-              <span class="skill-tag"><i class="fas fa-dog"></i> Dog Years Project</span>
-              <span class="skill-tag"><i class="fas fa-temperature-high"></i> Kelvin Weather Project</span>
-              <span class="skill-tag"><i class="fas fa-code"></i> Structured Programming (C)</span>
-              <span class="skill-tag"><i class="fas fa-database"></i> Data Structures & Lab</span>
-              <span class="skill-tag"><i class="fas fa-brain"></i> Computational Thinking</span>
-              <span class="skill-tag"><i class="fas fa-puzzle-piece"></i> Problem Solving</span>
-            </div>
-            <div class="fade-overlay"></div>
-          </div>
-        </div>
-        <!-- Networking & Web Tech -->
-        <div class="skill-category" data-collapsible>
-          <h3><i class="fas fa-cloud-arrow-up"></i> Networking & Web Tech</h3>
-          <div class="skills-list-wrapper">
-            <div class="skills-list fade-gradient">
-              <span class="skill-tag"><i class="fas fa-dns"></i> DNS Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-lock"></i> HTTP/HTTPS Protocol</span>
-              <span class="skill-tag"><i class="fas fa-server"></i> Client-Server Architecture</span>
-              <span class="skill-tag"><i class="fas fa-network-wired"></i> Basic Computer Networking</span>
-              <span class="skill-tag"><i class="fas fa-globe"></i> Internet Protocol Fundamentals</span>
-              <span class="skill-tag"><i class="fas fa-question-circle"></i> How Websites Work</span>
-              <span class="skill-tag"><i class="fas fa-shield-alt"></i> Security Principles & Best Practices</span>
-              <span class="skill-tag"><i class="fas fa-sync-alt"></i> Client-Server Communication</span>
-              <span class="skill-tag"><i class="fas fa-wifi"></i> Internet & Web Fundamentals</span>
-            </div>
-            <div class="fade-overlay"></div>
-          </div>
-        </div>
-        <!-- Professional Skills & Tools -->
-        <div class="skill-category" data-collapsible>
-          <h3><i class="fas fa-briefcase"></i> Professional Skills & Tools</h3>
-          <div class="skills-list-wrapper">
-            <div class="skills-list fade-gradient">
-              <span class="skill-tag"><i class="fas fa-chart-line"></i> Analytical Thinking</span>
-              <span class="skill-tag"><i class="fas fa-cogs"></i> Complex Problem Solving</span>
-              <span class="skill-tag"><i class="fas fa-book"></i> Self-Learning & Research</span>
-              <span class="skill-tag"><i class="fas fa-sync-alt"></i> Continuous Learning Mindset</span>
-              <span class="skill-tag"><i class="fas fa-file-alt"></i> Technical Documentation</span>
-              <span class="skill-tag"><i class="fas fa-users"></i> Team Collaboration</span>
-              <span class="skill-tag"><i class="fas fa-clock"></i> Time Management (BNCC)</span>
-              <span class="skill-tag"><i class="fas fa-hand-sparkles"></i> Adaptability & Leadership</span>
-              <span class="skill-tag"><i class="fas fa-flask"></i> Technical Research</span>
-              <span class="skill-tag"><i class="fas fa-file-excel"></i> Microsoft Office (Word, Excel, Sheets)</span>
-              <span class="skill-tag"><i class="fab fa-google"></i> Google Docs / Sheets</span>
-              <span class="skill-tag"><i class="fas fa-paintbrush"></i> Logo Design (Canva)</span>
-              <span class="skill-tag"><i class="fas fa-video"></i> Video Editing (Wondershare Filmora)</span>
-              <span class="skill-tag"><i class="fab fa-git-alt"></i> Git/GitHub Fundamentals</span>
-            </div>
-            <div class="fade-overlay"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   <!-- ========== CONNECT ========== -->
-<div id="contact-page" class="page">
-  <h2 class="section-title"><i class="fas fa-paper-plane"></i> Contact Informations</h2>
-  <div class="contact-grid primary">
-    <div class="contact-card">
-      <i class="fas fa-envelope"></i>
-      <h4>Email</h4>
-      <p>irtija.x.k6@hotmail.com</p>
-      <a href="mailto:irtija.x.k6@hotmail.com" class="btn-outline">Send Message</a>
-    </div>
-    <div class="contact-card">
-      <i class="fab fa-github"></i>
-      <h4>GitHub</h4>
-      <p>Irtizaa6x</p>
-      <a href="https://github.com/Irtizaa6x" target="_blank" class="btn-outline">Repositories</a>
-    </div>
-    <div class="contact-card">
-      <i class="fab fa-linkedin-in"></i>
-      <h4>LinkedIn</h4>
-      <p>Md Irtija Azad Talha</p>
-      <a href="https://linkedin.com/in/irtija-talha" target="_blank" class="btn-outline">Connect</a>
-    </div>
-  </div>
-
-  <h3 class="social-heading"><i class="fas fa-share-alt"></i> Social Media</h3>
-  <p class="helper-text social-helper"><i class="fas fa-fingerprint"></i> Tap any platform below to connect with me</p>
-  <div class="contact-grid social-grid">
-    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
-    <a href="https://www.instagram.com/7d6_nev" target="_blank" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
-    <a href="https://www.x.com/irtijaXtalha" target="_blank" class="social-btn"><i class="fab fa-x-twitter"></i> X (Twitter)</a>
-    <a href="https://www.threads.com/7d6_nev" target="_blank" class="social-btn"><i class="fab fa-threads"></i> Threads</a>
-    <a href="https://wa.me/qr/H3R2HPTW66G3P1" target="_blank" class="social-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    <a href="https://tryhackme.com/p/irtija.talha" target="_blank" class="social-btn"><img src="https://tryhackme.com/favicon.ico" class="thm-icon" alt="THM"> TryHackMe</a>
-    <a href="#" class="social-btn discord-copy"><i class="fab fa-discord"></i> Discord</a>
-  </div>
-
-  <!-- Phone card (only inside Connect page) -->
-  <div class="phone-card glass-card">
-    <i class="fas fa-phone-alt"></i>
-    <strong>Call:</strong>
-    <a href="tel:+8801518940566">+880 151 894 0566</a>
-    <span style="margin:0 4px">|</span>
-    <i class="fas fa-mobile-alt"></i>
-    <strong>Secondary:</strong>
-    <a href="tel:+8801886940566">+880 188 694 0566</a>
-    <hr>
-    <span>Open for cybersecurity collaborations, internships, and networking.</span>
-  </div>
-</div>
-<footer>
-      <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Built with <strong>AI</strong>
-    </footer>
-  </main>
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
