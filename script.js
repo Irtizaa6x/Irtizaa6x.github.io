@@ -1,4 +1,6 @@
-// Navigation
+// ==========================================
+//  NAVIGATION
+// ==========================================
 const navItems = document.querySelectorAll('.nav-item');
 const mainContent = document.getElementById('mainContent');
 const pages = {
@@ -6,43 +8,54 @@ const pages = {
   education: document.getElementById('education-page'),
   skills: document.getElementById('skills-page'),
   experience: document.getElementById('experience-page'),
-  contact: document.getElementById('contact-page')
+  contact: document.getElementById('contact-page'),
 };
 
 function switchPage(pageId) {
-  Object.values(pages).forEach(p => p && p.classList.remove('active-page'));
+  Object.values(pages).forEach((p) => p && p.classList.remove('active-page'));
   if (pages[pageId]) pages[pageId].classList.add('active-page');
-  navItems.forEach(btn => {
+
+  navItems.forEach((btn) => {
     const val = btn.getAttribute('data-page');
     if (val === pageId) btn.classList.add('active');
     else btn.classList.remove('active');
   });
-  
+
   if (mainContent) {
     mainContent.scrollTo({ top: 0, behavior: 'smooth' });
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  
+
+  // Close sidebar on mobile after navigation
   if (window.innerWidth <= 768) {
     document.getElementById('sidebar').classList.remove('open');
   }
 }
 
-navItems.forEach(btn => {
+navItems.forEach((btn) => {
   btn.addEventListener('click', () => {
     const page = btn.getAttribute('data-page');
     if (page && pages[page]) switchPage(page);
   });
 });
 
+// Set initial active page
 const activeNav = document.querySelector('.nav-item.active');
 if (activeNav) switchPage(activeNav.getAttribute('data-page'));
 else switchPage('home');
 
-// Live Dhaka Time
+// ==========================================
+//  LIVE DHAKA TIME
+// ==========================================
 function updateDhakaTime() {
   const now = new Date();
-  const options = { timeZone: 'Asia/Dhaka', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+  const options = {
+    timeZone: 'Asia/Dhaka',
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  };
   const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
   const timeElem = document.getElementById('dhaka-time');
   if (timeElem) timeElem.textContent = timeStr;
@@ -50,58 +63,56 @@ function updateDhakaTime() {
 updateDhakaTime();
 setInterval(updateDhakaTime, 1000);
 
-// Collapsible skills – click on the fade overlay to expand/collapse
-document.querySelectorAll('.skill-category[data-collapsible]').forEach(category => {
-  const wrapper = category.querySelector('.skills-list-wrapper');
+// ==========================================
+//  COLLAPSIBLE SKILLS (fade overlay)
+// ==========================================
+document.querySelectorAll('.skill-category[data-collapsible]').forEach((category) => {
   const skillsList = category.querySelector('.skills-list');
   const overlay = category.querySelector('.fade-overlay');
-  
-  if (!skillsList || !overlay) return;
-  
-  // Expand on overlay click
-  overlay.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // Expand: remove fade class and add expanded class
-    skillsList.classList.remove('fade-gradient');
-    category.classList.add('expanded');
-  });
-  
-  // Collapse when clicking on the expanded area? We'll use a second click on a "show less" indicator.
-  // To keep it clean, we add a "Show less" button inside the overlay when expanded.
-  // But simpler: when expanded, clicking again on the whole category will collapse.
-  // However, we need a clear "show less" signal. Let's add a small "⋯ less" text that appears after expansion.
-  
-  // After expansion, we'll insert a "show less" link inside the skill-category.
-  // We'll use a mutation observer or simply add the element on expansion.
-  // For simplicity, we'll listen for click on the expanded category and collapse if the click target is the "show less" area.
-  
-  // Create a "show less" element but hide it initially
+  const wrapper = category.querySelector('.skills-list-wrapper');
+
+  if (!skillsList || !overlay || !wrapper) return;
+
+  // Create "Show less" button (hidden initially)
   const showLess = document.createElement('div');
   showLess.className = 'show-less-btn-inline';
   showLess.innerHTML = '<i class="fas fa-chevron-up"></i> Show less';
-  showLess.style.cssText = 'display: none; text-align: center; margin-top: 0.8rem; cursor: pointer; font-size: 0.75rem; color: #2c5a9e; background: #eef2ff; width: fit-content; padding: 0.2rem 0.8rem; border-radius: 20px; margin-left: auto; margin-right: auto;';
+  Object.assign(showLess.style, {
+    display: 'none',
+    textAlign: 'center',
+    marginTop: '0.8rem',
+    cursor: 'pointer',
+    fontSize: '0.75rem',
+    color: '#2c5a9e',
+    background: '#eef2ff',
+    width: 'fit-content',
+    padding: '0.2rem 0.8rem',
+    borderRadius: '20px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  });
   wrapper.appendChild(showLess);
-  
+
+  // Expand: remove fade, add expanded, show "Show less"
+  overlay.addEventListener('click', (e) => {
+    e.stopPropagation();
+    skillsList.classList.remove('fade-gradient');
+    category.classList.add('expanded');
+    showLess.style.display = 'block';
+  });
+
+  // Collapse: add fade, remove expanded, hide "Show less"
   showLess.addEventListener('click', (e) => {
     e.stopPropagation();
     skillsList.classList.add('fade-gradient');
     category.classList.remove('expanded');
     showLess.style.display = 'none';
   });
-  
-  // Override the expand to also show the "show less" button
-  const originalExpand = overlay.click;
-  overlay.addEventListener('click', () => {
-    skillsList.classList.remove('fade-gradient');
-    category.classList.add('expanded');
-    showLess.style.display = 'block';
-  });
-  
-  // Also, if the category is expanded and user clicks on the overlay again (which is hidden), we don't want conflict.
-  // The 'show less' button handles collapsing.
 });
 
-// Discord copy
+// ==========================================
+//  DISCORD COPY
+// ==========================================
 const discordBtn = document.querySelector('.discord-copy');
 if (discordBtn) {
   const originalHTML = discordBtn.innerHTML;
@@ -115,7 +126,9 @@ if (discordBtn) {
   });
 }
 
-// Hamburger toggle
+// ==========================================
+//  HAMBURGER TOGGLE (mobile)
+// ==========================================
 const toggleBtn = document.getElementById('hamburgerToggle');
 const sidebar = document.getElementById('sidebar');
 
@@ -123,13 +136,50 @@ if (toggleBtn && sidebar) {
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('open');
   });
-  
-  document.addEventListener('click', function(event) {
-    if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
-        !sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+
+  // Close sidebar when clicking outside
+  document.addEventListener('click', (event) => {
+    if (
+      window.innerWidth <= 768 &&
+      sidebar.classList.contains('open') &&
+      !sidebar.contains(event.target) &&
+      !toggleBtn.contains(event.target)
+    ) {
       sidebar.classList.remove('open');
     }
   });
 }
 
-console.log("Portfolio ready — Irtija Talha Cybersecurity (fade‑out expand on click)");
+// ==========================================
+//  EXPANDABLE ACADEMIC DETAILS
+//  (B.Sc., HSC, SSC transcript tables)
+// ==========================================
+function initAcademicDetails() {
+  const toggleButtons = document.querySelectorAll('.btn-toggle-details');
+
+  toggleButtons.forEach((btn) => {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute('data-target');
+      if (!targetId) return;
+
+      const detailsContainer = document.getElementById(targetId);
+      if (!detailsContainer) return;
+
+      // Toggle open class on button (rotates chevron)
+      this.classList.toggle('open');
+
+      // Toggle open class on details container (shows/hides with animation)
+      detailsContainer.classList.toggle('open');
+    });
+  });
+}
+
+// Initialize academic detail toggles
+initAcademicDetails();
+
+// ==========================================
+//  CONSOLE SIGNATURE
+// ==========================================
+console.log('Portfolio ready — Irtija Talha Cybersecurity (fade‑out expand on click)');
