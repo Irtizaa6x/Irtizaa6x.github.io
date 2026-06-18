@@ -1106,17 +1106,12 @@ footer {
     display: block;
   }
 
-  /* Hide the old floating hamburger (no longer in HTML, but safe) */
-  .hamburger-toggle {
-    display: none !important;
-  }
-
   /* Main content: add top padding to clear the fixed header */
   .main-content {
     padding: 4.5rem 1rem 1.5rem 1rem;
   }
 
-  /* Sidebar: slide from left, with top padding so items clear the header */
+  /* Sidebar: slide from left */
   .sidebar {
     position: fixed;
     top: 0;
