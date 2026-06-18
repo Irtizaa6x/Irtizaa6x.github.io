@@ -328,6 +328,7 @@ body {
 .local-time-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;   /* <-- ADD THIS LINE */
     gap: 0.7rem;
     flex-wrap: wrap;
     background: #ffffff;
