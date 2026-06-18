@@ -94,8 +94,11 @@ function updateDhakaTime() {
     second: '2-digit',
   };
   const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
-  const timeElem = document.getElementById('dhaka-time');
-  if (timeElem) timeElem.textContent = timeStr;
+  
+  // Update ALL clocks on the page (using class)
+  document.querySelectorAll('.dhaka-time').forEach(el => {
+    el.textContent = timeStr;
+  });
 }
 updateDhakaTime();
 setInterval(updateDhakaTime, 1000);
