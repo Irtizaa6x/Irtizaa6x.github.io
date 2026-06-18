@@ -1,85 +1,86 @@
-# 🔐 Irtija Talha – Cybersecurity Portfolio
+# 🧑‍💻 Md. Irtija Azad Talha – Professional Portfolio
 
-A modern, responsive personal portfolio website for **Md. Irtija Azad Talha**, a Computer Science & Engineering student passionate about cybersecurity, ethical hacking, and network defense.
+A modern, responsive, single‑page portfolio website built for a cybersecurity student and aspiring professional. It showcases personal information, academic qualifications, activities, technical skills, and contact details in a clean, interactive interface.
 
 ---
 
 ## ✨ Features
 
-- Fully responsive – works on desktop, tablet, and mobile
-- Collapsible sidebar with hamburger menu on mobile
-- Smooth page transitions and automatic scroll‑to‑top on navigation
-- Professional timeline for activities & experience
-- Interactive skills section – click to expand/collapse
-- Live Dhaka time on profile card
-- Contact section with email, GitHub, LinkedIn, and social buttons (including WhatsApp)
-- One‑click copy for Discord username
-- Custom favicon and profile picture support
+- **Dynamic Sidebar Navigation** – Five sections: *Profile*, *Qualifications*, *Activities*, *Capabilities*, *Connect*.  
+- **Live Active Icon** – The brand area shows a medium‑sized icon that animates smoothly when switching pages.
+- **Real‑time Clock** – A professional‑style digital clock (with a pulsing live indicator) displays the local time in Asia/Dhaka. It appears on the **Connect** page.
+- **Expandable Academic Tables** – B.Sc., HSC, and SSC cards have toggle buttons that reveal detailed semester/subject‑wise grade tables.
+- **Collapsible Skill Categories** – Each skill group shows a limited set of tags with a “more skills” fade overlay; click to expand.
+- **Timeline Activities** – Experience entries are presented in a vertical timeline with hover effects.
+- **Contact & Social Links** – Email, GitHub, LinkedIn, social media, and phone numbers; Discord username copy‑to‑clipboard.
+- **Fully Responsive** – Optimised for desktops, tablets, and mobile devices with a hamburger menu.
+- **Polished UI** – Glass‑morphism cards, subtle gradients, and a clean blue‑and‑white colour palette.
 
 ---
 
 ## 🛠️ Technologies Used
 
-- HTML5
-- CSS3 (Flexbox, Grid, gradients, responsive design)
-- JavaScript (ES6)
-- Font Awesome 6
-- Google Fonts (Inter & Playfair Display)
+- **HTML5** – Semantic markup  
+- **CSS3** – Custom styles with Flexbox, Grid, animations, and media queries  
+- **JavaScript (ES6)** – Page switching, live clock, collapsible sections, copy‑to‑clipboard, and hamburger menu  
+- **Font Awesome 6** – Icons  
+- **Google Fonts** – *Inter* and *Playfair Display*  
 
 ---
 
-## 📁 File Structure
+## 📁 Project Structure
 
 ```
-
-├── index.html
-├── style.css
-├── script.js
-├── Talha.jpg          
-├── irtija.png         
-└── README.md
-
+.
+├── index.html          # Main HTML file
+├── style.css           # All custom styles
+├── script.js           # All JavaScript functionality
+├── Talha.jpg           # Profile picture (replace with your own)
+├── irtija.png          # Favicon (optional)
+└── README.md           # This file
 ```
 
 ---
 
-## 🚀 Setup & Deployment
+## 🚀 Getting Started
 
-1. Upload all files to your GitHub repository.
-2. Replace `Talha.jpg` and `irtija.png` with your own images.
-3. Edit `index.html` to update personal information, links, skills, etc.
-4. Go to repository **Settings → Pages**.
-5. Under **Branch**, select `main` and `/root` folder.
-6. Click **Save** – your site will be live.
-
-No build step required – pure static HTML/CSS/JS.
+1. **Clone or download** this repository.
+2. **Open `index.html`** in your favourite browser.
+3. No build tools or dependencies – it runs directly.
 
 ---
 
-## 🎨 Customization
+## 🧩 Customisation
 
-- **Colors:** Change `#2c5a9e` in `style.css` to your preferred brand color.
-- **Skills:** Add or remove `<span class="skill-tag">` inside `#skills-page` in `index.html`.
-- **Timeline:** Edit `.timeline-entry` divs in `#experience-page`.
-- **Social links:** Update `href` attributes inside `.social-grid`.
+- **Profile picture** – Replace `Talha.jpg` with your own image.
+- **Personal details** – Update the text in the *Profile* card.
+- **Qualifications** – Edit the table data or add new cards.
+- **Skills** – Modify the skill tags inside each `.skill-category`.
+- **Contact** – Update email, phone numbers, and social media links.
+- **Clock** – To change the timezone, edit the `timeZone` option in `script.js` (currently `'Asia/Dhaka'`).
 
 ---
 
-## 📝 Credits
+## 📱 Responsive Breakpoints
 
-Built with 💙 by **DeepSeek AI**  
-Icons: [Font Awesome](https://fontawesome.com/)  
-Fonts: [Google Fonts](https://fonts.google.com/)
+- **≤ 768px** – Sidebar becomes a slide‑out hamburger menu.
+- **769px – 1024px** – Sidebar and content scale down.
+- **≥ 1400px** – Content is centred with a max‑width.
 
-**Author:** Md. Irtija Azad Talha  
-**Institution:** Green University of Bangladesh, CSE Department
+---
+
+## ✍️ Author
+
+**Md. Irtija Azad Talha**  
+- [GitHub](https://github.com/Irtizaa6x)  
+- [LinkedIn](https://linkedin.com/in/irtija-talha)  
 
 ---
 
 ## 📄 License
 
-MIT License – free to use, modify, and distribute.
+This project is open‑source and available under the [MIT License](LICENSE).
 
 ---
 
-> For questions or collaborations: [irtija.x.k6@hotmail.com](mailto:irtija.x.k6@hotmail.com
+*Built with ❤️ and a lot of coffee.*
