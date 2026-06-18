@@ -91,17 +91,19 @@ body {
   .sidebar.open {
     transform: translateX(0);
   }
+
+  /* 👇 FIX: extra top padding so content clears the fixed button */
   .main-content {
-    padding: 1.5rem 1rem;
+    padding: 4.5rem 1rem 1.5rem 1rem; /* top, right, bottom, left */
   }
 
-  /* === MOBILE: Personal Details (with pic) appears FIRST === */
+  /* Mobile: Personal Details (with pic) appears FIRST */
   .home-two-columns {
     display: flex;
     flex-direction: column;
   }
   .home-right {
-    order: -1; /* moves personal card to the top */
+    order: -1;
   }
   .home-left {
     order: 0;
