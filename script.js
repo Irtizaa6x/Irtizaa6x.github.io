@@ -11,20 +11,30 @@ const pages = {
   contact: document.getElementById('contact-page'),
 };
 
+// ==========================================
+//  CORE SWITCH PAGE FUNCTION (FIXED)
+// ==========================================
 function switchPage(pageId) {
+  // Hide all pages
   Object.values(pages).forEach((p) => p && p.classList.remove('active-page'));
+  // Show the selected page
   if (pages[pageId]) pages[pageId].classList.add('active-page');
 
+  // Update active class on nav buttons
   navItems.forEach((btn) => {
     const val = btn.getAttribute('data-page');
     if (val === pageId) btn.classList.add('active');
     else btn.classList.remove('active');
   });
 
+  // Scroll to top smoothly
   if (mainContent) {
     mainContent.scrollTo({ top: 0, behavior: 'smooth' });
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // ✅ UPDATE THE LARGE NAV ICON WITH ANIMATION
+  updateActiveIcon(pageId);
 
   // Close sidebar on mobile after navigation
   if (window.innerWidth <= 768) {
@@ -32,6 +42,33 @@ function switchPage(pageId) {
   }
 }
 
+// ==========================================
+//  UPDATE LARGE NAV ICON WITH ANIMATION
+// ==========================================
+function updateActiveIcon(pageId) {
+  const activeNavBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+  if (!activeNavBtn) return;
+
+  const iconHtml = activeNavBtn.querySelector('i').outerHTML;
+  const displayContainer = document.getElementById('activeNavIcon');
+  if (!displayContainer) return;
+
+  // Remove animation class to reset
+  displayContainer.classList.remove('animating');
+
+  // Force reflow to restart the animation properly
+  void displayContainer.offsetWidth;
+
+  // Update the icon
+  displayContainer.innerHTML = iconHtml;
+
+  // Add animation class to trigger the pop effect
+  displayContainer.classList.add('animating');
+}
+
+// ==========================================
+//  NAVIGATION EVENT LISTENERS
+// ==========================================
 navItems.forEach((btn) => {
   btn.addEventListener('click', () => {
     const page = btn.getAttribute('data-page');
@@ -152,7 +189,6 @@ if (toggleBtn && sidebar) {
 
 // ==========================================
 //  EXPANDABLE ACADEMIC DETAILS
-//  (B.Sc., HSC, SSC transcript tables)
 // ==========================================
 function initAcademicDetails() {
   const toggleButtons = document.querySelectorAll('.btn-toggle-details');
@@ -167,16 +203,12 @@ function initAcademicDetails() {
       const detailsContainer = document.getElementById(targetId);
       if (!detailsContainer) return;
 
-      // Toggle open class on button (rotates chevron)
       this.classList.toggle('open');
-
-      // Toggle open class on details container (shows/hides with animation)
       detailsContainer.classList.toggle('open');
     });
   });
 }
 
-// Initialize academic detail toggles
 initAcademicDetails();
 
 // ==========================================
