@@ -1111,18 +1111,21 @@ footer {
     padding: 4.5rem 1rem 1.5rem 1rem;
   }
 
-  /* Sidebar: slide from left */
+  /* Sidebar: slide from RIGHT side */
   .sidebar {
     position: fixed;
     top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    right: 0;
+    transform: translateX(100%);
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
     padding-top: 4.5rem;
     width: 280px;
     height: 100vh;
     overflow-y: auto;
     border-radius: 0;
+    transition: transform 0.3s ease;
+    border-right: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
   }
   .sidebar.open {
     transform: translateX(0);
