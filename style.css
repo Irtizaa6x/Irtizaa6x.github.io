@@ -1,3 +1,9 @@
+/* ==========================================
+   MD. IRTIJA AZAD TALHA – PORTFOLIO
+   All rights reserved.
+   ========================================== */
+
+/* ----- RESET & BASE ----- */
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +15,8 @@ body {
   background: #fbfbfd;
   color: #1a1e2b;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .app-wrapper {
@@ -20,47 +28,84 @@ body {
   position: relative;
 }
 
-/* ===== PROFESSIONAL HAMBURGER BUTTON (mobile) ===== */
-.hamburger-toggle {
+/* ----- MOBILE HEADER (fixed, glass‑morphism) ----- */
+.mobile-header {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1001;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: #1a2b4a;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 0.6rem 1rem;
   display: none;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+  will-change: transform;
+}
+
+.mobile-header.hidden {
+  transform: translateY(-100%);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1a2b4a;
+}
+
+.header-title i {
+  font-size: 1.2rem;
+  color: #2c5a9e;
+}
+
+/* Hamburger button inside the header */
+.mobile-header .hamburger-toggle {
+  position: static;
+  display: flex;
+  background: transparent;
+  border: none;
+  color: #1a2b4a;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 1.3rem;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: all 0.25s ease;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-.hamburger-toggle:hover {
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  transform: scale(1.03);
+.mobile-header .hamburger-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 
-.hamburger-toggle:active {
-  transform: scale(0.94);
-}
-
-.hamburger-toggle i {
+.mobile-header .hamburger-toggle i {
   transition: transform 0.3s ease;
 }
 
-.sidebar.open + .hamburger-toggle i {
+.mobile-header .hamburger-toggle.open i {
   transform: rotate(90deg);
 }
 
+/* ----- SIDEBAR ----- */
 .sidebar {
   width: 280px;
   background: rgba(255, 255, 255, 0.95);
@@ -72,80 +117,12 @@ body {
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
-  z-index: 1000;
+  z-index: 1001;
   position: sticky;
   top: 0;
 }
 
-@media (max-width: 768px) {
-  .hamburger-toggle {
-    display: flex;
-  }
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  /* 👇 FIX: extra top padding so content clears the fixed button */
-  .main-content {
-    padding: 4.5rem 1rem 1.5rem 1rem; /* top, right, bottom, left */
-  }
-
-  /* Mobile: Personal Details (with pic) appears FIRST */
-  .home-two-columns {
-    display: flex;
-    flex-direction: column;
-  }
-  .home-right {
-    order: -1;
-  }
-  .home-left {
-    order: 0;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .sidebar {
-    width: 220px;
-    padding: 1.5rem 1rem;
-  }
-  .nav-item {
-    padding: 0.7rem 1rem;
-    gap: 0.8rem;
-  }
-  .nav-item span {
-    font-size: 0.85rem;
-  }
-  .main-content {
-    padding: 1.8rem 1.8rem;
-  }
-  .section-title {
-    font-size: 1.6rem;
-  }
-  .profile-pic-placeholder {
-    width: 140px;
-    height: 140px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 3rem;
-  }
-  .app-wrapper {
-    justify-content: center;
-  }
-}
-
-/* --- Brand + Dynamic Active Nav Icon (Medium size) --- */
+/* ----- BRAND + DYNAMIC NAV ICON ----- */
 .brand {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -193,21 +170,7 @@ body {
   animation: navIconPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Responsive tweaks for nav icon */
-@media (max-width: 1024px) {
-  .nav-icon-display {
-    font-size: 3.8rem;
-    min-height: 70px;
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-icon-display {
-    font-size: 4.2rem;
-    min-height: 80px;
-  }
-}
-
+/* ----- NAVIGATION MENU ----- */
 .nav-menu {
   flex: 1;
   display: flex;
@@ -223,7 +186,7 @@ body {
   border-radius: 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s;
+  transition: 0.25s ease;
   color: #2d3a5e;
   background: transparent;
   border: none;
@@ -261,14 +224,16 @@ body {
   color: #6c7f99;
 }
 
+/* ----- MAIN CONTENT ----- */
 .main-content {
   flex: 1;
   padding: 2rem 2rem;
   overflow-y: auto;
-  transition: padding 0.3s;
+  transition: padding 0.3s ease;
   scroll-behavior: smooth;
 }
 
+/* ----- PAGES ----- */
 .page {
   display: none;
   animation: fade 0.3s ease;
@@ -289,6 +254,7 @@ body {
   }
 }
 
+/* ----- GLASS CARD ----- */
 .glass-card {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(2px);
@@ -312,6 +278,7 @@ body {
   gap: 0.6rem;
 }
 
+/* ----- HOME / PROFILE ----- */
 .home-two-columns {
   display: flex;
   gap: 1.5rem;
@@ -445,33 +412,7 @@ body {
   border: 1px solid #f1f5f9;
 }
 
-@media (max-width: 600px) {
-  .local-time-wrapper {
-    gap: 0.4rem;
-    padding: 0.25rem 0.9rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .time-digital {
-    font-size: 0.8rem;
-    min-width: 65px;
-    padding: 0.05rem 0.4rem;
-  }
-  .time-label {
-    font-size: 0.6rem;
-    padding-right: 0.4rem;
-  }
-  .time-zone {
-    font-size: 0.45rem;
-    padding: 0.05rem 0.4rem;
-  }
-  .live-indicator {
-    width: 6px;
-    height: 6px;
-  }
-}
-
-/* === All other styles remain unchanged === */
+/* ----- QUALIFICATIONS ----- */
 .qualifications-grid {
   display: flex;
   flex-direction: column;
@@ -486,7 +427,7 @@ body {
   gap: 1rem;
   align-items: flex-start;
   border: 1px solid #eef2f8;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .qual-card:hover {
@@ -570,6 +511,7 @@ body {
   margin-top: 0.3rem;
 }
 
+/* ----- EXPANDABLE ACADEMIC DETAILS ----- */
 .btn-toggle-details {
   background: transparent;
   border: 1px solid #2c5a9e;
@@ -713,34 +655,11 @@ body {
   color: #2c5a9e;
 }
 
-@media (max-width: 600px) {
-  .academic-table {
-    font-size: 0.7rem;
-    min-width: 420px;
-  }
-  .academic-table thead th,
-  .academic-table tbody td {
-    padding: 0.4rem 0.5rem;
-  }
-  .details-inner {
-    padding: 0.75rem;
-  }
-  .btn-toggle-details {
-    font-size: 0.7rem;
-    padding: 0.3rem 1rem;
-  }
-}
-
+/* ----- SKILLS ----- */
 .grid-2col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1.2rem;
-}
-
-@media (max-width: 680px) {
-  .grid-2col {
-    grid-template-columns: 1fr;
-  }
 }
 
 .skill-category {
@@ -749,7 +668,7 @@ body {
   padding: 1.2rem;
   box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.05);
   border: 1px solid #eef2f8;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
   position: relative;
 }
 
@@ -803,11 +722,11 @@ body {
   color: #2c5a9e;
   gap: 0.3rem;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
   pointer-events: none;
 }
 
-.skills-list.fade-gradient~.fade-overlay {
+.skills-list.fade-gradient ~ .fade-overlay {
   opacity: 1;
   pointer-events: auto;
   background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
@@ -842,7 +761,7 @@ body {
   font-size: 0.75rem;
   font-weight: 500;
   color: #1f3b62;
-  transition: 0.1s;
+  transition: 0.1s ease;
 }
 
 .skill-tag i {
@@ -865,6 +784,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
+/* ----- CAREER OBJECTIVE ----- */
 .career-objective-highlight {
   background: linear-gradient(135deg, #f1f5fe 0%, #ffffff 100%);
   border-radius: 1.2rem;
@@ -904,13 +824,7 @@ body {
   line-height: 1.5;
 }
 
-@media (max-width: 600px) {
-  .career-objective-highlight {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
+/* ----- TIMELINE ----- */
 .timeline-container {
   position: relative;
   padding-left: 2rem;
@@ -943,7 +857,7 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 0 2px rgba(44, 90, 158, 0.3);
   z-index: 2;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .timeline-entry:hover .timeline-marker {
@@ -957,7 +871,7 @@ body {
   border-radius: 1rem;
   padding: 1rem;
   border-left: 3px solid #2c5a9e;
-  transition: 0.2s;
+  transition: 0.2s ease;
   margin-left: 1rem;
 }
 
@@ -1051,7 +965,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: 0.2s;
+  transition: 0.2s ease;
   cursor: pointer;
 }
 
@@ -1067,22 +981,7 @@ body {
   vertical-align: middle;
 }
 
-@media (max-width: 680px) {
-  .timeline-container {
-    padding-left: 0;
-  }
-  .timeline-container::before {
-    left: 20px;
-  }
-  .timeline-marker {
-    left: 12px;
-    top: 0.4rem;
-  }
-  .timeline-content {
-    margin-left: 40px;
-  }
-}
-
+/* ----- CONTACT ----- */
 .contact-grid {
   display: grid;
   gap: 1.2rem;
@@ -1095,13 +994,6 @@ body {
 
 .social-grid {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-}
-
-@media (max-width: 550px) {
-  .primary,
-  .social-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .contact-card {
@@ -1133,7 +1025,7 @@ body {
   text-decoration: none;
   color: #1f3b62;
   font-weight: 500;
-  transition: 0.2s;
+  transition: 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1160,4 +1052,176 @@ footer {
   color: #7d8ea3;
   border-top: 1px solid #e2e8f0;
   padding-top: 1rem;
+}
+
+/* ==========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================== */
+
+/* ----- TABLET (769px – 1024px) ----- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+    padding: 1.5rem 1rem;
+  }
+  .nav-item {
+    padding: 0.7rem 1rem;
+    gap: 0.8rem;
+  }
+  .nav-item span {
+    font-size: 0.85rem;
+  }
+  .main-content {
+    padding: 1.8rem 1.8rem;
+  }
+  .section-title {
+    font-size: 1.6rem;
+  }
+  .profile-pic-placeholder {
+    width: 140px;
+    height: 140px;
+  }
+  .nav-icon-display {
+    font-size: 3.8rem;
+    min-height: 70px;
+  }
+}
+
+/* ----- LARGE DESKTOP (≥ 1400px) ----- */
+@media (min-width: 1400px) {
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+  }
+  .app-wrapper {
+    justify-content: center;
+  }
+}
+
+/* ----- MOBILE (≤ 768px) ----- */
+@media (max-width: 768px) {
+  /* Show mobile header */
+  .mobile-header {
+    display: block;
+  }
+
+  /* Hide the old floating hamburger (no longer in HTML, but safe) */
+  .hamburger-toggle {
+    display: none !important;
+  }
+
+  /* Main content: add top padding to clear the fixed header */
+  .main-content {
+    padding: 4.5rem 1rem 1.5rem 1rem;
+  }
+
+  /* Sidebar: slide from left, with top padding so items clear the header */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    padding-top: 4.5rem;
+    width: 280px;
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 0;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Mobile order: personal details (with photo) appear FIRST */
+  .home-two-columns {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-right {
+    order: -1;
+  }
+  .home-left {
+    order: 0;
+  }
+
+  /* Qualification tables on small screens */
+  .academic-table {
+    font-size: 0.7rem;
+    min-width: 420px;
+  }
+  .academic-table thead th,
+  .academic-table tbody td {
+    padding: 0.4rem 0.5rem;
+  }
+  .details-inner {
+    padding: 0.75rem;
+  }
+  .btn-toggle-details {
+    font-size: 0.7rem;
+    padding: 0.3rem 1rem;
+  }
+
+  /* Skills grid becomes 1 column */
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+
+  /* Time badge responsive */
+  .local-time-wrapper {
+    gap: 0.4rem;
+    padding: 0.25rem 0.9rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .time-digital {
+    font-size: 0.8rem;
+    min-width: 65px;
+    padding: 0.05rem 0.4rem;
+  }
+  .time-label {
+    font-size: 0.6rem;
+    padding-right: 0.4rem;
+  }
+  .time-zone {
+    font-size: 0.45rem;
+    padding: 0.05rem 0.4rem;
+  }
+  .live-indicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Timeline on mobile */
+  .timeline-container {
+    padding-left: 0;
+  }
+  .timeline-container::before {
+    left: 20px;
+  }
+  .timeline-marker {
+    left: 12px;
+    top: 0.4rem;
+  }
+  .timeline-content {
+    margin-left: 40px;
+  }
+
+  /* Career objective */
+  .career-objective-highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Contact grid */
+  .primary,
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Navigation icon responsive */
+  .nav-icon-display {
+    font-size: 4.2rem;
+    min-height: 80px;
+  }
 }
