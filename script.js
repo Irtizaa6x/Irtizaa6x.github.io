@@ -119,7 +119,7 @@ if (discordBtn) {
   discordBtn.addEventListener('click', (e) => {
     e.preventDefault();
     navigator.clipboard.writeText('naz.irt.k6');
-    discordBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+    discordBtn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
     setTimeout(() => {
       discordBtn.innerHTML = originalHTML;
     }, 1800);
