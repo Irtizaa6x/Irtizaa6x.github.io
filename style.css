@@ -120,7 +120,68 @@ body {
   padding-bottom: 1rem;
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
+/* --- Dynamic Active Nav Icon (Medium size) --- */
+.brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
 
+.nav-icon-display {
+    font-size: 4.8rem;        /* Medium size */
+    color: #2c5a9e;
+    line-height: 1;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-icon-display i {
+    display: inline-block;
+    color: #2c5a9e;
+}
+
+/* Professional pop animation */
+@keyframes navIconPop {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    40% {
+        transform: scale(0.4) rotate(-12deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(0.4) rotate(12deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.nav-icon-display.animating i {
+    animation: navIconPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Responsive tweaks */
+@media (max-width: 1024px) {
+    .nav-icon-display {
+        font-size: 3.8rem;
+        min-height: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-icon-display {
+        font-size: 4.2rem;
+        min-height: 80px;
+    }
+}
 .nav-menu {
   flex: 1;
   display: flex;
