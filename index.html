@@ -11,18 +11,27 @@
 </head>
 <body>
     <div class="app-wrapper">
-        <!-- Hamburger toggle -->
-        <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
+
+        <!-- ===== MOBILE HEADER (visible only on small screens) ===== -->
+        <header class="mobile-header" id="mobileHeader">
+            <div class="header-inner">
+                <div class="header-title" id="headerTitle">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>Profile</span>
+                </div>
+                <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
 
         <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="brand">
-    <div class="nav-icon-display" id="activeNavIcon">
-        <i class="fas fa-user-astronaut"></i>
-    </div>
-</div>
+                <div class="nav-icon-display" id="activeNavIcon">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+            </div>
             <div class="nav-menu">
                 <button class="nav-item active" data-page="home"><i class="fas fa-user-astronaut"></i> <span>Profile</span></button>
                 <button class="nav-item" data-page="education"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></button>
@@ -60,7 +69,6 @@
                                 <p><i class="fas fa-mosque"></i> <strong>Religion:</strong> Islam</p>
                                 <p><i class="fas fa-heart"></i> <strong>Marital Status:</strong> Single</p>
                                 <p><i class="fas fa-flag"></i> <strong>Nationality:</strong> Bangladeshi</p>
-                                
                             </div>
                         </div>
                     </div>
@@ -592,37 +600,39 @@
                     <a href="#" class="social-btn discord-copy"><i class="fab fa-discord"></i> Discord</a>
                 </div>
                 
-               <!-- Phone card -->
-<div class="phone-card glass-card">
+                <!-- Phone card -->
+                <div class="phone-card glass-card">
 
-    <!-- ===== NEW CLOCK BADGE (CENTERED) ===== -->
-    <div class="local-time-wrapper" style="margin: 0 auto 0.8rem auto;">
-        <span class="live-indicator"></span>
-        <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
-        <span class="time-digital dhaka-time">--:--:--</span>
-        <span class="time-zone">(Asia/Dhaka UTC+6:00)</span>
-    </div>
+                    <!-- Clock badge (centered) -->
+                    <div class="local-time-wrapper" style="margin: 0 auto 0.8rem auto;">
+                        <span class="live-indicator"></span>
+                        <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
+                        <span class="time-digital dhaka-time">--:--:--</span>
+                        <span class="time-zone">(Asia/Dhaka UTC+6:00)</span>
+                    </div>
 
-    <hr style="margin: 0.8rem 0; opacity: 0.3;" />
+                    <hr style="margin: 0.8rem 0; opacity: 0.3;" />
 
-    <i class="fas fa-phone-alt"></i>
-    <strong>Call:</strong>
-    <a href="tel:+8801518940566">+880 151 894 0566</a>
-    <span style="margin:0 4px">|</span>
-    <i class="fas fa-mobile-alt"></i>
-    <strong>Secondary:</strong>
-    <a href="tel:+8801886940566">+880 188 694 0566</a>
-    <hr />
-    <span>Open for cybersecurity collaborations, internships, and networking.</span>
-</div>
+                    <i class="fas fa-phone-alt"></i>
+                    <strong>Call:</strong>
+                    <a href="tel:+8801518940566">+880 151 894 0566</a>
+                    <span style="margin:0 4px">|</span>
+                    <i class="fas fa-mobile-alt"></i>
+                    <strong>Secondary:</strong>
+                    <a href="tel:+8801886940566">+880 188 694 0566</a>
+                    <hr />
+                    <span>Open for cybersecurity collaborations, internships, and networking.</span>
+                </div>
 
-            <!-- ===== FOOTER ===== -->
-            <footer>
-                <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Built with <strong>AI</strong>
-            </footer>
+                <!-- ===== FOOTER ===== -->
+                <footer>
+                    <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Built with <strong>AI</strong>
+                </footer>
+
+            </div><!-- end contact-page -->
 
         </main>
-    </div>
+    </div><!-- end app-wrapper -->
 
     <script src="script.js"></script>
 </body>
