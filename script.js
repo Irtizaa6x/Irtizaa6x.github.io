@@ -1,6 +1,7 @@
 // ==========================================
 //  MD. IRTIJA AZAD TALHA – EXECUTIVE PORTFOLIO
 //  Forest Green Edition · Solid Sidebar
+//  WITH DYNAMIC DATA FROM data.js
 // ==========================================
 
 // ==========================================
@@ -95,6 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     updateTimeOfDay();
+
+    // ===== RENDER DYNAMIC CONTENT =====
+    renderExperiences();
+    renderSkills();
+    initCollapsibleSkills(); // Re-run after dynamic render
 });
 
 navItems.forEach((btn) => {
@@ -153,7 +159,128 @@ updateDhakaTime();
 setInterval(updateDhakaTime, 1000);
 
 // ==========================================
-//  COLLAPSIBLE SKILLS
+//  DURATION CALCULATOR (from data.js)
+// ==========================================
+function calculateDuration(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = endDate ? new Date(endDate) : new Date(); // today if ongoing
+
+    if (isNaN(start.getTime())) return 'Invalid date';
+
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+    let days = end.getDate() - start.getDate();
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    let parts = [];
+    if (years > 0) parts.push(`${years} year${years > 1 ? 's' : ''}`);
+    if (months > 0) parts.push(`${months} month${months > 1 ? 's' : ''}`);
+    if (days > 0 && years === 0 && months === 0) parts.push(`${days} day${days > 1 ? 's' : ''}`);
+
+    if (parts.length === 0) return 'Less than a day';
+
+    // If ongoing, add "+" sign
+    if (!endDate) {
+        return parts.join(' ') + '+';
+    }
+    return parts.join(' ');
+}
+
+// ==========================================
+//  RENDER EXPERIENCES (from data.js)
+// ==========================================
+function renderExperiences() {
+    const container = document.getElementById('experienceContainer');
+    if (!container || typeof experiences === 'undefined') return;
+
+    // Sort by start date (newest first)
+    const sorted = [...experiences].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+    let html = '';
+    sorted.forEach(exp => {
+        const duration = calculateDuration(exp.startDate, exp.endDate);
+        const isOngoing = !exp.endDate;
+        const dateLabel = isOngoing ? `${exp.startDate} – Present` : `${exp.startDate} – ${exp.endDate}`;
+
+        html += `
+            <div class="timeline-entry">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">${dateLabel}</div>
+                    <h4><i class="${exp.icon || 'fas fa-briefcase'}"></i> ${exp.title}</h4>
+                    <div class="meta-inline">
+                        <span><i class="fas fa-user-check"></i> ${exp.role || 'Member'}</span>
+                        <span><i class="fas fa-hourglass-half"></i> ${duration}</span>
+                    </div>
+                    <p class="key-points-single">${exp.description || ''}</p>
+                    ${exp.parentClub ? `<div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>${exp.parentClub}</strong></div>` : ''}
+                    ${exp.certButtons ? `
+                        <div class="cert-buttons">
+                            ${exp.certButtons.map(btn => `
+                                <a href="${btn.url}" target="_blank" class="btn-outline">
+                                    ${btn.icon ? `<i class="${btn.icon}"></i>` : ''}
+                                    ${btn.img ? `<img src="${btn.img}" class="official-icon" alt="${btn.label}" />` : ''}
+                                    ${btn.label}
+                                </a>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+// ==========================================
+//  RENDER SKILLS (from data.js)
+// ==========================================
+function renderSkills() {
+    const container = document.getElementById('skillsContainer');
+    if (!container || typeof skills === 'undefined') return;
+
+    const categoryMap = {
+        cyber: { icon: 'fa-user-secret', title: 'Cybersecurity' },
+        web: { icon: 'fa-html5', title: 'Web Dev & Programming' },
+        networking: { icon: 'fa-cloud-arrow-up', title: 'Networking & Web Tech' },
+        professional: { icon: 'fa-briefcase', title: 'Professional Skills & Tools' }
+    };
+
+    let html = '';
+    for (const [key, cat] of Object.entries(categoryMap)) {
+        const skillList = skills[key] || [];
+        if (skillList.length === 0) continue;
+
+        html += `
+            <div class="skill-category" data-collapsible>
+                <h3><i class="fas ${cat.icon}"></i> ${cat.title}</h3>
+                <div class="skills-list-wrapper">
+                    <div class="skills-list fade-gradient">
+                        ${skillList.map(skill => `
+                            <span class="skill-tag"><i class="${skill.icon || 'fas fa-circle'}"></i> ${skill.name}</span>
+                        `).join('')}
+                    </div>
+                    <div class="fade-overlay"></div>
+                </div>
+            </div>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
+// ==========================================
+//  COLLAPSIBLE SKILLS (updated for dynamic)
 // ==========================================
 function initCollapsibleSkills() {
     document.querySelectorAll('.skill-category[data-collapsible]').forEach((category) => {
@@ -161,6 +288,10 @@ function initCollapsibleSkills() {
         const overlay = category.querySelector('.fade-overlay');
         const wrapper = category.querySelector('.skills-list-wrapper');
         if (!skillsList || !overlay || !wrapper) return;
+
+        // Remove existing show-less button if any
+        const oldBtn = wrapper.querySelector('.show-less-btn-inline');
+        if (oldBtn) oldBtn.remove();
 
         const showLess = document.createElement('div');
         showLess.className = 'show-less-btn-inline';
@@ -182,7 +313,11 @@ function initCollapsibleSkills() {
         });
         wrapper.appendChild(showLess);
 
-        overlay.addEventListener('click', (e) => {
+        // Remove old event listeners by cloning and replacing
+        const newOverlay = overlay.cloneNode(true);
+        overlay.parentNode.replaceChild(newOverlay, overlay);
+
+        newOverlay.addEventListener('click', (e) => {
             e.stopPropagation();
             skillsList.classList.remove('fade-gradient');
             category.classList.add('expanded');
@@ -197,7 +332,6 @@ function initCollapsibleSkills() {
         });
     });
 }
-initCollapsibleSkills();
 
 // ==========================================
 //  DISCORD COPY
@@ -245,7 +379,7 @@ function initHamburger() {
 initHamburger();
 
 // ==========================================
-//  ACADEMIC DETAILS
+//  ACADEMIC DETAILS (unchanged)
 // ==========================================
 function initAcademicDetails() {
     document.querySelectorAll('.btn-toggle-details').forEach((btn) => {
@@ -306,4 +440,4 @@ console.log(
     'background:#1f2421;color:#9cc5a1;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
     'background:#9cc5a1;color:#1f2421;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
 );
-console.log('%c🌿 Icon clarity: Sidebar Big=Seaweed · Inside=Stormy · Small=Seaweed', 'color:#216869;font-weight:500;');
+console.log('%c🌿 Dynamic data from data.js loaded', 'color:#216869;font-weight:500;');
