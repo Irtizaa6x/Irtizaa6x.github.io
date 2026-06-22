@@ -573,7 +573,7 @@ body::before {
     border-radius: 9999px;
     border: 1px solid rgba(31, 36, 33, 0.04);
     box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
+    transition: background 0.8s ease, box-shadow 0.8s ease, border-color 0.8s ease;
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
@@ -589,66 +589,66 @@ body::before {
     pointer-events: none;
 }
 
-.local-time-wrapper.day::before {
-    background: radial-gradient(circle at 30% 50%, rgba(73, 160, 120, 0.06), transparent 70%);
-    opacity: 1;
-}
-
-.local-time-wrapper.night::before {
-    background: radial-gradient(circle at 30% 50%, rgba(33, 104, 105, 0.08), transparent 70%);
-    opacity: 1;
-}
-
 .local-time-wrapper:hover {
     border-color: rgba(73, 160, 120, 0.12);
     box-shadow: var(--shadow-glow);
     transform: translateY(-1px);
 }
 
-.time-icon-wrapper {
-    display: inline-flex;
+/* ------ Astro Display (sun/moon) ------ */
+.astro-display {
+    width: 40px;
+    height: 40px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    transition: all 0.6s ease;
     flex-shrink: 0;
-}
-
-.time-icon-wrapper.day-icon {
-    color: #f5a623;
-    background: rgba(245, 166, 35, 0.08);
-}
-
-.time-icon-wrapper.night-icon {
-    color: #7a9bb5;
-    background: rgba(122, 155, 181, 0.08);
-}
-
-.live-indicator {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--seaweed);
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(73, 160, 120, 0.10);
-    animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* ===== TIME PHASE THEMES ===== */
-
-/* Base wrapper – relative for pseudo‑elements */
-.local-time-wrapper {
     position: relative;
-    overflow: hidden; /* Keep gradients inside */
-    transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
-/* ---------- Day Phases ---------- */
-/* Dawn (5:00 – 7:00) – soft orange sunrise */
+/* Sun (daytime) */
+.astro-display .sun {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fdd835, #f9a825);
+    box-shadow: 0 0 30px rgba(253, 216, 53, 0.4);
+    transition: all 0.5s ease;
+}
+
+/* Moon container */
+.astro-display .moon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e8f0;
+    box-shadow: inset -4px -4px 10px rgba(0,0,0,0.1), 0 0 20px rgba(200,220,240,0.2);
+    position: relative;
+    transition: transform 0.5s ease, width 0.5s, height 0.5s;
+}
+
+/* Moon phase shadow – uses CSS custom property for rotation */
+.astro-display .moon::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: #1a2f3f; /* dark night sky color, matches night background */
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    transform: rotate(var(--rotation, 0deg));
+    transition: transform 0.5s ease;
+    transform-origin: center;
+}
+
+/* Moon size variations */
+.astro-display .moon.size-small { transform: scale(0.8); }
+.astro-display .moon.size-medium { transform: scale(1); }
+.astro-display .moon.size-large { transform: scale(1.15); }
+
+/* ----- Time Phase Themes (day) ----- */
 .local-time-wrapper.dawn {
     background: linear-gradient(135deg, #fdd89b 0%, #f8b88b 60%, #e8a07a 100%);
     border-color: #e8a07a;
@@ -659,7 +659,6 @@ body::before {
     color: #5a3e2b;
 }
 
-/* Morning (7:00 – 11:00) – bright fresh yellow */
 .local-time-wrapper.morning {
     background: linear-gradient(135deg, #fde9c8 0%, #f9d99a 100%);
     border-color: #f0c27a;
@@ -670,7 +669,6 @@ body::before {
     color: #6b4f2e;
 }
 
-/* Noon (11:00 – 13:00) – clear bright blue */
 .local-time-wrapper.noon {
     background: linear-gradient(135deg, #a8d8ea 0%, #7fc1d9 100%);
     border-color: #5fa8c4;
@@ -681,7 +679,6 @@ body::before {
     color: #1f4a5e;
 }
 
-/* Afternoon (13:00 – 17:00) – warm but softening */
 .local-time-wrapper.afternoon {
     background: linear-gradient(135deg, #e8d5b5 0%, #dbbd99 100%);
     border-color: #c9a87d;
@@ -692,7 +689,6 @@ body::before {
     color: #5a4a38;
 }
 
-/* Dusk / Evening (17:00 – 19:00) – sunset orange/purple */
 .local-time-wrapper.dusk {
     background: linear-gradient(135deg, #f7b58a 0%, #e58a7a 40%, #c97a8a 100%);
     border-color: #b86a7a;
@@ -703,32 +699,59 @@ body::before {
     color: #3d2a2a;
 }
 
-/* ---------- Night (19:00 – 5:00) – dark with stars ---------- */
-.local-time-wrapper.night {
-    background: linear-gradient(135deg, #0b1a2e 0%, #1a2f3f 100%);
-    border-color: #2a4a5a;
-    box-shadow: 0 0 50px rgba(10, 30, 50, 0.6);
+/* ----- Night Variants (new) ----- */
+/* Light night – just after dusk, softer */
+.local-time-wrapper.night-light {
+    background: linear-gradient(135deg, #1a2f3f 0%, #2a4a5a 100%);
+    border-color: #3a5a6a;
+    box-shadow: 0 0 40px rgba(20,40,60,0.3);
 }
-.local-time-wrapper.night .time-digital {
-    background: rgba(255, 255, 255, 0.08);
-    color: #b8d4e0;
-    border-color: rgba(255, 255, 255, 0.08);
+.local-time-wrapper.night-light .time-digital {
+    background: rgba(255,255,255,0.06);
+    color: #aac8d8;
 }
-.local-time-wrapper.night .time-label {
+.local-time-wrapper.night-light .time-label,
+.local-time-wrapper.night-light .time-zone {
     color: #8ab0c0;
 }
-.local-time-wrapper.night .time-zone {
-    background: rgba(255, 255, 255, 0.05);
-    color: #8ab0c0;
+/* Fewer stars */
+.local-time-wrapper.night-light::before {
+    opacity: 0.3;
 }
-.local-time-wrapper.night .live-indicator {
+.local-time-wrapper.night-light::after {
+    display: none;
+}
+
+/* Deep night – dark, many stars */
+.local-time-wrapper.night-deep {
+    background: linear-gradient(135deg, #0b1a2e 0%, #0f2535 100%);
+    border-color: #1a3a4a;
+    box-shadow: 0 0 60px rgba(0,0,0,0.7);
+}
+.local-time-wrapper.night-deep .time-digital {
+    background: rgba(255,255,255,0.04);
+    color: #c8e0ec;
+}
+.local-time-wrapper.night-deep .time-label,
+.local-time-wrapper.night-deep .time-zone {
+    color: #7a9fb0;
+}
+.local-time-wrapper.night-deep .live-indicator {
     background: #7fc1d9;
     box-shadow: 0 0 10px #7fc1d9;
 }
+/* Many stars */
+.local-time-wrapper.night-deep::before {
+    opacity: 0.9;
+}
+.local-time-wrapper.night-deep::after {
+    opacity: 0.7;
+}
 
-/* ----- Stars (only on night) ----- */
-.local-time-wrapper.night::before,
-.local-time-wrapper.night::after {
+/* ----- Stars (on night variants) ----- */
+.local-time-wrapper.night-light::before,
+.local-time-wrapper.night-deep::before,
+.local-time-wrapper.night-deep::after {
     content: '';
     position: absolute;
     top: 0;
@@ -738,10 +761,10 @@ body::before {
     pointer-events: none;
     z-index: 0;
     border-radius: 9999px;
-    opacity: 0.6;
 }
 
-.local-time-wrapper.night::before {
+.local-time-wrapper.night-light::before,
+.local-time-wrapper.night-deep::before {
     background-image: 
         radial-gradient(2px 2px at 10% 20%, #fff, transparent),
         radial-gradient(2px 2px at 30% 60%, #fff, transparent),
@@ -757,7 +780,7 @@ body::before {
     animation: twinkle 4s ease-in-out infinite alternate;
 }
 
-.local-time-wrapper.night::after {
+.local-time-wrapper.night-deep::after {
     background-image: 
         radial-gradient(1px 1px at 20% 40%, #fff, transparent),
         radial-gradient(1px 1px at 60% 20%, #fff, transparent),
@@ -774,30 +797,34 @@ body::before {
     100% { opacity: 0.9; }
 }
 
-/* ---------- Sun / Icon Positioning ---------- */
-/* You can add subtle rotation or translation to simulate sun movement */
-.local-time-wrapper .time-icon-wrapper {
-    transition: transform 0.8s ease, color 0.8s ease;
+/* Moon position: higher in deep night, lower in light night */
+.local-time-wrapper.night-deep .astro-display .moon {
+    transform: translateY(-6px) scale(var(--moon-scale, 1));
+}
+.local-time-wrapper.night-light .astro-display .moon {
+    transform: translateY(2px) scale(var(--moon-scale, 1));
 }
 
-/* Daytime: sun slightly higher */
-.local-time-wrapper.dawn .time-icon-wrapper,
-.local-time-wrapper.morning .time-icon-wrapper,
-.local-time-wrapper.noon .time-icon-wrapper,
-.local-time-wrapper.afternoon .time-icon-wrapper,
-.local-time-wrapper.dusk .time-icon-wrapper {
-    transform: translateY(0);
-}
-
-/* Night: moon lower */
-.local-time-wrapper.night .time-icon-wrapper {
-    transform: translateY(4px);
-}
-
-/* Additional polish: make the wrapper content appear above pseudo-elements */
+/* Ensure the astro display sits above pseudo-elements */
 .local-time-wrapper > * {
     position: relative;
     z-index: 1;
+}
+
+/* ----- Old icon wrapper – kept for compatibility, but not used ----- */
+.time-icon-wrapper {
+    display: none; /* hidden because we use astro-display */
+}
+
+.live-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--seaweed);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(73, 160, 120, 0.10);
+    animation: pulse-dot 2s ease-in-out infinite;
 }
 
 @keyframes pulse-dot {
@@ -2038,10 +2065,17 @@ footer strong {
         width: 6px;
         height: 6px;
     }
-    .time-icon-wrapper {
-        font-size: 0.9rem;
+    .astro-display {
+        width: 32px;
+        height: 32px;
+    }
+    .astro-display .sun {
         width: 24px;
         height: 24px;
+    }
+    .astro-display .moon {
+        width: 26px;
+        height: 26px;
     }
 
     .timeline-container {
@@ -2146,6 +2180,18 @@ footer strong {
     }
     .time-zone {
         font-size: 0.45rem;
+    }
+    .astro-display {
+        width: 28px;
+        height: 28px;
+    }
+    .astro-display .sun {
+        width: 20px;
+        height: 20px;
+    }
+    .astro-display .moon {
+        width: 22px;
+        height: 22px;
     }
 
     /* Small phones: 1 column for contact & social */
