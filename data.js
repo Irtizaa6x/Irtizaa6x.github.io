@@ -23,7 +23,7 @@ const experiences = [
         id: 'bncc',
         title: 'Bangladesh National Cadet Corps (BNCC)',
         role: 'Cadet',
-        startDate: '2025-01-15',
+        startDate: '2025-08-21',
         endDate: null,
         icon: 'fa-shield-alt',
         description: 'Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.',
