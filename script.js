@@ -2,6 +2,7 @@
 //  MD. IRTIJA AZAD TALHA – EXECUTIVE PORTFOLIO
 //  Forest Green Edition · Solid Sidebar
 //  WITH DYNAMIC DATA FROM data.js
+//  & SUNCalc for realistic sun/moon
 // ==========================================
 
 // ==========================================
@@ -115,52 +116,87 @@ if (activeNav) switchPage(activeNav.getAttribute('data-page'));
 else switchPage('home');
 
 // ==========================================
-//  LIVE DHAKA TIME + SUN/MOON EFFECT
+//  LIVE DHAKA TIME + REAL SUN/MOON (SunCalc)
 // ==========================================
+
+// Dhaka coordinates
+const DHAKA_LAT = 23.8103;
+const DHAKA_LON = 90.4125;
+
 function updateTimeOfDay() {
     const now = new Date();
-    const hours = now.getHours();
     const wrapper = document.getElementById('localTimeWrapper');
-    const iconWrapper = document.getElementById('timeIconWrapper');
-    if (!wrapper || !iconWrapper) return;
+    const astroDisplay = document.getElementById('astroDisplay');
+    if (!wrapper || !astroDisplay) return;
 
-    // Determine phase
+    // Get sunrise/sunset for today
+    const sunTimes = SunCalc.getTimes(now, DHAKA_LAT, DHAKA_LON);
+    const sunrise = sunTimes.sunrise;
+    const sunset = sunTimes.sunset;
+    const nowTime = now.getTime();
+
+    // Define phase boundaries (in milliseconds)
+    const dawnStart = new Date(sunrise.getTime() - 30 * 60 * 1000);
+    const morningEnd = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
+    const noonStart = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
+    const noonEnd = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
+    const afternoonStart = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
+    const duskEnd = new Date(sunset.getTime() + 30 * 60 * 1000);
+    const lightNightEnd = new Date(sunset.getTime() + 3 * 60 * 60 * 1000);
+
     let phase = '';
-    let iconClass = '';
+    let isDay = false;
 
-    if (hours >= 5 && hours < 7) {
+    if (nowTime >= dawnStart.getTime() && nowTime < sunrise.getTime()) {
         phase = 'dawn';
-        iconClass = 'fa-sun';
-    } else if (hours >= 7 && hours < 11) {
+        isDay = true;
+    } else if (nowTime >= sunrise.getTime() && nowTime < morningEnd.getTime()) {
         phase = 'morning';
-        iconClass = 'fa-sun';
-    } else if (hours >= 11 && hours < 13) {
+        isDay = true;
+    } else if (nowTime >= noonStart.getTime() && nowTime < noonEnd.getTime()) {
         phase = 'noon';
-        iconClass = 'fa-sun';
-    } else if (hours >= 13 && hours < 17) {
+        isDay = true;
+    } else if (nowTime >= afternoonStart.getTime() && nowTime < sunset.getTime()) {
         phase = 'afternoon';
-        iconClass = 'fa-sun';
-    } else if (hours >= 17 && hours < 19) {
+        isDay = true;
+    } else if (nowTime >= sunset.getTime() && nowTime < duskEnd.getTime()) {
         phase = 'dusk';
-        iconClass = 'fa-sun';
+        isDay = true; // twilight – still show sun
+    } else if (nowTime >= duskEnd.getTime() && nowTime < lightNightEnd.getTime()) {
+        phase = 'night-light';
+        isDay = false;
     } else {
-        phase = 'night';
-        iconClass = 'fa-moon';
+        phase = 'night-deep';
+        isDay = false;
     }
 
     // Remove all phase classes, add the new one
-    wrapper.classList.remove('dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night');
+    wrapper.classList.remove('dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep');
     wrapper.classList.add(phase);
 
-    // Update icon
-    iconWrapper.className = 'time-icon-wrapper';
-    // Add a subtle color class for the icon
-    if (phase === 'night') {
-        iconWrapper.classList.add('night-icon');
+    // --- Update astro display ---
+    if (isDay) {
+        // Show sun
+        astroDisplay.innerHTML = `<div class="sun"></div>`;
     } else {
-        iconWrapper.classList.add('day-icon');
+        // Show moon with phase
+        const moonIllum = SunCalc.getMoonIllumination(now);
+        const phaseAngle = moonIllum.angle; // 0 to 2π
+        const fraction = moonIllum.fraction; // 0 to 1
+
+        // Determine size based on fraction (full moon larger)
+        let sizeClass = 'size-medium';
+        if (fraction < 0.3) sizeClass = 'size-small';
+        else if (fraction > 0.7) sizeClass = 'size-large';
+
+        // Rotation for shadow: phaseAngle maps to rotation (degrees)
+        // The shadow clip-path uses rotation to simulate phase
+        const rotationDeg = (phaseAngle * 180 / Math.PI) % 360;
+
+        astroDisplay.innerHTML = `
+            <div class="moon ${sizeClass}" id="moonShape" style="--rotation: ${rotationDeg}deg;"></div>
+        `;
     }
-    iconWrapper.innerHTML = `<i class="fas ${iconClass}"></i>`;
 }
 
 function updateDhakaTime() {
@@ -526,4 +562,4 @@ console.log(
     'background:#1f2421;color:#9cc5a1;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
     'background:#9cc5a1;color:#1f2421;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
 );
-console.log('%c🌿 Dynamic data from data.js loaded', 'color:#216869;font-weight:500;');
+console.log('%c🌿 Dynamic data from data.js loaded · SunCalc active', 'color:#216869;font-weight:500;');
