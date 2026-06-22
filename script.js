@@ -76,7 +76,7 @@ function updateActiveIcon(pageId) {
                 currentIcon.classList.remove('anim-in');
                 currentIcon.classList.add('anim-out');
                 setTimeout(() => {
-                    displayContainer.innerHTML = `<img src="irtija.png" alt="Irtija Logo" class="sidebar-logo" />`;
+                    displayContainer.innerHTML = `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
                     const newImg = displayContainer.querySelector('.sidebar-logo');
                     if (newImg) {
                         newImg.classList.add('anim-in');
@@ -84,7 +84,7 @@ function updateActiveIcon(pageId) {
                 }, 200);
             } else {
                 // No icon, just set the image
-                displayContainer.innerHTML = `<img src="irtija.png" alt="Irtija Logo" class="sidebar-logo" />`;
+                displayContainer.innerHTML = `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
                 const newImg = displayContainer.querySelector('.sidebar-logo');
                 if (newImg) {
                     newImg.classList.add('anim-in');
