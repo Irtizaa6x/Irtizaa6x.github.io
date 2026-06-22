@@ -998,7 +998,45 @@ body::before {
     transform: translateY(-3px);
     border-color: rgba(73, 160, 120, 0.06);
 }
+/* ----- CLICKABLE TEXT HINT (not a button) ----- */
+.scroll-to-cert-hint {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
 
+.scroll-to-cert-hint i {
+    color: var(--icon-small);
+    font-size: 0.8rem;
+}
+
+#scrollToCertTrigger {
+    color: var(--stormy);
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 1.5px dashed rgba(33, 104, 105, 0.25);
+    transition: all 0.3s ease;
+    padding: 0 0.1rem;
+}
+
+#scrollToCertTrigger:hover {
+    color: var(--seaweed);
+    border-bottom-color: var(--seaweed);
+    transform: translateY(-0.5px);
+}
+
+/* On small screens, keep it readable */
+@media (max-width: 768px) {
+    .scroll-to-cert-hint {
+        font-size: 0.85rem;
+        justify-content: center;
+        text-align: center;
+    }
+}
 /* Category headers — use Stormy for icon, with a subtle gradient bg */
 .skill-category h3 {
     font-size: 1.1rem;
