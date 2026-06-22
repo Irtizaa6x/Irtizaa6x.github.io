@@ -322,7 +322,23 @@ function renderSkills() {
 
     container.innerHTML = html;
 }
+// ==========================================
+//  SCROLL TO CERTIFICATIONS (clickable text)
+// ==========================================
+function initScrollToCert() {
+    const trigger = document.getElementById('scrollToCertTrigger');
+    const target = document.getElementById('certificationsSection');
+    if (!trigger || !target) return;
 
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    });
+}
+initScrollToCert();
 // ==========================================
 //  COLLAPSIBLE SKILLS (updated for dynamic)
 // ==========================================
