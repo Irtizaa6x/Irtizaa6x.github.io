@@ -52,7 +52,12 @@ const experiences = [
                 label: 'TryHackMe',
                 url: 'https://tryhackme.com/p/irtija.talha',
                 img: 'https://tryhackme.com/favicon.ico'
-            }
+            },
+            {
+                label: 'Cisco Networking Academy',
+                url: 'https://www.netacad.com/',
+                img: 'https://www.netacad.com/favicon.ico'
+            }   
         ]
     }
     // Add more experiences like:
