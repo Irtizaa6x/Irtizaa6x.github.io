@@ -31,9 +31,9 @@ const experiences = [
     },
     {
         id: 'certifications',
-        title: 'Certifications & Achievements',
+        title: 'Skills Validation',
         role: 'Learner',
-        startDate: '2025-06-01',
+        startDate: '2023-10-06',
         endDate: null,
         icon: 'fa-certificate',
         description: 'Continuous learning on cybersecurity platforms.',
