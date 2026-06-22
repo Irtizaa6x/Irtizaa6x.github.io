@@ -998,12 +998,12 @@ body::before {
     transform: translateY(-3px);
     border-color: rgba(73, 160, 120, 0.06);
 }
-/* ----- CLICKABLE TEXT HINT (not a button) ----- */
+/* ----- CLICKABLE TEXT HINT – hidden on desktop, shown on mobile ----- */
 .scroll-to-cert-hint {
+    display: none; /* hidden by default (desktop) */
     font-size: 0.95rem;
     color: var(--text-muted);
     margin-bottom: 1.2rem;
-    display: flex;
     align-items: center;
     gap: 0.4rem;
     flex-wrap: wrap;
@@ -1029,12 +1029,13 @@ body::before {
     transform: translateY(-0.5px);
 }
 
-/* On small screens, keep it readable */
+/* On mobile (≤768px) – show the hint */
 @media (max-width: 768px) {
     .scroll-to-cert-hint {
-        font-size: 0.85rem;
+        display: flex;
         justify-content: center;
         text-align: center;
+        font-size: 0.85rem;
     }
 }
 /* Category headers — use Stormy for icon, with a subtle gradient bg */
