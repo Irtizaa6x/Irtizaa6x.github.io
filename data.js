@@ -27,7 +27,7 @@ const experiences = [
         endDate: null,
         icon: 'fa-shield-alt',
         description: 'Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.',
-        parentClub: 'Extra Activities: Cadet Corps Excellence'
+        parentClub: null
     },
     {
         id: 'certifications',
