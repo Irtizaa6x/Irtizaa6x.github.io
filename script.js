@@ -62,15 +62,70 @@ function updateHeaderTitle(pageId) {
 //  SUBTLE ICON TRANSITION
 // ==========================================
 function updateActiveIcon(pageId) {
-    const activeNavBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-    if (!activeNavBtn) return;
-    const newIconHtml = activeNavBtn.querySelector('i').outerHTML;
     const displayContainer = document.getElementById('activeNavIcon');
     if (!displayContainer) return;
 
+    // If we are on the home page, show the custom logo
+    if (pageId === 'home') {
+        // Only update if it's not already the image
+        const currentImg = displayContainer.querySelector('.sidebar-logo');
+        if (!currentImg) {
+            // Animate out any existing icon
+            const currentIcon = displayContainer.querySelector('i');
+            if (currentIcon) {
+                currentIcon.classList.remove('anim-in');
+                currentIcon.classList.add('anim-out');
+                setTimeout(() => {
+                    displayContainer.innerHTML = `<img src="irtija.png" alt="Irtija Logo" class="sidebar-logo" />`;
+                    const newImg = displayContainer.querySelector('.sidebar-logo');
+                    if (newImg) {
+                        newImg.classList.add('anim-in');
+                    }
+                }, 200);
+            } else {
+                // No icon, just set the image
+                displayContainer.innerHTML = `<img src="irtija.png" alt="Irtija Logo" class="sidebar-logo" />`;
+                const newImg = displayContainer.querySelector('.sidebar-logo');
+                if (newImg) {
+                    newImg.classList.add('anim-in');
+                }
+            }
+        }
+        return;
+    }
+
+    // For other pages, use the nav item's icon
+    const activeNavBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+    if (!activeNavBtn) return;
+    const newIconHtml = activeNavBtn.querySelector('i').outerHTML;
+
+    // If the container currently has an image, replace it with the icon
+    const currentImg = displayContainer.querySelector('.sidebar-logo');
+    if (currentImg) {
+        // Remove the image with a quick fade
+        currentImg.classList.remove('anim-in');
+        currentImg.classList.add('anim-out');
+        setTimeout(() => {
+            displayContainer.innerHTML = newIconHtml;
+            const newIcon = displayContainer.querySelector('i');
+            if (newIcon) {
+                newIcon.classList.remove('anim-out');
+                requestAnimationFrame(() => {
+                    newIcon.classList.add('anim-in');
+                });
+            }
+        }, 200);
+        return;
+    }
+
+    // If it's already an icon, use the existing animation logic
     const currentIcon = displayContainer.querySelector('i');
     if (!currentIcon) {
         displayContainer.innerHTML = newIconHtml;
+        const newIcon = displayContainer.querySelector('i');
+        if (newIcon) {
+            newIcon.classList.add('anim-in');
+        }
         return;
     }
 
@@ -80,10 +135,12 @@ function updateActiveIcon(pageId) {
     setTimeout(() => {
         displayContainer.innerHTML = newIconHtml;
         const newIcon = displayContainer.querySelector('i');
-        newIcon.classList.remove('anim-out');
-        requestAnimationFrame(() => {
-            newIcon.classList.add('anim-in');
-        });
+        if (newIcon) {
+            newIcon.classList.remove('anim-out');
+            requestAnimationFrame(() => {
+                newIcon.classList.add('anim-in');
+            });
+        }
     }, 200);
 }
 
