@@ -196,22 +196,28 @@ function calculateDuration(startDate, endDate) {
 }
 
 // ==========================================
-//  RENDER EXPERIENCES (from data.js)
+//  RENDER EXPERIENCES + CERTIFICATIONS
 // ==========================================
 function renderExperiences() {
-    const container = document.getElementById('experienceContainer');
-    if (!container || typeof experiences === 'undefined') return;
+    const expContainer = document.getElementById('experienceContainer');
+    const certContainer = document.getElementById('certificationsContainer');
+    if (!expContainer || typeof experiences === 'undefined') return;
 
+    // Split data: exclude certifications from main timeline
+    const mainExperiences = experiences.filter(exp => exp.id !== 'certifications');
+    const certExperience = experiences.find(exp => exp.id === 'certifications');
+
+    // --- Render main experiences (timeline) ---
     // Sort by start date (newest first)
-    const sorted = [...experiences].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+    const sorted = [...mainExperiences].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 
-    let html = '';
+    let expHtml = '';
     sorted.forEach(exp => {
         const duration = calculateDuration(exp.startDate, exp.endDate);
         const isOngoing = !exp.endDate;
         const dateLabel = isOngoing ? `${exp.startDate} – Present` : `${exp.startDate} – ${exp.endDate}`;
 
-        html += `
+        expHtml += `
             <div class="timeline-entry">
                 <div class="timeline-marker"></div>
                 <div class="timeline-content">
@@ -238,8 +244,46 @@ function renderExperiences() {
             </div>
         `;
     });
+    expContainer.innerHTML = expHtml || '<p class="text-muted">No experience entries found.</p>';
 
-    container.innerHTML = html;
+    // --- Render certifications (card style) ---
+    if (certContainer) {
+        if (certExperience) {
+            const cert = certExperience;
+            // Build button HTML
+            let buttonsHtml = '';
+            if (cert.certButtons && cert.certButtons.length) {
+                buttonsHtml = `
+                    <div class="cert-buttons">
+                        ${cert.certButtons.map(btn => `
+                            <a href="${btn.url}" target="_blank" class="btn-outline">
+                                ${btn.icon ? `<i class="${btn.icon}"></i>` : ''}
+                                ${btn.img ? `<img src="${btn.img}" class="official-icon" alt="${btn.label}" />` : ''}
+                                ${btn.label}
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            const certHtml = `
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <h4><i class="fas fa-certificate"></i> ${cert.title}</h4>
+                        <span class="ongoing-badge">Ongoing</span>
+                    </div>
+                    <div class="cert-body">
+                        <p>${cert.description || ''}</p>
+                        ${cert.parentClub ? `<div class="parent-club"><i class="fas fa-users"></i> ${cert.parentClub}</div>` : ''}
+                        ${buttonsHtml}
+                    </div>
+                </div>
+            `;
+            certContainer.innerHTML = certHtml;
+        } else {
+            certContainer.innerHTML = '<p class="text-muted">No certifications yet.</p>';
+        }
+    }
 }
 
 // ==========================================
