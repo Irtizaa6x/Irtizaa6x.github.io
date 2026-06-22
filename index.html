@@ -334,13 +334,17 @@
                 </div>
 
                 <div class="phone-card">
-                    <div class="local-time-wrapper" id="localTimeWrapper" style="margin: 0 auto 0.8rem auto;">
-                        <span class="live-indicator"></span>
-                        <span class="time-icon-wrapper" id="timeIconWrapper"><i class="fas fa-sun"></i></span>
-                        <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
-                        <span class="time-digital dhaka-time">--:--:--</span>
-                        <span class="time-zone">(Asia/Dhaka UTC+6:00)</span>
-                    </div>
+      <div class="local-time-wrapper" id="localTimeWrapper">
+    <span class="live-indicator"></span>
+    <!-- New graphical moon/sun display -->
+    <div class="astro-display" id="astroDisplay">
+        <div class="moon" id="moonShape"></div>
+        <!-- or a sun icon for daytime (we'll show a simple sun) -->
+    </div>
+    <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
+    <span class="time-digital dhaka-time">--:--:--</span>
+    <span class="time-zone">(Asia/Dhaka UTC+6:00)</span>
+</div>
                     <hr />
                     <i class="fas fa-phone-alt"></i>
                     <strong>Call:</strong>
