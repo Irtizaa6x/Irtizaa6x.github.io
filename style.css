@@ -1398,8 +1398,9 @@ body::before {
 }
 
 /* ==========================================
-   CONTACT & SOCIAL — FLEXBOX 3-COLUMN LAYOUT
+   CONTACT & SOCIAL — FLEXBOX LAYOUTS (3 & 4 columns)
    ========================================== */
+
 .contact-grid {
     display: flex;
     flex-wrap: wrap;
@@ -1408,7 +1409,7 @@ body::before {
     margin-bottom: 1.5rem;
 }
 
-/* Primary contact cards (Email, GitHub, LinkedIn) */
+/* Primary Contact Cards — 3 per row */
 .contact-grid.primary .contact-card {
     flex: 0 0 calc((100% - 2 * 1.2rem) / 3);
     max-width: calc((100% - 2 * 1.2rem) / 3);
@@ -1451,7 +1452,7 @@ body::before {
     margin-bottom: 0.5rem;
 }
 
-/* Social Media buttons — same 3‑column flex layout */
+/* Social Media Buttons — 4 per row */
 .social-grid {
     display: flex;
     flex-wrap: wrap;
@@ -1461,12 +1462,12 @@ body::before {
 }
 
 .social-grid .social-btn {
-    flex: 0 0 calc((100% - 2 * 1.2rem) / 3);
-    max-width: calc((100% - 2 * 1.2rem) / 3);
-    min-height: 60px;  /* adjust as needed */
+    flex: 0 0 calc((100% - 3 * 1.2rem) / 4);
+    max-width: calc((100% - 3 * 1.2rem) / 4);
+    min-height: 60px;
     background: var(--bg-body);
     border: 1px solid rgba(31, 36, 33, 0.04);
-    padding: 0.65rem 1rem;
+    padding: 0.65rem 0.5rem;
     border-radius: 2rem;
     text-align: center;
     text-decoration: none;
@@ -1480,6 +1481,7 @@ body::before {
     gap: 0.5rem;
     cursor: pointer;
     font-family: inherit;
+    white-space: nowrap;
 }
 
 .social-grid .social-btn:hover {
@@ -1493,19 +1495,26 @@ body::before {
 .social-grid .social-btn i {
     font-size: 1.1rem;
     color: var(--icon-inside);
+    transition: color 0.3s ease;
 }
 
 .social-grid .social-btn:hover i {
     color: white;
 }
 
+/* TryHackMe icon fix */
 .social-grid .social-btn .thm-icon {
     width: 18px;
     height: 18px;
     border-radius: 4px;
+    transition: filter 0.3s ease;
 }
 
-/* ----- Phone Card (full width, unchanged) ----- */
+.social-grid .social-btn:hover .thm-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* Phone card - full width */
 .phone-card {
     text-align: center;
     margin-top: 1.5rem;
@@ -1604,7 +1613,10 @@ footer strong {
     }
 
     /* Tablet: 2 columns for contact & social */
-    .contact-grid.primary .contact-card,
+    .contact-grid.primary .contact-card {
+        flex: 0 0 calc((100% - 1.2rem) / 2);
+        max-width: calc((100% - 1.2rem) / 2);
+    }
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
@@ -1740,7 +1752,10 @@ footer strong {
     }
 
     /* Mobile: 2 columns for contact & social */
-    .contact-grid.primary .contact-card,
+    .contact-grid.primary .contact-card {
+        flex: 0 0 calc((100% - 1.2rem) / 2);
+        max-width: calc((100% - 1.2rem) / 2);
+    }
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
@@ -1804,7 +1819,10 @@ footer strong {
     }
 
     /* Small phones: 1 column for contact & social */
-    .contact-grid.primary .contact-card,
+    .contact-grid.primary .contact-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
     .social-grid .social-btn {
         flex: 0 0 100%;
         max-width: 100%;
