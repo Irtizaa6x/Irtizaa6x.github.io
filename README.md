@@ -1,30 +1,20 @@
-# 🧑‍💻 Md. Irtija Azad Talha – Professional Portfolio
+```markdown
+# 🌿 Md. Irtija Azad Talha – Executive Portfolio
 
-A modern, responsive, single‑page portfolio website built for a cybersecurity student and aspiring professional. It showcases personal information, academic qualifications, activities, technical skills, and contact details in a clean, interactive interface.
-
----
-
-## ✨ Features
-
-- **Dynamic Sidebar Navigation** – Five sections: *Profile*, *Qualifications*, *Activities*, *Capabilities*, *Connect*.  
-- **Live Active Icon** – The brand area shows a medium‑sized icon that animates smoothly when switching pages.
-- **Real‑time Clock** – A professional‑style digital clock (with a pulsing live indicator) displays the local time in Asia/Dhaka. It appears on the **Connect** page.
-- **Expandable Academic Tables** – B.Sc., HSC, and SSC cards have toggle buttons that reveal detailed semester/subject‑wise grade tables.
-- **Collapsible Skill Categories** – Each skill group shows a limited set of tags with a “more skills” fade overlay; click to expand.
-- **Timeline Activities** – Experience entries are presented in a vertical timeline with hover effects.
-- **Contact & Social Links** – Email, GitHub, LinkedIn, social media, and phone numbers; Discord username copy‑to‑clipboard.
-- **Fully Responsive** – Optimised for desktops, tablets, and mobile devices with a hamburger menu.
-- **Polished UI** – Glass‑morphism cards, subtle gradients, and a clean blue‑and‑white colour palette.
+A modern, fully responsive personal portfolio website built with vanilla HTML, CSS, and JavaScript. Designed with a **Forest Green** aesthetic and a solid sidebar navigation, this portfolio showcases your profile, educational qualifications, activities & experience, skills, and contact information – all backed by a clean `data.js` file for easy content management.
 
 ---
 
-## 🛠️ Technologies Used
+## 🚀 Features
 
-- **HTML5** – Semantic markup  
-- **CSS3** – Custom styles with Flexbox, Grid, animations, and media queries  
-- **JavaScript (ES6)** – Page switching, live clock, collapsible sections, copy‑to‑clipboard, and hamburger menu  
-- **Font Awesome 6** – Icons  
-- **Google Fonts** – *Inter* and *Playfair Display*  
+- **Dynamic Content** – Experiences and skills are rendered from `data.js`; no need to touch the HTML for updates.
+- **Two-Column Layout** – Activities page splits into **Experience (2/3)** and **Certifications & Achievements (1/3)** on desktop, with smooth stacking on mobile.
+- **Live Dhaka Time** – Displays real-time clock with day/night icon (sun/moon).
+- **Collapsible Skill Categories** – Each skill category shows a “show all” overlay; click to expand and collapse.
+- **Mobile‑First** – Hamburger navigation, scroll‑away header, and touch‑friendly interactions.
+- **Dark Sidebar** – Solid carbon background with subtle green accents, matching the forest theme.
+- **Smooth Scrolling** – Clickable “Certifications & Achievements” hint (mobile only) scrolls to the certifications section.
+- **Copy Discord Username** – One‑click copy for Discord handle.
 
 ---
 
@@ -32,55 +22,98 @@ A modern, responsive, single‑page portfolio website built for a cybersecurity 
 
 ```
 .
-├── index.html          # Main HTML file
-├── style.css           # All custom styles
-├── script.js           # All JavaScript functionality
-├── Talha.jpg           # Profile picture (replace with your own)
-├── irtija.png          # Favicon (optional)
+├── index.html          # Main HTML structure
+├── style.css           # All styles (Forest Green palette)
+├── script.js           # Core logic: navigation, rendering, interactions
+├── data.js             # All dynamic content (experiences, skills)
 └── README.md           # This file
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🎨 Color Palette
 
-1. **Clone or download** this repository.
-2. **Open `index.html`** in your favourite browser.
-3. No build tools or dependencies – it runs directly.
-
----
-
-## 🧩 Customisation
-
-- **Profile picture** – Replace `Talha.jpg` with your own image.
-- **Personal details** – Update the text in the *Profile* card.
-- **Qualifications** – Edit the table data or add new cards.
-- **Skills** – Modify the skill tags inside each `.skill-category`.
-- **Contact** – Update email, phone numbers, and social media links.
-- **Clock** – To change the timezone, edit the `timeZone` option in `script.js` (currently `'Asia/Dhaka'`).
+| Role | Color Code |
+|------|------------|
+| Carbon (sidebar) | `#1f2421` |
+| Stormy (primary accents) | `#216869` |
+| Seaweed (icons & highlights) | `#49a078` |
+| Muted Teal (soft backgrounds) | `#9cc5a1` |
+| Alabaster (main background) | `#dce1de` |
 
 ---
 
-## 📱 Responsive Breakpoints
+## 📦 How to Use / Customize
 
-- **≤ 768px** – Sidebar becomes a slide‑out hamburger menu.
-- **769px – 1024px** – Sidebar and content scale down.
-- **≥ 1400px** – Content is centred with a max‑width.
+### 1. Update Content
+- **Experiences** – Edit the `experiences` array in `data.js`.  
+  - Each entry can have `id`, `title`, `role`, `startDate`, `endDate` (or `null` for ongoing), `icon` (FontAwesome class), `description`, `parentClub`, and `certButtons`.
+  - The entry with `id: 'certifications'` is rendered separately as a card with an “Ongoing” badge.
+- **Skills** – Edit the `skills` object, which has four categories: `cyber`, `web`, `networking`, and `professional`.  
+  - Each skill object requires `name` and `icon` (FontAwesome class).
+
+### 2. Replace Profile Image
+- Place your photo as `Talha.jpg` in the root folder (or update the `src` in the `<img>` tag inside `index.html`).
+
+### 3. Change Personal Details
+- All personal information (name, DOB, etc.) is in the **Home** page HTML – update directly in `index.html`.
+
+### 4. Add / Remove Pages
+- The sidebar navigation is defined in `index.html` with `data-page` attributes.  
+- Each page’s content is a `<div>` with an `id` matching the `data-page` value.  
+- Update `script.js` if you add new pages (add to the `pages` object).
+
+### 5. Modify Styling
+- All CSS variables are in `:root` inside `style.css`. Tweak colors, radii, shadows, and more to match your brand.
 
 ---
 
-## ✍️ Author
+## 📱 Responsive Behavior
 
-**Md. Irtija Azad Talha**  
-- [GitHub](https://github.com/Irtizaa6x)  
-- [LinkedIn](https://linkedin.com/in/irtija-talha)  
+- **Desktop** – Sidebar fixed left, main content scrolls.  
+- **Tablet** – Sidebar width reduces, contact cards switch to 2 columns.  
+- **Mobile** – Sidebar slides in from the right, header becomes fixed, all content stacks vertically.  
+- **Activities Page** – Two‑column layout on desktop; on mobile, Experience appears first, then a clickable hint (“Check my Certifications & Achievements below”) leads to the certifications card.
+
+---
+
+## 🧠 Technologies Used
+
+- **HTML5** – Semantic markup  
+- **CSS3** – Flexbox, Grid, custom properties, animations  
+- **JavaScript (ES6)** – DOM manipulation, event handling, dynamic rendering  
+- **Font Awesome 6** – Icons  
+- **Google Fonts** – Inter & Playfair Display
+
+---
+
+## 🔧 Development Notes
+
+- The page uses **no build tools** – it’s pure static HTML/CSS/JS.  
+- All external assets are loaded via CDN.  
+- The `data.js` file must be included **before** `script.js` in the HTML.  
+- The `calculateDuration` function in `script.js` automatically computes the time difference from `startDate` to `endDate` (or to now if ongoing).  
+- The skills collapsible feature is dynamically initialised after rendering.
 
 ---
 
 ## 📄 License
 
-This project is open‑source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE). Feel free to use it for your own portfolio.
 
 ---
 
-*Built with ❤️ and a lot of coffee.*
+## 👤 Author
+
+**Md. Irtija Azad Talha**  
+- GitHub: [Irtizaa6x](https://github.com/Irtizaa6x)  
+- LinkedIn: [irtija-talha](https://linkedin.com/in/irtija-talha)
+
+---
+
+## 🙏 Credits
+
+Designed with 💚 and powered by AI assistance for code structuring and optimisation.
+```
+
+---
