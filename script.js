@@ -124,19 +124,43 @@ function updateTimeOfDay() {
     const iconWrapper = document.getElementById('timeIconWrapper');
     if (!wrapper || !iconWrapper) return;
 
-    const isDay = hours >= 6 && hours < 18;
+    // Determine phase
+    let phase = '';
+    let iconClass = '';
 
-    iconWrapper.className = 'time-icon-wrapper';
-    if (isDay) {
-        iconWrapper.classList.add('day-icon');
-        iconWrapper.innerHTML = '<i class="fas fa-sun"></i>';
+    if (hours >= 5 && hours < 7) {
+        phase = 'dawn';
+        iconClass = 'fa-sun';
+    } else if (hours >= 7 && hours < 11) {
+        phase = 'morning';
+        iconClass = 'fa-sun';
+    } else if (hours >= 11 && hours < 13) {
+        phase = 'noon';
+        iconClass = 'fa-sun';
+    } else if (hours >= 13 && hours < 17) {
+        phase = 'afternoon';
+        iconClass = 'fa-sun';
+    } else if (hours >= 17 && hours < 19) {
+        phase = 'dusk';
+        iconClass = 'fa-sun';
     } else {
-        iconWrapper.classList.add('night-icon');
-        iconWrapper.innerHTML = '<i class="fas fa-moon"></i>';
+        phase = 'night';
+        iconClass = 'fa-moon';
     }
 
-    wrapper.classList.remove('day', 'night');
-    wrapper.classList.add(isDay ? 'day' : 'night');
+    // Remove all phase classes, add the new one
+    wrapper.classList.remove('dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night');
+    wrapper.classList.add(phase);
+
+    // Update icon
+    iconWrapper.className = 'time-icon-wrapper';
+    // Add a subtle color class for the icon
+    if (phase === 'night') {
+        iconWrapper.classList.add('night-icon');
+    } else {
+        iconWrapper.classList.add('day-icon');
+    }
+    iconWrapper.innerHTML = `<i class="fas ${iconClass}"></i>`;
 }
 
 function updateDhakaTime() {
@@ -322,23 +346,7 @@ function renderSkills() {
 
     container.innerHTML = html;
 }
-// ==========================================
-//  SCROLL TO CERTIFICATIONS (clickable text)
-// ==========================================
-function initScrollToCert() {
-    const trigger = document.getElementById('scrollToCertTrigger');
-    const target = document.getElementById('certificationsSection');
-    if (!trigger || !target) return;
 
-    trigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-        });
-    });
-}
-initScrollToCert();
 // ==========================================
 //  COLLAPSIBLE SKILLS (updated for dynamic)
 // ==========================================
@@ -455,6 +463,24 @@ function initAcademicDetails() {
     });
 }
 initAcademicDetails();
+
+// ==========================================
+//  SCROLL TO CERTIFICATIONS (clickable text)
+// ==========================================
+function initScrollToCert() {
+    const trigger = document.getElementById('scrollToCertTrigger');
+    const target = document.getElementById('certificationsSection');
+    if (!trigger || !target) return;
+
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
+    });
+}
+initScrollToCert();
 
 // ==========================================
 //  SCROLL HEADER
