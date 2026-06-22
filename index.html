@@ -334,12 +334,11 @@
                 </div>
 
                 <div class="phone-card">
-      <div class="local-time-wrapper" id="localTimeWrapper">
+<div class="local-time-wrapper" id="localTimeWrapper">
     <span class="live-indicator"></span>
-    <!-- New graphical moon/sun display -->
+    <!-- New astro display (sun/moon) -->
     <div class="astro-display" id="astroDisplay">
-        <div class="moon" id="moonShape"></div>
-        <!-- or a sun icon for daytime (we'll show a simple sun) -->
+        <div class="sun"></div> <!-- will be replaced by JS -->
     </div>
     <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
     <span class="time-digital dhaka-time">--:--:--</span>
@@ -367,6 +366,8 @@
 
     <!-- ===== DATA (new file) ===== -->
     <script src="data.js"></script>
+    <!-- SunCalc for realistic sun/moon -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
     <!-- ===== MAIN SCRIPT ===== -->
     <script src="script.js"></script>
 </body>
