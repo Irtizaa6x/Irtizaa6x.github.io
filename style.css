@@ -638,6 +638,168 @@ body::before {
     animation: pulse-dot 2s ease-in-out infinite;
 }
 
+/* ===== TIME PHASE THEMES ===== */
+
+/* Base wrapper – relative for pseudo‑elements */
+.local-time-wrapper {
+    position: relative;
+    overflow: hidden; /* Keep gradients inside */
+    transition: background 0.8s ease, box-shadow 0.8s ease;
+}
+
+/* ---------- Day Phases ---------- */
+/* Dawn (5:00 – 7:00) – soft orange sunrise */
+.local-time-wrapper.dawn {
+    background: linear-gradient(135deg, #fdd89b 0%, #f8b88b 60%, #e8a07a 100%);
+    border-color: #e8a07a;
+    box-shadow: 0 0 30px rgba(248, 184, 139, 0.2);
+}
+.local-time-wrapper.dawn .time-digital {
+    background: rgba(255, 255, 255, 0.3);
+    color: #5a3e2b;
+}
+
+/* Morning (7:00 – 11:00) – bright fresh yellow */
+.local-time-wrapper.morning {
+    background: linear-gradient(135deg, #fde9c8 0%, #f9d99a 100%);
+    border-color: #f0c27a;
+    box-shadow: 0 0 30px rgba(249, 217, 154, 0.15);
+}
+.local-time-wrapper.morning .time-digital {
+    background: rgba(255, 255, 255, 0.5);
+    color: #6b4f2e;
+}
+
+/* Noon (11:00 – 13:00) – clear bright blue */
+.local-time-wrapper.noon {
+    background: linear-gradient(135deg, #a8d8ea 0%, #7fc1d9 100%);
+    border-color: #5fa8c4;
+    box-shadow: 0 0 40px rgba(127, 193, 217, 0.25);
+}
+.local-time-wrapper.noon .time-digital {
+    background: rgba(255, 255, 255, 0.6);
+    color: #1f4a5e;
+}
+
+/* Afternoon (13:00 – 17:00) – warm but softening */
+.local-time-wrapper.afternoon {
+    background: linear-gradient(135deg, #e8d5b5 0%, #dbbd99 100%);
+    border-color: #c9a87d;
+    box-shadow: 0 0 30px rgba(219, 189, 153, 0.15);
+}
+.local-time-wrapper.afternoon .time-digital {
+    background: rgba(255, 255, 255, 0.5);
+    color: #5a4a38;
+}
+
+/* Dusk / Evening (17:00 – 19:00) – sunset orange/purple */
+.local-time-wrapper.dusk {
+    background: linear-gradient(135deg, #f7b58a 0%, #e58a7a 40%, #c97a8a 100%);
+    border-color: #b86a7a;
+    box-shadow: 0 0 40px rgba(229, 138, 122, 0.2);
+}
+.local-time-wrapper.dusk .time-digital {
+    background: rgba(255, 255, 255, 0.3);
+    color: #3d2a2a;
+}
+
+/* ---------- Night (19:00 – 5:00) – dark with stars ---------- */
+.local-time-wrapper.night {
+    background: linear-gradient(135deg, #0b1a2e 0%, #1a2f3f 100%);
+    border-color: #2a4a5a;
+    box-shadow: 0 0 50px rgba(10, 30, 50, 0.6);
+}
+.local-time-wrapper.night .time-digital {
+    background: rgba(255, 255, 255, 0.08);
+    color: #b8d4e0;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.local-time-wrapper.night .time-label {
+    color: #8ab0c0;
+}
+.local-time-wrapper.night .time-zone {
+    background: rgba(255, 255, 255, 0.05);
+    color: #8ab0c0;
+}
+.local-time-wrapper.night .live-indicator {
+    background: #7fc1d9;
+    box-shadow: 0 0 10px #7fc1d9;
+}
+
+/* ----- Stars (only on night) ----- */
+.local-time-wrapper.night::before,
+.local-time-wrapper.night::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 9999px;
+    opacity: 0.6;
+}
+
+.local-time-wrapper.night::before {
+    background-image: 
+        radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+        radial-gradient(2px 2px at 30% 60%, #fff, transparent),
+        radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+        radial-gradient(2px 2px at 70% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+        radial-gradient(2px 2px at 15% 80%, #fff, transparent),
+        radial-gradient(1px 1px at 55% 70%, #fff, transparent),
+        radial-gradient(2px 2px at 85% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 40% 30%, #fff, transparent),
+        radial-gradient(2px 2px at 95% 50%, #fff, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+.local-time-wrapper.night::after {
+    background-image: 
+        radial-gradient(1px 1px at 20% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 60% 20%, #fff, transparent),
+        radial-gradient(2px 2px at 80% 70%, #fff, transparent),
+        radial-gradient(1px 1px at 10% 90%, #fff, transparent),
+        radial-gradient(1px 1px at 45% 50%, #fff, transparent),
+        radial-gradient(2px 2px at 75% 10%, #fff, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 6s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.9; }
+}
+
+/* ---------- Sun / Icon Positioning ---------- */
+/* You can add subtle rotation or translation to simulate sun movement */
+.local-time-wrapper .time-icon-wrapper {
+    transition: transform 0.8s ease, color 0.8s ease;
+}
+
+/* Daytime: sun slightly higher */
+.local-time-wrapper.dawn .time-icon-wrapper,
+.local-time-wrapper.morning .time-icon-wrapper,
+.local-time-wrapper.noon .time-icon-wrapper,
+.local-time-wrapper.afternoon .time-icon-wrapper,
+.local-time-wrapper.dusk .time-icon-wrapper {
+    transform: translateY(0);
+}
+
+/* Night: moon lower */
+.local-time-wrapper.night .time-icon-wrapper {
+    transform: translateY(4px);
+}
+
+/* Additional polish: make the wrapper content appear above pseudo-elements */
+.local-time-wrapper > * {
+    position: relative;
+    z-index: 1;
+}
+
 @keyframes pulse-dot {
     0%,
     100% {
