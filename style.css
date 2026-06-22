@@ -1398,9 +1398,11 @@ body::before {
 }
 
 /* ==========================================
-   CONTACT & SOCIAL — FLEXBOX LAYOUTS (3 & 4 columns)
+   CONTACT & SOCIAL — FLEXBOX LAYOUTS
+   (Only on Contact page, but CSS applies globally)
    ========================================== */
 
+/* ----- Primary Contact Cards (3 per row) ----- */
 .contact-grid {
     display: flex;
     flex-wrap: wrap;
@@ -1409,7 +1411,6 @@ body::before {
     margin-bottom: 1.5rem;
 }
 
-/* Primary Contact Cards — 3 per row */
 .contact-grid.primary .contact-card {
     flex: 0 0 calc((100% - 2 * 1.2rem) / 3);
     max-width: calc((100% - 2 * 1.2rem) / 3);
@@ -1452,7 +1453,7 @@ body::before {
     margin-bottom: 0.5rem;
 }
 
-/* Social Media Buttons — 4 per row */
+/* ----- Social Media Buttons (4 per row) ----- */
 .social-grid {
     display: flex;
     flex-wrap: wrap;
@@ -1502,7 +1503,7 @@ body::before {
     color: white;
 }
 
-/* TryHackMe icon fix */
+/* TryHackMe icon – match other icons */
 .social-grid .social-btn .thm-icon {
     width: 18px;
     height: 18px;
@@ -1514,7 +1515,7 @@ body::before {
     filter: brightness(0) invert(1);
 }
 
-/* Phone card - full width */
+/* ----- Phone Card (full width) ----- */
 .phone-card {
     text-align: center;
     margin-top: 1.5rem;
@@ -1612,11 +1613,12 @@ footer strong {
         font-size: 0.6rem;
     }
 
-    /* Tablet: 2 columns for contact & social */
+    /* Contact: 2 columns */
     .contact-grid.primary .contact-card {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
     }
+    /* Social: 2 columns */
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
@@ -1752,10 +1754,7 @@ footer strong {
     }
 
     /* Mobile: 2 columns for contact & social */
-    .contact-grid.primary .contact-card {
-        flex: 0 0 calc((100% - 1.2rem) / 2);
-        max-width: calc((100% - 1.2rem) / 2);
-    }
+    .contact-grid.primary .contact-card,
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
@@ -1819,10 +1818,7 @@ footer strong {
     }
 
     /* Small phones: 1 column for contact & social */
-    .contact-grid.primary .contact-card {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
+    .contact-grid.primary .contact-card,
     .social-grid .social-btn {
         flex: 0 0 100%;
         max-width: 100%;
