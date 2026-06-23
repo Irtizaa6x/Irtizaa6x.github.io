@@ -1,7 +1,7 @@
 // ==========================================
 //  COMPACT SKY · FULL WRAPPER BACKGROUND
 //  Real-time Dhaka sky behind the time card
-//  With ResizeObserver to handle hidden wrapper
+//  With smaller sun/moon to fit compact wrapper
 // ==========================================
 
 (function() {
@@ -21,44 +21,36 @@
   const ctx = canvas.getContext('2d');
   let width = 0, height = 0;
 
-  // --- Resize function: sets canvas size from parent ---
   function resize() {
     const parent = canvas.parentElement;
     if (!parent) return;
     const rect = parent.getBoundingClientRect();
     width = rect.width;
     height = rect.height;
-    if (width === 0 || height === 0) {
-      // Still hidden – we'll retry when ResizeObserver fires
-      return;
-    }
+    if (width === 0 || height === 0) return;
     canvas.width = width;
     canvas.height = height;
-    // Force a redraw immediately after resize
+    // redraw immediately
     const now = new Date();
     drawSky(now);
   }
 
-  // --- Use ResizeObserver to catch when wrapper gets size ---
-  const observer = new ResizeObserver(() => {
-    resize();
-  });
+  // ResizeObserver to catch when wrapper gets size
+  const observer = new ResizeObserver(() => resize());
   observer.observe(canvas.parentElement);
 
-  // --- Also observe the contact page visibility (class change) ---
-  // We can listen for when the contact page gets 'active-page' class
+  // Also observe contact page visibility
   const contactPage = document.getElementById('contact-page');
   if (contactPage) {
     const mutationObserver = new MutationObserver(() => {
       if (contactPage.classList.contains('active-page')) {
-        // Page became visible – resize and redraw
-        setTimeout(resize, 50); // small delay to let layout settle
+        setTimeout(resize, 50);
       }
     });
     mutationObserver.observe(contactPage, { attributes: true, attributeFilter: ['class'] });
   }
 
-  // --- Fallback: try to resize every second until we get size (for safety) ---
+  // Fallback interval
   let retryCount = 0;
   const retryInterval = setInterval(() => {
     if (width > 0 && height > 0) {
@@ -67,10 +59,10 @@
     }
     resize();
     retryCount++;
-    if (retryCount > 10) clearInterval(retryInterval); // stop after 10 tries
+    if (retryCount > 10) clearInterval(retryInterval);
   }, 1000);
 
-  // --- Update digital clock ---
+  // Update clock
   function updateClock() {
     const now = new Date();
     const options = {
@@ -84,7 +76,7 @@
     document.querySelectorAll('.dhaka-time').forEach(el => el.textContent = timeStr);
   }
 
-  // --- Draw the sky ---
+  // Draw sky
   function drawSky(now) {
     if (width === 0 || height === 0) return;
 
@@ -93,7 +85,6 @@
 
     ctx.clearRect(0, 0, w, h);
 
-    // Sun position
     const sunPos = SunCalc.getPosition(now, DHAKA_LAT, DHAKA_LON);
     const alt = sunPos.altitude;
     const az = sunPos.azimuth;
@@ -123,12 +114,12 @@
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
 
-    // Sun
+    // Sun (smaller)
     if (alt > -0.3) {
       let x = ((az / (2 * Math.PI)) * w) % w;
       if (x < 0) x += w;
       const y = h * (1 - Math.max(0, Math.min(1, (alt + 0.3) / 1.8)));
-      const radius = Math.min(w, h) * 0.12;
+      const radius = Math.min(w, h) * 0.06;   // ← smaller
 
       const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 2.5);
       glow.addColorStop(0, alt > 0.1 ? 'rgba(255,200,50,0.5)' : 'rgba(255,150,80,0.5)');
@@ -147,7 +138,7 @@
       ctx.shadowBlur = 0;
     }
 
-    // Moon
+    // Moon (smaller)
     if (alt < 0.2) {
       const moonPos = SunCalc.getMoonPosition(now, DHAKA_LAT, DHAKA_LON);
       const mAlt = moonPos.altitude;
@@ -155,7 +146,7 @@
         let x = ((moonPos.azimuth / (2 * Math.PI)) * w) % w;
         if (x < 0) x += w;
         const y = h * (1 - Math.max(0, Math.min(1, (mAlt + 0.3) / 1.5)));
-        const radius = Math.min(w, h) * 0.10;
+        const radius = Math.min(w, h) * 0.05;   // ← smaller
 
         const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 2);
         glow.addColorStop(0, 'rgba(220,235,255,0.2)');
@@ -172,7 +163,7 @@
         ctx.fillStyle = '#e0e8f0';
         ctx.fill();
 
-        // Moon phase
+        // Phase
         const ill = SunCalc.getMoonIllumination(now);
         const phase = ill.phase;
         const shadowOffset = (phase - 0.5) * 2 * radius;
@@ -192,7 +183,6 @@
     }
   }
 
-  // --- Animation loop ---
   function animate() {
     const now = new Date();
     drawSky(now);
@@ -200,13 +190,8 @@
     requestAnimationFrame(animate);
   }
 
-  // Initial resize (may be 0 if hidden)
   resize();
-
-  // Start the loop
   animate();
-
-  // Also resize on window resize (already had)
   window.addEventListener('resize', resize);
 
 })();
