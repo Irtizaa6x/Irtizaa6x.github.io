@@ -2,7 +2,6 @@
 //  MD. IRTIJA AZAD TALHA – EXECUTIVE PORTFOLIO
 //  Forest Green Edition · Solid Sidebar
 //  WITH DYNAMIC DATA FROM data.js
-//  & SUNCalc for realistic sun/moon
 // ==========================================
 
 // ==========================================
@@ -153,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.classList.add('anim-in');
         }
     }
-    updateTimeOfDay();
 
     // ===== RENDER DYNAMIC CONTENT =====
     renderExperiences();
@@ -171,109 +169,6 @@ navItems.forEach((btn) => {
 const activeNav = document.querySelector('.nav-item.active');
 if (activeNav) switchPage(activeNav.getAttribute('data-page'));
 else switchPage('home');
-
-// ==========================================
-//  LIVE DHAKA TIME + REAL SUN/MOON (SunCalc)
-// ==========================================
-
-// Dhaka coordinates
-const DHAKA_LAT = 23.8103;
-const DHAKA_LON = 90.4125;
-
-function updateTimeOfDay() {
-    const now = new Date();
-    const wrapper = document.getElementById('localTimeWrapper');
-    const astroDisplay = document.getElementById('astroDisplay');
-    if (!wrapper || !astroDisplay) return;
-
-    // Get sunrise/sunset for today
-    const sunTimes = SunCalc.getTimes(now, DHAKA_LAT, DHAKA_LON);
-    const sunrise = sunTimes.sunrise;
-    const sunset = sunTimes.sunset;
-    const nowTime = now.getTime();
-
-    // Define phase boundaries (in milliseconds)
-    const dawnStart = new Date(sunrise.getTime() - 30 * 60 * 1000);
-    const morningEnd = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
-    const noonStart = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
-    const noonEnd = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
-    const afternoonStart = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
-    const duskEnd = new Date(sunset.getTime() + 30 * 60 * 1000);
-    const lightNightEnd = new Date(sunset.getTime() + 3 * 60 * 60 * 1000);
-
-    let phase = '';
-    let isDay = false;
-
-    if (nowTime >= dawnStart.getTime() && nowTime < sunrise.getTime()) {
-        phase = 'dawn';
-        isDay = true;
-    } else if (nowTime >= sunrise.getTime() && nowTime < morningEnd.getTime()) {
-        phase = 'morning';
-        isDay = true;
-    } else if (nowTime >= noonStart.getTime() && nowTime < noonEnd.getTime()) {
-        phase = 'noon';
-        isDay = true;
-    } else if (nowTime >= afternoonStart.getTime() && nowTime < sunset.getTime()) {
-        phase = 'afternoon';
-        isDay = true;
-    } else if (nowTime >= sunset.getTime() && nowTime < duskEnd.getTime()) {
-        phase = 'dusk';
-        isDay = true; // twilight – still show sun
-    } else if (nowTime >= duskEnd.getTime() && nowTime < lightNightEnd.getTime()) {
-        phase = 'night-light';
-        isDay = false;
-    } else {
-        phase = 'night-deep';
-        isDay = false;
-    }
-
-    // Remove all phase classes, add the new one
-    wrapper.classList.remove('dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep');
-    wrapper.classList.add(phase);
-
-    // --- Update astro display ---
-    if (isDay) {
-        // Show sun
-        astroDisplay.innerHTML = `<div class="sun"></div>`;
-    } else {
-        // Show moon with phase
-        const moonIllum = SunCalc.getMoonIllumination(now);
-        const phaseAngle = moonIllum.angle; // 0 to 2π
-        const fraction = moonIllum.fraction; // 0 to 1
-
-        // Determine size based on fraction (full moon larger)
-        let sizeClass = 'size-medium';
-        if (fraction < 0.3) sizeClass = 'size-small';
-        else if (fraction > 0.7) sizeClass = 'size-large';
-
-        // Rotation for shadow: phaseAngle maps to rotation (degrees)
-        // The shadow clip-path uses rotation to simulate phase
-        const rotationDeg = (phaseAngle * 180 / Math.PI) % 360;
-
-        astroDisplay.innerHTML = `
-            <div class="moon ${sizeClass}" id="moonShape" style="--rotation: ${rotationDeg}deg;"></div>
-        `;
-    }
-}
-
-function updateDhakaTime() {
-    const now = new Date();
-    const options = {
-        timeZone: 'Asia/Dhaka',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-    };
-    const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
-    document.querySelectorAll('.dhaka-time').forEach((el) => {
-        el.textContent = timeStr;
-    });
-    updateTimeOfDay();
-}
-
-updateDhakaTime();
-setInterval(updateDhakaTime, 1000);
 
 // ==========================================
 //  DURATION CALCULATOR (from data.js)
@@ -619,4 +514,4 @@ console.log(
     'background:#1f2421;color:#9cc5a1;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
     'background:#9cc5a1;color:#1f2421;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
 );
-console.log('%c🌿 Dynamic data from data.js loaded · SunCalc active', 'color:#216869;font-weight:500;');
+console.log('%c🌿 Dynamic data from data.js loaded · Sky Dashboard active', 'color:#216869;font-weight:500;');
