@@ -1,15 +1,26 @@
 /* ==========================================
    SKY BACKGROUND – covers entire wrapper
+   Keep wrapper size small, sky as background
    ========================================== */
 
 .local-time-wrapper {
     position: relative;
     overflow: hidden;
-    padding: 0.4rem 1.4rem 0.4rem 1.2rem;
-    /* Keep existing glass styles */
+    padding: 0.3rem 1.0rem 0.3rem 0.8rem;  /* reduced padding */
+    border-radius: 9999px;                 /* keep pill shape */
+    /* your existing glass styles stay */
+    background: rgba(255, 255, 255, 0.9);   /* fallback */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(31, 36, 33, 0.04);
+    box-shadow: var(--shadow-sm);
+    /* ensure inline-flex and gap are as before */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
 }
 
-/* The canvas fills the wrapper completely */
+/* The canvas fills the wrapper completely, but does not affect layout */
 .sky-canvas-compact {
     position: absolute;
     top: 0;
@@ -20,6 +31,7 @@
     border-radius: inherit;  /* matches wrapper's border-radius */
     z-index: 0;
     background: #0b1a2e;     /* fallback night */
+    pointer-events: none;    /* allow clicks to pass through */
 }
 
 /* All text/live elements sit on top */
@@ -28,4 +40,14 @@
     z-index: 1;
 }
 
-/* The live dot, time label, clock, timezone retain their styles */
+/* optional: add a subtle overlay to keep text readable */
+.local-time-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    z-index: 0;
+    backdrop-filter: blur(4px);
+}
