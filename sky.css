@@ -1,36 +1,31 @@
 /* ==========================================
-   COMPACT SKY CANVAS – for local-time wrapper
+   SKY BACKGROUND – covers entire wrapper
    ========================================== */
 
-.sky-canvas-compact {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #0b1a2e;  /* fallback night sky */
-    flex-shrink: 0;
-    display: block;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    margin: 0 6px;
-}
-
-/* Adjust wrapper spacing if needed */
 .local-time-wrapper {
-    /* ensure it has enough padding to contain the larger canvas */
+    position: relative;
+    overflow: hidden;
     padding: 0.4rem 1.4rem 0.4rem 1.2rem;
+    /* Keep existing glass styles */
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .sky-canvas-compact {
-        width: 50px;
-        height: 50px;
-    }
+/* The canvas fills the wrapper completely */
+.sky-canvas-compact {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: inherit;  /* matches wrapper's border-radius */
+    z-index: 0;
+    background: #0b1a2e;     /* fallback night */
 }
 
-@media (max-width: 400px) {
-    .sky-canvas-compact {
-        width: 40px;
-        height: 40px;
-    }
+/* All text/live elements sit on top */
+.local-time-wrapper > * {
+    position: relative;
+    z-index: 1;
 }
+
+/* The live dot, time label, clock, timezone retain their styles */
