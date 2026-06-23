@@ -335,118 +335,13 @@
                 </div>
 
                 <div class="phone-card">
-<!-- ===== NEW SKY DASHBOARD ===== -->
-<div class="sky-dashboard">
-    <div class="sky-dashboard-inner">
-        <!-- Sky Canvas (≥ 50% height) -->
-        <div class="sky-canvas-wrapper">
-            <canvas id="skyCanvas"></canvas>
-            <!-- Live badge (top-right) -->
-            <div class="sky-live-badge">
-                <span class="live-dot"></span>
-                LIVE
-                <span class="badge-time">--:--:--</span>
-            </div>
-            <!-- Condition label (bottom-left) -->
-            <div class="sky-condition-label">
-                <i class="fas fa-sun"></i>
-                <span class="label-text">Clear</span>
-            </div>
-            <!-- Overlays for weather effects (used by JS) -->
-            <div class="sky-rain-overlay"></div>
-            <div class="sky-lightning-flash"></div>
-            <div class="sky-fog-overlay"></div>
-        </div>
-
-        <!-- Information Grid (14 cards) -->
-        <div class="sky-info-grid">
-            <!-- Each card must have data-key matching the JS field -->
-            <div class="sky-info-card" data-key="temperature">
-                <span class="label">Temperature</span>
-                <span class="value">--°C</span>
-                <span class="sub">Feels --°C</span>
-                <span class="tooltip">Current air temperature</span>
-            </div>
-            <div class="sky-info-card" data-key="humidity">
-                <span class="label">Humidity</span>
-                <span class="value">--%</span>
-                <span class="sub"></span>
-                <span class="tooltip">Relative humidity</span>
-            </div>
-            <div class="sky-info-card" data-key="wind">
-                <span class="label">Wind Speed</span>
-                <span class="value">-- km/h</span>
-                <span class="sub"></span>
-                <span class="tooltip">Wind speed at surface</span>
-            </div>
-            <div class="sky-info-card" data-key="uv">
-                <span class="label">UV Index</span>
-                <span class="value">--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Ultraviolet radiation level</span>
-            </div>
-            <div class="sky-info-card" data-key="visibility">
-                <span class="label">Visibility</span>
-                <span class="value">-- km</span>
-                <span class="sub"></span>
-                <span class="tooltip">Distance you can see clearly</span>
-            </div>
-            <div class="sky-info-card" data-key="pressure">
-                <span class="label">Pressure</span>
-                <span class="value">-- hPa</span>
-                <span class="sub"></span>
-                <span class="tooltip">Atmospheric pressure</span>
-            </div>
-            <div class="sky-info-card" data-key="aqi">
-                <span class="label">Air Quality</span>
-                <span class="value">--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Air Quality Index (lower is better)</span>
-            </div>
-            <div class="sky-info-card" data-key="sunrise">
-                <span class="label">Sunrise</span>
-                <span class="value">--:--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Today's sunrise time</span>
-            </div>
-            <div class="sky-info-card" data-key="sunset">
-                <span class="label">Sunset</span>
-                <span class="value">--:--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Today's sunset time</span>
-            </div>
-            <div class="sky-info-card" data-key="solarNoon">
-                <span class="label">Solar Noon</span>
-                <span class="value">--:--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Sun at highest point</span>
-            </div>
-            <div class="sky-info-card" data-key="dayLength">
-                <span class="label">Day Length</span>
-                <span class="value">--h --m</span>
-                <span class="sub"></span>
-                <span class="tooltip">Sunlight duration today</span>
-            </div>
-            <div class="sky-info-card" data-key="moonPhase">
-                <span class="label">Moon Phase</span>
-                <span class="value">--</span>
-                <span class="sub">--%</span>
-                <span class="tooltip">Current lunar phase</span>
-            </div>
-            <div class="sky-info-card" data-key="moonrise">
-                <span class="label">Moonrise</span>
-                <span class="value">--:--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Today's moonrise</span>
-            </div>
-            <div class="sky-info-card" data-key="moonset">
-                <span class="label">Moonset</span>
-                <span class="value">--:--</span>
-                <span class="sub"></span>
-                <span class="tooltip">Today's moonset</span>
-            </div>
-        </div>
-    </div>
+<div class="local-time-wrapper" id="localTimeWrapper">
+    <span class="live-indicator"></span>
+    <!-- New compact sky canvas -->
+    <canvas id="skyCanvas" class="sky-canvas-compact"></canvas>
+    <span class="time-label"><i class="fas fa-clock"></i> Local Time</span>
+    <span class="time-digital dhaka-time">--:--:--</span>
+    <span class="time-zone">(Asia/Dhaka UTC+6:00)</span>
 </div>
                     <hr />
                     <i class="fas fa-phone-alt"></i>
