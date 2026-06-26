@@ -15,15 +15,15 @@ Explore my personal portfolio website:
 
 It showcases my academic background, activities, certifications, skills, and professional interests — all in a clean, Forest Green–themed interface.
 
-You can also scan the QR code below to visit directly:
+Scan the QR code below to visit instantly:
 
-![QR Code](<QR for web.png>)
+<img src="QR for web.png" alt="QR Code to irtija.webhop.me" width="200" />
 
 ---
 
 ## 📌 About This Repository
 
-This repository contains the source code for my portfolio website. It’s built with:
+This repository contains the source code for my portfolio website. It's built with:
 
 - **HTML5** – Semantic markup  
 - **CSS3** – Custom properties, Flexbox, Grid, animations  
@@ -44,4 +44,4 @@ All content (experiences, skills, certifications) is stored in `data.js` for eas
 
 ---
 
-> *“Ethical mindset · integrity first”* — always learning, always growing.
+> *"Ethical mindset · integrity first"* — always learning, always growing.
