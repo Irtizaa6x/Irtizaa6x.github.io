@@ -11,9 +11,13 @@ I am a passionate Computer Science & Engineering student at **Green University o
 ## 🌐 Live Portfolio
 
 Explore my personal portfolio website:  
-👉 **[irtija.redirectme.net](https://irtija.redirectme.net/)**
+👉 **[irtija.webhop.me](https://irtija.webhop.me/)**
 
 It showcases my academic background, activities, certifications, skills, and professional interests — all in a clean, Forest Green–themed interface.
+
+You can also scan the QR code below to visit directly:
+
+![QR Code](<QR for web.png>)
 
 ---
 
