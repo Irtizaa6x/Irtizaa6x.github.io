@@ -9,11 +9,11 @@ backend:
   name: github
   repo: Irtizaa6x/Irtizaa6x.github.io
   branch: main
-  # Optional: if you use a different branch, change it above
+  site_id: e33338c2-cb78-478e-9d1b-ed55d5c86671
 
 # ---------------------- MEDIA SETTINGS ----------------------
-media_folder: "pic/blog"          # where uploaded images are saved
-public_folder: "/pic/blog"        # how images are referenced in URLs
+media_folder: "pic/blog"
+public_folder: "/pic/blog"
 
 # ---------------------- COLLECTIONS --------------------------
 collections:
@@ -23,7 +23,6 @@ collections:
     folder: "src/posts"
     create: true
     slug: "{{slug}}"
-    # Sort by date descending in the admin list
     sortable_fields: ["date", "title"]
     view_filters:
       - label: "With Video"
@@ -33,7 +32,6 @@ collections:
         field: certificate
         pattern: '.+'
     fields:
-      # --- BASIC INFO ---
       - label: "Title"
         name: "title"
         widget: "string"
@@ -55,7 +53,6 @@ collections:
         required: true
         hint: "The date of the event or when you published this post."
 
-      # --- MEDIA ---
       - label: "Cover Image"
         name: "coverImage"
         widget: "image"
@@ -63,7 +60,7 @@ collections:
         hint: "The large image displayed on the blog card and at the top of the detail page."
         media_library:
           config:
-            max_file_size: 5120000  # 5MB limit
+            max_file_size: 5120000
 
       - label: "Gallery Images"
         name: "gallery"
@@ -78,7 +75,6 @@ collections:
             config:
               max_file_size: 5120000
 
-      # --- CONTENT ---
       - label: "Preview Text"
         name: "previewText"
         widget: "text"
@@ -94,7 +90,6 @@ collections:
         editor:
           preview: true
 
-      # --- EXTRAS ---
       - label: "Tags"
         name: "tags"
         widget: "list"
@@ -118,13 +113,8 @@ collections:
         required: false
         hint: "URL to a PDF or image of your certificate (e.g., Google Drive share link or direct file URL)."
 
-    # -------------------- SUMMARY VIEW (admin list) --------------------
     summary: "📄 {{title}} — {{date}}"
     preview_path: "blog-detail.html?slug={{slug}}"
     preview_path_date_field: "date"
 
-# ============================================================
-#  OPTIONAL: Enable editorial workflow (drafts)
-#  Uncomment the line below if you want draft/publish states.
-# ============================================================
 # publish_mode: editorial_workflow
