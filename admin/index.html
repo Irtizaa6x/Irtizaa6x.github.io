@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin · Irtija's Blog</title>
+    <!-- Decap CMS styles -->
+    <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css" />
+    <!-- Optional: Custom branding / favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" />
+    <style>
+        /* Subtle customisation to match your Forest Green palette */
+        :root {
+            --cms-primary: #216869;
+            --cms-primary-dark: #1a4f4f;
+            --cms-accent: #49a078;
+        }
+        /* Decap CMS uses CSS variables for theming */
+        .nc-gatewayPage-card {
+            border-top: 4px solid var(--cms-primary) !important;
+        }
+        .nc-entryEditor .nc-entryEditor-controls button {
+            background-color: var(--cms-primary) !important;
+        }
+        .nc-entryEditor .nc-entryEditor-controls button:hover {
+            background-color: var(--cms-primary-dark) !important;
+        }
+        .nc-collectionCard-link {
+            color: var(--cms-primary) !important;
+        }
+        .nc-collectionCard-link:hover {
+            color: var(--cms-accent) !important;
+        }
+        /* Hide the "Workflow" tab if you don't use it */
+        .nc-workflowTab {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decap CMS will mount itself here -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>
