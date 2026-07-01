@@ -15,15 +15,19 @@ const pages = {
     education: document.getElementById('education-page'),
     skills: document.getElementById('skills-page'),
     experience: document.getElementById('experience-page'),
+    blog: document.getElementById('blog-page'),
     contact: document.getElementById('contact-page'),
 };
-
 // ==========================================
 //  CORE NAVIGATION
 // ==========================================
 function switchPage(pageId) {
     Object.values(pages).forEach((p) => p && p.classList.remove('active-page'));
     if (pages[pageId]) pages[pageId].classList.add('active-page');
+    
+    if (pageId === 'blog' && typeof loadBlogs === 'function') {
+        loadBlogs();
+    }
 
     navItems.forEach((btn) => {
         const val = btn.getAttribute('data-page');
