@@ -1,0 +1,186 @@
+/* ============================================================
+   BLOGS / JOURNEY — Professional Styles
+   Forest Green Palette: #1f2421 · #216869 · #49a078 · #9cc5a1 · #dce1de
+   All images are served from /pic/blog/ (matching your config.yml)
+   ============================================================ */
+
+/* ----- BLOG GRID LAYOUT ----- */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0.5rem 0 1.5rem 0;
+}
+
+/* ----- INDIVIDUAL BLOG CARD ----- */
+.blog-card {
+    background: #ffffff;
+    border-radius: var(--radius, 18px);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(31, 36, 33, 0.04);
+    border: 1px solid rgba(156, 197, 161, 0.15);
+    transition: box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+.blog-card:hover {
+    box-shadow: 0 12px 48px rgba(73, 160, 120, 0.10);
+    transform: translateY(-6px);
+    border-color: rgba(73, 160, 120, 0.12);
+}
+
+/* ----- COVER IMAGE ----- */
+.blog-card .cover-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    background: var(--alabaster-light, #e8efeb);
+    transition: filter 0.4s ease;
+}
+
+.blog-card:hover .cover-image {
+    filter: brightness(0.97) saturate(1.02);
+}
+
+/* ----- EXPANDABLE PREVIEW AREA ----- */
+.blog-card .preview-area {
+    max-height: 0;
+    overflow: hidden;
+    background: #ffffff;
+    padding: 0 1.4rem;
+    transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                padding 0.4s ease,
+                border-top 0.3s ease;
+    border-top: 1px solid transparent;
+}
+
+.blog-card .preview-area.open {
+    max-height: 220px;          /* Enough for ~4 lines of text */
+    padding: 1rem 1.4rem 1.4rem 1.4rem;
+    border-top-color: rgba(73, 160, 120, 0.08);
+}
+
+.blog-card .preview-area p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #3a4a4a);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-card .preview-area .read-more-hint {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--stormy, #216869);
+    letter-spacing: 0.3px;
+    border-bottom: 1.5px dashed rgba(33, 104, 105, 0.15);
+    transition: border-color 0.3s ease;
+}
+
+.blog-card:hover .read-more-hint {
+    border-bottom-color: var(--stormy);
+}
+
+/* ----- EMPTY STATE ----- */
+.blog-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-muted, #6a7a7a);
+    font-size: 1rem;
+}
+
+.blog-empty i {
+    font-size: 2.5rem;
+    color: var(--muted-teal, #9cc5a1);
+    margin-bottom: 1rem;
+    display: block;
+    opacity: 0.5;
+}
+
+.blog-empty p {
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ----- LOADING STATE ----- */
+.blog-loading {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-muted, #6a7a7a);
+}
+
+.blog-loading i {
+    font-size: 2rem;
+    animation: spin 1.2s linear infinite;
+    color: var(--seaweed, #49a078);
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .blog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.6rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.2rem;
+    }
+
+    .blog-card .preview-area.open {
+        max-height: 180px;
+        padding: 0.8rem 1rem 1.2rem 1rem;
+    }
+
+    .blog-card .preview-area p {
+        font-size: 0.82rem;
+        -webkit-line-clamp: 2;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .blog-card .cover-image {
+        aspect-ratio: 16 / 10;
+    }
+
+    .blog-card .preview-area.open {
+        max-height: 160px;
+        padding: 0.6rem 0.9rem 1rem 0.9rem;
+    }
+}
+
+/* ============================================================
+   UTILITY: Smooth scroll behaviour (applies to detail page too)
+   ============================================================ */
+html {
+    scroll-behavior: smooth;
+}
