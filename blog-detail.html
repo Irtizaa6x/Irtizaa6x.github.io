@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Detail · Irtija</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="blogs.css" />
+    <style>
+        body { background: var(--alabaster, #dce1de); padding: 2rem 1rem; }
+        .app-wrapper { max-width: 1200px; margin: 0 auto; display: block; }
+        .main-content { padding: 0; background: transparent; }
+        .back-to-portfolio {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--stormy, #216869);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(33,104,105,0.15);
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        .back-to-portfolio:hover { background: var(--stormy); color: white; border-color: var(--stormy); }
+        .blog-detail-container .detail-body ul,
+        .blog-detail-container .detail-body ol { padding-left: 1.5rem; }
+        .blog-detail-container .detail-body blockquote {
+            border-left: 4px solid var(--seaweed, #49a078);
+            padding-left: 1rem;
+            margin-left: 0;
+            color: var(--text-secondary);
+        }
+        .blog-detail-container .detail-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 0.8rem 0;
+        }
+        .blog-detail-container .detail-body pre {
+            background: var(--carbon, #1f2421);
+            color: #dce1de;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+        .blog-detail-container .detail-body code {
+            background: rgba(31,36,33,0.06);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <main class="main-content" id="mainContent">
+            <a href="index.html" class="back-to-portfolio"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <div id="blogDetailContainer" class="blog-detail-container">
+                <p style="text-align:center;color:var(--text-muted);padding:3rem 0;">Loading post...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
+    <script>
+        const GITHUB_USER = "YOUR_USERNAME";   // CHANGE THIS
+        const GITHUB_REPO = "YOUR_REPO_NAME";  // CHANGE THIS
+        const BRANCH = "main";
+
+        function getParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function parseFrontmatter(markdown) {
+            const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
+            if (!match) return { data: {}, content: markdown };
+            const frontmatter = match[1];
+            const content = markdown.replace(match[0], '').trim();
+            const data = {};
+            frontmatter.split('\n').forEach(line => {
+                const [key, ...val] = line.split(':');
+                if (key && val.length) {
+                    let value = val.join(':').trim();
+                    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+                        value = value.slice(1, -1);
+                    }
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(v => v.trim());
+                    }
+                    data[key.trim()] = value;
+                }
+            });
+            return { data, content };
+        }
+
+        async function fetchPost(slug) {
+            try {
+                const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/src/posts/${slug}.md?ref=${BRANCH}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Post not found');
+                const file = await response.json();
+                const markdown = atob(file.content);
+                const { data, content } = parseFrontmatter(markdown);
+                return { ...data, content };
+            } catch (error) {
+                console.error('Error fetching post:', error);
+                return null;
+            }
+        }
+
+        async function renderDetail() {
+            const slug = getParam('slug');
+            const container = document.getElementById('blogDetailContainer');
+            if (!slug) {
+                container.innerHTML = `<p style="text-align:center;color:red;">No blog post selected.</p><a href="index.html" class="back-to-portfolio">Go back</a>`;
+                return;
+            }
+
+            const post = await fetchPost(slug);
+            if (!post) {
+                container.innerHTML = `<p style="text-align:center;color:red;">Post not found.</p><a href="index.html" class="back-to-portfolio">Go back</a>`;
+                return;
+            }
+
+            const coverHtml = post.coverImage ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" />` : '';
+            const dateHtml = post.date ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>` : '';
+            
+            let tagsHtml = '';
+            if (post.tags && post.tags.length) {
+                tagsHtml = `<div class="detail-tags">${post.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
+            }
+
+            let galleryHtml = '';
+            if (post.gallery && post.gallery.length) {
+                galleryHtml = `<div class="detail-gallery">${post.gallery.map(img => `<img src="${img}" alt="Gallery" loading="lazy" />`).join('')}</div>`;
+            }
+
+            let videoHtml = '';
+            if (post.videoURL) {
+                let embedUrl = post.videoURL;
+                if (post.videoURL.includes('watch?v=')) {
+                    embedUrl = post.videoURL.replace('watch?v=', 'embed/');
+                } else if (post.videoURL.includes('youtu.be/')) {
+                    embedUrl = post.videoURL.replace('youtu.be/', 'youtube.com/embed/');
+                }
+                if (embedUrl.includes('youtube')) {
+                    videoHtml = `<div class="detail-video"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                }
+            }
+
+            let certHtml = '';
+            if (post.certificate) {
+                certHtml = `<a href="${post.certificate}" target="_blank" class="detail-cert-btn"><i class="fas fa-certificate"></i> View Certificate</a>`;
+            }
+
+            const bodyHtml = post.content ? marked.parse(post.content) : '';
+
+            container.innerHTML = `
+                ${coverHtml}
+                <h1 class="detail-title">${post.title}</h1>
+                ${dateHtml}
+                ${tagsHtml}
+                <div class="detail-body">${bodyHtml}</div>
+                ${galleryHtml}
+                ${videoHtml}
+                ${certHtml}
+                <div style="margin-top:2rem;border-top:1px solid rgba(31,36,33,0.06);padding-top:1rem;">
+                    <a href="index.html" class="back-to-portfolio"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+                </div>
+            `;
+        }
+
+        renderDetail();
+    </script>
+</body>
+</html>
