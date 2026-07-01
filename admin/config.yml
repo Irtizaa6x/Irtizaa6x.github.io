@@ -1,15 +1,12 @@
 # ============================================================
 #  DECAP CMS CONFIGURATION
-#  Professional build for Irtija's Portfolio
-#  Images stored in: pic/blog/
-#  Blog posts stored as Markdown in: src/posts/
+#  Using Netlify Identity + Git Gateway (correct backend)
 # ============================================================
 
 backend:
-  name: github
+  name: git-gateway
   repo: Irtizaa6x/Irtizaa6x.github.io
   branch: main
-  site_id: e33338c2-cb78-478e-9d1b-ed55d5c86671
 
 # ---------------------- MEDIA SETTINGS ----------------------
 media_folder: "pic/blog"
@@ -116,5 +113,3 @@ collections:
     summary: "📄 {{title}} — {{date}}"
     preview_path: "blog-detail.html?slug={{slug}}"
     preview_path_date_field: "date"
-
-# publish_mode: editorial_workflow
