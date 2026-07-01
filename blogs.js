@@ -11,8 +11,8 @@
     // ============================================================
     //  CONFIGURATION — Edit these 3 values
     // ============================================================
-    const GITHUB_USER = "YOUR_USERNAME";        // e.g., "irtija-talha"
-    const GITHUB_REPO = "YOUR_REPO_NAME";       // e.g., "my-portfolio"
+    const GITHUB_USER = "Irtizaa6x";        // e.g., "irtija-talha"
+    const GITHUB_REPO = "Irtizaa6x.github.io";       // e.g., "my-portfolio"
     const BRANCH = "main";
 
     // ============================================================
