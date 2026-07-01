@@ -7,6 +7,7 @@ backend:
   name: git-gateway
   repo: Irtizaa6x/Irtizaa6x.github.io
   branch: main
+  site_id: e33338c2-cb78-478e-9d1b-ed55d5c86671
 
 # ---------------------- MEDIA SETTINGS ----------------------
 media_folder: "pic/blog"
