@@ -1,217 +1,26 @@
 // ============================================================
-//  MD. IRTIJA AZAD TALHA – EXECUTIVE PORTFOLIO
-//  Forest Green Edition · Solid Sidebar
-//  WITH DYNAMIC DATA FROM data.js
-//  & SUNCalc FOR REALISTIC SUN/MOON
-//  & HISTORY API FOR CLEAN URLS (NO #)
+//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES
+//  Forest Green Edition · No Router (separate HTML pages)
+//  Handles: Clock, Data Rendering, Interactions, Animations
 // ============================================================
 
 (function () {
     'use strict';
 
     // ============================================================
-    //  1.  DOM REFS & GLOBALS
+    //  1.  DOM REFS (safe access)
     // ============================================================
 
-    const navItems = document.querySelectorAll('.nav-item');
-    const mainContent = document.getElementById('mainContent');
-
-    const pages = {
-        home: document.getElementById('home-page'),
-        education: document.getElementById('education-page'),
-        skills: document.getElementById('skills-page'),
-        experience: document.getElementById('experience-page'),
-        blog: document.getElementById('blog-page'),
-        contact: document.getElementById('contact-page'),
-    };
-
-    /** @type {string} – Tracks the currently active page to avoid duplicate renders */
-    let currentPage = 'home';
-
-    /** @type {boolean} – Prevents multiple initialisation calls */
-    let isInitialised = false;
+    const $ = (sel, ctx = document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
     // ============================================================
-    //  2.  CORE NAVIGATION (History API Router)
-    // ============================================================
-
-    /**
-     * Navigate to a specific page without reloading the browser.
-     * @param {string} pageId – One of: 'home', 'education', 'skills', 'experience', 'blog', 'contact'
-     * @param {boolean} pushState – Whether to push a new history entry (true) or replace (false)
-     */
-    function navigateTo(pageId, pushState = true) {
-        // Guard: page must exist and be different from the current page
-        if (!pages[pageId] || pageId === currentPage) return;
-
-        // --- 1. Update active page (show/hide) ---
-        Object.values(pages).forEach((p) => p && p.classList.remove('active-page'));
-        pages[pageId].classList.add('active-page');
-
-        // --- 2. Update nav item active states ---
-        navItems.forEach((btn) => {
-            const val = btn.getAttribute('data-page');
-            btn.classList.toggle('active', val === pageId);
-        });
-
-        // --- 3. Update UI (header title & sidebar big icon) ---
-        updateHeaderTitle(pageId);
-        updateActiveIcon(pageId);
-
-        // --- 4. Update browser URL (clean, no #) ---
-        const path = pageId === 'home' ? '/' : `/${pageId}`;
-        if (pushState) {
-            window.history.pushState({ page: pageId }, '', path);
-        } else {
-            window.history.replaceState({ page: pageId }, '', path);
-        }
-
-        // --- 5. Update document title for SEO ---
-        const pageNames = {
-            home: 'Profile · IrtiJa',
-            education: 'Qualifications · IrtiJa',
-            skills: 'Capabilities · IrtiJa',
-            experience: 'Activities · IrtiJa',
-            blog: 'Blog · IrtiJa',
-            contact: 'Connect · IrtiJa',
-        };
-        document.title = pageNames[pageId] || 'IrtiJa · Portfolio';
-
-        // --- 6. Scroll to top smoothly ---
-        if (mainContent) mainContent.scrollTo({ top: 0, behavior: 'smooth' });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // --- 7. Close mobile sidebar (if open) ---
-        if (window.innerWidth <= 768) {
-            const sidebar = document.getElementById('sidebar');
-            const hamburger = document.getElementById('hamburgerToggle');
-            if (sidebar) sidebar.classList.remove('open');
-            if (hamburger) hamburger.classList.remove('open');
-        }
-
-        // --- 8. Load blogs dynamically if we're on the blog page ---
-        if (pageId === 'blog' && typeof window.loadBlogs === 'function') {
-            window.loadBlogs();
-        }
-
-        // --- 9. Update current page tracker ---
-        currentPage = pageId;
-    }
-
-    /**
-     * Derive the page ID from the current URL pathname.
-     * @returns {string} – Page ID ('home' if root or unknown)
-     */
-    function getPageFromPath() {
-        const path = window.location.pathname.replace(/^\/|\/$/g, '') || 'home';
-        return pages[path] ? path : 'home';
-    }
-
-    // --- Expose navigateTo globally for inline click handlers if needed ---
-    window.navigateTo = navigateTo;
-
-    // ============================================================
-    //  3.  UI UPDATE HELPERS
-    // ============================================================
-
-    /**
-     * Update the mobile header title to match the active page.
-     * @param {string} pageId
-     */
-    function updateHeaderTitle(pageId) {
-        const activeBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-        if (!activeBtn) return;
-        const iconHtml = activeBtn.querySelector('i').outerHTML;
-        const label = activeBtn.querySelector('span')?.textContent ||
-            pageId.charAt(0).toUpperCase() + pageId.slice(1);
-        const titleContainer = document.getElementById('headerTitle');
-        if (titleContainer) {
-            titleContainer.innerHTML = `${iconHtml} <span>${label}</span>`;
-        }
-    }
-
-    /**
-     * Update the large icon in the sidebar (Home = image, others = icon).
-     * Includes a subtle cross‑fade animation.
-     * @param {string} pageId
-     */
-    function updateActiveIcon(pageId) {
-        const displayContainer = document.getElementById('activeNavIcon');
-        if (!displayContainer) return;
-
-        // HOME → show the custom logo image
-        if (pageId === 'home') {
-            const currentImg = displayContainer.querySelector('.sidebar-logo');
-            if (!currentImg) {
-                const currentIcon = displayContainer.querySelector('i');
-                if (currentIcon) {
-                    currentIcon.classList.remove('anim-in');
-                    currentIcon.classList.add('anim-out');
-                    setTimeout(() => {
-                        displayContainer.innerHTML =
-                            `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
-                        const newImg = displayContainer.querySelector('.sidebar-logo');
-                        if (newImg) newImg.classList.add('anim-in');
-                    }, 200);
-                } else {
-                    displayContainer.innerHTML =
-                        `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
-                    const newImg = displayContainer.querySelector('.sidebar-logo');
-                    if (newImg) newImg.classList.add('anim-in');
-                }
-            }
-            return;
-        }
-
-        // OTHER PAGES → use the corresponding nav icon
-        const activeNavBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-        if (!activeNavBtn) return;
-        const newIconHtml = activeNavBtn.querySelector('i').outerHTML;
-
-        const currentImg = displayContainer.querySelector('.sidebar-logo');
-        if (currentImg) {
-            currentImg.classList.remove('anim-in');
-            currentImg.classList.add('anim-out');
-            setTimeout(() => {
-                displayContainer.innerHTML = newIconHtml;
-                const newIcon = displayContainer.querySelector('i');
-                if (newIcon) {
-                    newIcon.classList.remove('anim-out');
-                    requestAnimationFrame(() => newIcon.classList.add('anim-in'));
-                }
-            }, 200);
-            return;
-        }
-
-        const currentIcon = displayContainer.querySelector('i');
-        if (!currentIcon) {
-            displayContainer.innerHTML = newIconHtml;
-            const newIcon = displayContainer.querySelector('i');
-            if (newIcon) newIcon.classList.add('anim-in');
-            return;
-        }
-
-        // Animate out → replace → animate in
-        currentIcon.classList.remove('anim-in');
-        currentIcon.classList.add('anim-out');
-        setTimeout(() => {
-            displayContainer.innerHTML = newIconHtml;
-            const newIcon = displayContainer.querySelector('i');
-            if (newIcon) {
-                newIcon.classList.remove('anim-out');
-                requestAnimationFrame(() => newIcon.classList.add('anim-in'));
-            }
-        }, 200);
-    }
-
-    // ============================================================
-    //  4.  REAL‑TIME CLOCK (Dhaka) + SUN/MOON (SunCalc)
+    //  2.  REAL‑TIME CLOCK (Dhaka) + SUN/MOON (SunCalc)
     // ============================================================
 
     const DHAKA_LAT = 23.8103;
     const DHAKA_LON = 90.4125;
 
-    /** Update the time‑of‑day phase and astro display (sun/moon) */
     function updateTimeOfDay() {
         const now = new Date();
         const wrapper = document.getElementById('localTimeWrapper');
@@ -257,13 +66,13 @@
             isDay = false;
         }
 
-        wrapper.classList.remove(
-            'dawn', 'morning', 'noon', 'afternoon',
-            'dusk', 'night-light', 'night-deep'
-        );
-        wrapper.classList.add(phase);
+        wrapper.className = wrapper.className
+            .split(' ')
+            .filter(c => !['dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep'].includes(c))
+            .concat(phase)
+            .join(' ');
 
-        // --- Astro display ---
+        // Astro display
         if (isDay) {
             astroDisplay.innerHTML = `<div class="sun"></div>`;
         } else {
@@ -276,14 +85,12 @@
             else if (fraction > 0.7) sizeClass = 'size-large';
 
             const rotationDeg = ((phaseAngle * 180) / Math.PI) % 360;
-
             astroDisplay.innerHTML = `
                 <div class="moon ${sizeClass}" style="--rotation: ${rotationDeg}deg;"></div>
             `;
         }
     }
 
-    /** Update the digital clock (Dhaka time) every second */
     function updateDhakaTime() {
         const now = new Date();
         const options = {
@@ -301,19 +108,12 @@
     }
 
     // ============================================================
-    //  5.  DURATION CALCULATOR (from data.js)
+    //  3.  DURATION CALCULATOR (from data.js)
     // ============================================================
 
-    /**
-     * Calculate human‑readable duration between two dates.
-     * @param {string} startDate – YYYY-MM-DD
-     * @param {string|null} endDate – YYYY-MM-DD or null (ongoing)
-     * @returns {string} – e.g., "2 years 3 months+"
-     */
     function calculateDuration(startDate, endDate) {
         const start = new Date(startDate);
         const end = endDate ? new Date(endDate) : new Date();
-
         if (isNaN(start.getTime())) return 'Invalid date';
 
         let years = end.getFullYear() - start.getFullYear();
@@ -342,10 +142,9 @@
     }
 
     // ============================================================
-    //  6.  RENDER EXPERIENCES + CERTIFICATIONS
+    //  4.  RENDER EXPERIENCES + CERTIFICATIONS (from data.js)
     // ============================================================
 
-    /** Render the main timeline and the certifications card */
     function renderExperiences() {
         const expContainer = document.getElementById('experienceContainer');
         const certContainer = document.getElementById('certificationsContainer');
@@ -354,7 +153,7 @@
         const mainExperiences = experiences.filter((exp) => exp.id !== 'certifications');
         const certExperience = experiences.find((exp) => exp.id === 'certifications');
 
-        // --- Main timeline (sorted newest first) ---
+        // Timeline
         const sorted = [...mainExperiences].sort(
             (a, b) => new Date(b.startDate) - new Date(a.startDate)
         );
@@ -396,7 +195,7 @@
         });
         expContainer.innerHTML = expHtml || '<p class="text-muted">No experience entries found.</p>';
 
-        // --- Certifications card ---
+        // Certifications card
         if (certContainer) {
             if (certExperience) {
                 const cert = certExperience;
@@ -435,10 +234,9 @@
     }
 
     // ============================================================
-    //  7.  RENDER SKILLS (from data.js)
+    //  5.  RENDER SKILLS (from data.js)
     // ============================================================
 
-    /** Render the four skill categories with collapsible lists */
     function renderSkills() {
         const container = document.getElementById('skillsContainer');
         if (!container || typeof skills === 'undefined') return;
@@ -474,10 +272,9 @@
     }
 
     // ============================================================
-    //  8.  COLLAPSIBLE SKILLS (dynamic “Show all / Show less”)
+    //  6.  COLLAPSIBLE SKILLS (Show All / Show Less)
     // ============================================================
 
-    /** Initialise the collapsible behaviour for skill categories */
     function initCollapsibleSkills() {
         document.querySelectorAll('.skill-category[data-collapsible]').forEach((category) => {
             const skillsList = category.querySelector('.skills-list');
@@ -485,7 +282,7 @@
             const wrapper = category.querySelector('.skills-list-wrapper');
             if (!skillsList || !overlay || !wrapper) return;
 
-            // Remove old show-less button if it exists
+            // Remove old show-less button if any
             const oldBtn = wrapper.querySelector('.show-less-btn-inline');
             if (oldBtn) oldBtn.remove();
 
@@ -509,7 +306,7 @@
             });
             wrapper.appendChild(showLess);
 
-            // Replace overlay with a fresh clone to remove old listeners
+            // Replace overlay with fresh clone to remove old listeners
             const newOverlay = overlay.cloneNode(true);
             overlay.parentNode.replaceChild(newOverlay, overlay);
 
@@ -530,10 +327,42 @@
     }
 
     // ============================================================
-    //  9.  VARIOUS INITIALISERS (Discord, Hamburger, Academics, etc.)
+    //  7.  ACADEMIC DETAILS TOGGLE
     // ============================================================
 
-    /** Copy Discord username to clipboard */
+    function initAcademicDetails() {
+        document.querySelectorAll('.btn-toggle-details').forEach((btn) => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                if (!targetId) return;
+                const detailsContainer = document.getElementById(targetId);
+                if (!detailsContainer) return;
+                this.classList.toggle('open');
+                detailsContainer.classList.toggle('open');
+            });
+        });
+    }
+
+    // ============================================================
+    //  8.  SCROLL TO CERTIFICATIONS (clickable hint)
+    // ============================================================
+
+    function initScrollToCert() {
+        const trigger = document.getElementById('scrollToCertTrigger');
+        const target = document.getElementById('certificationsSection');
+        if (!trigger || !target) return;
+
+        trigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    }
+
+    // ============================================================
+    //  9.  DISCORD COPY TO CLIPBOARD
+    // ============================================================
+
     function initDiscordCopy() {
         const discordBtn = document.querySelector('.discord-copy');
         if (!discordBtn) return;
@@ -548,7 +377,10 @@
         });
     }
 
-    /** Mobile hamburger toggle + click‑outside close */
+    // ============================================================
+    //  10. HAMBURGER MENU TOGGLE
+    // ============================================================
+
     function initHamburger() {
         const toggleBtn = document.getElementById('hamburgerToggle');
         const sidebar = document.getElementById('sidebar');
@@ -572,34 +404,10 @@
         });
     }
 
-    /** Academic transcript toggle buttons */
-    function initAcademicDetails() {
-        document.querySelectorAll('.btn-toggle-details').forEach((btn) => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('data-target');
-                if (!targetId) return;
-                const detailsContainer = document.getElementById(targetId);
-                if (!detailsContainer) return;
-                this.classList.toggle('open');
-                detailsContainer.classList.toggle('open');
-            });
-        });
-    }
+    // ============================================================
+    //  11. MOBILE HEADER SCROLL HIDE/SHOW
+    // ============================================================
 
-    /** Scroll to certifications section (clickable hint) */
-    function initScrollToCert() {
-        const trigger = document.getElementById('scrollToCertTrigger');
-        const target = document.getElementById('certificationsSection');
-        if (!trigger || !target) return;
-
-        trigger.addEventListener('click', function (e) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    }
-
-    /** Hide mobile header on scroll down, show on scroll up */
     function initScrollHeader() {
         const header = document.getElementById('mobileHeader');
         if (!header) return;
@@ -637,63 +445,59 @@
     }
 
     // ============================================================
-    //  10. BOOTSTRAP
+    //  12. ACTIVE NAV ITEM (based on current page)
     // ============================================================
 
-    /** Initialise everything once the DOM is ready */
-    function init() {
-        if (isInitialised) return;
-        isInitialised = true;
-
-        // --- Render dynamic content ---
-        renderExperiences();
-        renderSkills();
-
-        // --- Initialise UI behaviours ---
-        initCollapsibleSkills();
-        initDiscordCopy();
-        initHamburger();
-        initAcademicDetails();
-        initScrollToCert();
-        initScrollHeader();
-
-        // --- Setup navigation click listeners ---
-        navItems.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = btn.getAttribute('data-page');
-                if (page && pages[page]) {
-                    navigateTo(page, true);
-                }
-            });
-        });
-
-        // --- Handle browser back/forward buttons ---
-        window.addEventListener('popstate', (event) => {
-            const page = event.state?.page || getPageFromPath();
-            if (pages[page]) {
-                navigateTo(page, false);
+    function setActiveNav() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-item').forEach((item) => {
+            const href = item.getAttribute('href');
+            if (href === currentPage) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
             }
         });
+    }
 
-        // --- Start the real‑time clock ---
-        updateDhakaTime();
-        setInterval(updateDhakaTime, 1000);
+    // ============================================================
+    //  13. BOOTSTRAP (DOM ready)
+    // ============================================================
 
-        // --- Initial page load based on current URL path ---
-        const initialPage = getPageFromPath();
-        navigateTo(initialPage, false);
+    function init() {
+        // Render dynamic content from data.js
+        if (typeof renderExperiences === 'function') renderExperiences();
+        if (typeof renderSkills === 'function') renderSkills();
 
-        // --- Log startup (so you know it's ready) ---
+        // Initialise UI behaviours
+        initCollapsibleSkills();
+        initAcademicDetails();
+        initScrollToCert();
+        initDiscordCopy();
+        initHamburger();
+        initScrollHeader();
+        setActiveNav();
+
+        // Start clock (if element exists)
+        if (document.querySelector('.dhaka-time')) {
+            updateDhakaTime();
+            setInterval(updateDhakaTime, 1000);
+        }
+
+        // Load blogs only if on blog page
+        if (document.getElementById('blogContainer') && typeof loadBlogs === 'function') {
+            loadBlogs();
+        }
+
         console.log(
             '%c✦ Md. Irtija Azad Talha · Forest Green %cExecutive Portfolio',
             'background:#1f2421;color:#9cc5a1;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
             'background:#9cc5a1;color:#1f2421;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
         );
-        console.log('%c🌿 Dynamic data from data.js loaded · SunCalc active · Clean URLs active', 'color:#216869;font-weight:500;');
+        console.log('%c🌿 Separate HTML pages · Utility mode active', 'color:#216869;font-weight:500;');
     }
 
-    // --- Wait for DOM, then bootstrap ---
+    // --- Run when DOM is ready ---
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
