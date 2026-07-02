@@ -32,12 +32,12 @@
 }
 
 /* ============================================================
-   BLOG GRID LAYOUT — Responsive, clean, modern
+   BLOG GRID LAYOUT — exactly 3 columns on desktop
    ============================================================ */
 .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2.2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     padding: 0.5rem 0 2rem 0;
 }
 
@@ -102,6 +102,12 @@
     transition: -webkit-line-clamp 0.4s ease;
 }
 
+/* On hover, show full preview text (up to 10 lines) */
+.blog-card:hover .preview-area p {
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+}
+
 /* --- "Read more" hint (always visible) --- */
 .blog-card .preview-area .read-more-hint {
     display: inline-block;
@@ -120,18 +126,9 @@
     transform: translateX(4px);
 }
 
-/* --- Expanded preview (on hover) --- */
-.blog-card .preview-area.open {
-    padding: 1.2rem 1.4rem 1.4rem 1.4rem;
-}
-
+/* --- Expanded preview (on hover) — kept for compatibility --- */
 .blog-card .preview-area.open p {
-    -webkit-line-clamp: 6;
-}
-
-.blog-card .preview-area.open .read-more-hint {
-    border-bottom-color: var(--seaweed);
-    color: var(--seaweed);
+    -webkit-line-clamp: 10;
 }
 
 /* ============================================================
@@ -363,7 +360,7 @@
 
 /* --- Gallery Grid — VISIBLE BY DEFAULT (professional collage) --- */
 .detail-gallery {
-    display: grid; /* ← Changed from 'none' to 'grid' – visible by default */
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 0.8rem;
     margin-top: 0.2rem;
@@ -372,7 +369,7 @@
 
 .detail-gallery img {
     width: 100%;
-    aspect-ratio: 1 / 1;          /* Square crop — professional, consistent */
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius-sm);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -393,7 +390,7 @@
 .detail-video {
     margin: 1.8rem 0;
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     border-radius: var(--radius-sm);
@@ -507,7 +504,7 @@
 /* --- Tablets (≤1024px) --- */
 @media (max-width: 1024px) {
     .blog-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
         gap: 1.8rem;
     }
 
@@ -528,10 +525,10 @@
     }
 }
 
-/* --- Mobile (≤768px) --- */
+/* --- Mobile (≤768px) — 1 column, no hover --- */
 @media (max-width: 768px) {
     .blog-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-template-columns: 1fr; /* single column on mobile */
         gap: 1.4rem;
     }
 
@@ -541,11 +538,29 @@
 
     .blog-card .preview-area p {
         font-size: 0.85rem;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 2; /* show only 2 lines initially */
+        overflow: hidden;
+    }
+
+    /* Disable hover effect on mobile (touch devices) */
+    .blog-card:hover .preview-area p {
+        -webkit-line-clamp: 2; /* keep it same as normal */
+        overflow: hidden;
     }
 
     .blog-card .preview-area.open p {
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 4; /* when clicked/expanded, show more */
+        overflow: hidden;
+    }
+
+    .blog-card:hover {
+        transform: none; /* remove lift effect on mobile */
+        box-shadow: var(--shadow-sm);
+    }
+
+    .blog-card:hover .cover-image {
+        transform: none;
+        filter: none;
     }
 
     .blog-detail-container {
@@ -591,7 +606,6 @@
 /* --- Small Phones (≤480px) --- */
 @media (max-width: 480px) {
     .blog-grid {
-        grid-template-columns: 1fr;
         gap: 1.2rem;
     }
 
