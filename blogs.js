@@ -1,33 +1,72 @@
-// blogs.js - improved with debugging
-(function() {
+// ============================================================
+//  BLOGS.JS — GitHub‑Powered Blog Loader
+//  Fetches Markdown posts from a public GitHub repo,
+//  parses frontmatter, and renders them as beautiful cards.
+//  Uses cache‑busting to ensure fresh content every time.
+// ============================================================
+
+(function () {
     'use strict';
 
-    const GITHUB_USER = "Irtizaa6x";
-    const GITHUB_REPO = "Irtizaa6x.github.io";
-    const BRANCH = "main";
+    // ============================================================
+    //  1.  CONFIGURATION
+    // ============================================================
 
+    /** @type {string} – Your GitHub username */
+    const GITHUB_USER = 'Irtizaa6x';
+
+    /** @type {string} – The repository where posts are stored */
+    const GITHUB_REPO = 'Irtizaa6x.github.io';
+
+    /** @type {string} – The branch to pull from */
+    const BRANCH = 'main';
+
+    /** @type {string} – The folder containing your Markdown posts */
+    const POSTS_PATH = 'src/posts';
+
+    /** @type {string} – Relative link to the detail page (clean URL) */
+    const DETAIL_PAGE = '/blog-detail';
+
+    // ============================================================
+    //  2.  HELPERS
+    // ============================================================
+
+    /**
+     * Parse YAML frontmatter from a Markdown string.
+     * Uses js‑yaml if available; falls back to a simple key‑value parser.
+     * @param {string} markdown – The raw Markdown content.
+     * @returns {{ data: Object, content: string }} – Parsed metadata and the rest of the content.
+     */
     function parseFrontmatter(markdown) {
         const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
         if (!match) {
             return { data: {}, content: markdown };
         }
+
         const frontmatter = match[1];
         const content = markdown.replace(match[0], '').trim();
         let data = {};
+
+        // Try parsing with js-yaml first
         try {
             if (typeof jsyaml !== 'undefined' && jsyaml.load) {
                 data = jsyaml.load(frontmatter) || {};
             } else {
-                // fallback
+                // Fallback: simple key:value lines
                 const lines = frontmatter.split('\n');
                 const fallbackData = {};
-                lines.forEach(line => {
+                lines.forEach((line) => {
                     const colon = line.indexOf(':');
                     if (colon > 0) {
                         const key = line.slice(0, colon).trim();
                         let val = line.slice(colon + 1).trim();
-                        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-                        if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+                        // Remove surrounding quotes if present
+                        if (
+                            (val.startsWith('"') && val.endsWith('"')) ||
+                            (val.startsWith("'") && val.endsWith("'"))
+                        ) {
+                            val = val.slice(1, -1);
+                        }
                         fallbackData[key] = val;
                     }
                 });
@@ -37,60 +76,97 @@
             console.warn('YAML parse error:', err.message);
             data = {};
         }
+
         return { data, content };
     }
 
+    /**
+     * Build a cache‑busted GitHub API URL for a given path.
+     * @param {string} path – The API path (e.g., 'contents/src/posts').
+     * @param {Record<string, string>} extraParams – Additional query parameters.
+     * @returns {string} – The full API URL with a timestamp.
+     */
+    function buildApiUrl(path, extraParams = {}) {
+        const base = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/${path}?ref=${BRANCH}`;
+        const params = new URLSearchParams({
+            ...extraParams,
+            _t: Date.now(), // ← Cache‑buster: forces fresh data from GitHub
+        });
+        return `${base}&${params.toString()}`;
+    }
+
+    // ============================================================
+    //  3.  FETCH POSTS (with parallel loading)
+    // ============================================================
+
+    /**
+     * Fetch all blog posts from GitHub.
+     * @returns {Promise<Array<Object>>} – An array of post objects (sorted newest first).
+     */
     async function fetchPosts() {
         try {
-            const url =
-                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/src/posts?ref=${BRANCH}`;
-            console.log('Fetching posts from:', url);
-            const response = await fetch(url);
+            // 1. Get the list of Markdown files
+            const listUrl = buildApiUrl(`contents/${POSTS_PATH}`);
+            const listResponse = await fetch(listUrl);
 
-            if (!response.ok) {
-                throw new Error(`GitHub API responded with ${response.status}`);
+            if (!listResponse.ok) {
+                // 404 means the folder doesn't exist yet – that's fine, just return empty
+                if (listResponse.status === 404) {
+                    console.warn('📁 No posts folder found yet.');
+                    return [];
+                }
+                throw new Error(`GitHub API responded with ${listResponse.status}`);
             }
 
-            const files = await response.json();
-            console.log('Files from GitHub:', files);
+            const files = await listResponse.json();
+            const mdFiles = files.filter((file) =>
+                file.name.endsWith('.md') && file.download_url
+            );
 
-            const posts = [];
+            if (mdFiles.length === 0) {
+                console.log('📭 No .md files found in the posts folder.');
+                return [];
+            }
 
-            for (const file of files) {
-                if (!file.name.endsWith('.md')) continue;
-
+            // 2. Fetch and parse all Markdown files in parallel
+            const fetchPromises = mdFiles.map(async (file) => {
                 try {
                     const contentRes = await fetch(file.download_url);
                     const markdown = await contentRes.text();
                     const { data, content } = parseFrontmatter(markdown);
 
-                    // Log each post data
-                    console.log('Post data:', data);
-
-                    if (data.title) {
-                        let gallery = data.gallery || [];
-                        if (Array.isArray(gallery) && gallery.length > 0) {
-                            if (typeof gallery[0] === 'object' && gallery[0].image) {
-                                gallery = gallery.map(item => item.image);
-                            }
-                        }
-
-                        posts.push({
-                            ...data,
-                            gallery: gallery,
-                            content: content,
-                            slug: data.slug || file.name.replace('.md', ''),
-                            download_url: file.download_url,
-                            fileName: file.name,
-                        });
-                    } else {
-                        console.warn('Skipping post (no title):', file.name);
+                    // Only include posts that have at least a title
+                    if (!data.title) {
+                        console.warn(`⏩ Skipping ${file.name} – missing "title" in frontmatter.`);
+                        return null;
                     }
-                } catch (err) {
-                    console.warn(`Skipping ${file.name}:`, err.message);
-                }
-            }
 
+                    // Normalise the gallery field (handle both string[] and object[] formats)
+                    let gallery = data.gallery || [];
+                    if (Array.isArray(gallery) && gallery.length > 0) {
+                        if (typeof gallery[0] === 'object' && gallery[0].image) {
+                            gallery = gallery.map((item) => item.image);
+                        }
+                    }
+
+                    return {
+                        ...data,
+                        gallery,
+                        content,
+                        slug: data.slug || file.name.replace('.md', ''),
+                        download_url: file.download_url,
+                        fileName: file.name,
+                    };
+                } catch (err) {
+                    console.warn(`⚠️ Error parsing ${file.name}:`, err.message);
+                    return null;
+                }
+            });
+
+            const results = await Promise.all(fetchPromises);
+            const posts = results.filter((post) => post !== null);
+
+            // 3. Sort by date (newest first)
             posts.sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
@@ -100,15 +176,22 @@
                 return a.fileName.localeCompare(b.fileName);
             });
 
-            console.log('Final posts array:', posts);
+            console.log(`✅ Loaded ${posts.length} blog post(s).`);
             return posts;
-
         } catch (error) {
-            console.error('Failed to fetch blog posts:', error);
+            console.error('❌ Failed to fetch blog posts:', error);
             return [];
         }
     }
 
+    // ============================================================
+    //  4.  RENDER POSTS (Card Grid)
+    // ============================================================
+
+    /**
+     * Render blog cards into the container.
+     * @param {Array<Object>} posts – The list of posts to display.
+     */
     function renderPosts(posts) {
         const container = document.getElementById('blogContainer');
         if (!container) return;
@@ -125,8 +208,9 @@
 
         let html = '<div class="blog-grid">';
 
-        posts.forEach(post => {
-            const coverUrl = post.coverImage ||
+        posts.forEach((post) => {
+            const coverUrl =
+                post.coverImage ||
                 'https://via.placeholder.com/600x400/216869/fff?text=Blog+Post';
             const preview = post.previewText || 'Click to read the full story.';
             const title = post.title || 'Untitled';
@@ -144,31 +228,44 @@
         html += '</div>';
         container.innerHTML = html;
 
-        document.querySelectorAll('.blog-card').forEach(card => {
+        // --- Attach event listeners to each card ---
+        document.querySelectorAll('.blog-card').forEach((card) => {
             const preview = card.querySelector('.preview-area');
             if (!preview) return;
 
-            card.addEventListener('mouseenter', function() {
+            // Expand preview on hover (desktop)
+            card.addEventListener('mouseenter', function () {
                 preview.classList.add('open');
             });
 
-            card.addEventListener('mouseleave', function() {
+            card.addEventListener('mouseleave', function () {
                 preview.classList.remove('open');
             });
 
-            card.addEventListener('click', function() {
+            // Navigate to detail page on click (clean URL)
+            card.addEventListener('click', function () {
                 const slug = this.dataset.slug;
                 if (slug) {
-                    window.location.href = `blog-detail.html?slug=${slug}`;
+                    // Use clean URL without hash: /blog-detail?slug=xyz
+                    window.location.href = `${DETAIL_PAGE}?slug=${slug}`;
                 }
             });
         });
     }
 
+    // ============================================================
+    //  5.  PUBLIC LOADER (Exposed globally)
+    // ============================================================
+
+    /**
+     * Load and render blog posts.
+     * Shows a loading state while fetching, then renders the cards.
+     */
     async function loadBlogs() {
         const container = document.getElementById('blogContainer');
         if (!container) return;
 
+        // Show loading state
         container.innerHTML = `
             <div class="blog-loading">
                 <i class="fas fa-spinner"></i>
@@ -180,10 +277,28 @@
         renderPosts(posts);
     }
 
-    // Auto-init if container exists
+    // Expose `loadBlogs` globally so `script.js` can call it
+    // when navigating to the blog page via the clean router.
+    window.loadBlogs = loadBlogs;
+
+    // ============================================================
+    //  6.  AUTO‑INIT
+    // ============================================================
+
+    // If the blog container exists on page load (e.g., direct access to /blog),
+    // automatically load the posts.
     if (document.getElementById('blogContainer')) {
+        // Use a small delay to ensure everything else is ready,
+        // but also avoid blocking the main thread.
         setTimeout(loadBlogs, 100);
     }
 
-    window.loadBlogs = loadBlogs;
+    // ============================================================
+    //  7.  CONSOLE BRANDING
+    // ============================================================
+
+    console.log('%c📚 Blog loader initialised', 'color:#49a078;font-weight:600;');
+    console.log(`   ↳ Repo: ${GITHUB_USER}/${GITHUB_REPO}/${POSTS_PATH}`);
+    console.log('   ↳ Cache‑busting enabled · Clean URLs active');
+
 })();
