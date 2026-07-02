@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="blogs.css" />
+
+    <!-- ===== REQUIRED: js-yaml for robust frontmatter parsing ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <!-- ===== REQUIRED: marked for Markdown rendering ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
+
     <style>
         /* ----- BASE ----- */
         body {
@@ -306,39 +312,61 @@
         </main>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
     <script>
+        // ============================================================
+        //  CONFIGURATION
+        // ============================================================
         const GITHUB_USER = "Irtizaa6x";
         const GITHUB_REPO = "Irtizaa6x.github.io";
         const BRANCH = "main";
 
+        // ============================================================
+        //  HELPERS
+        // ============================================================
         function getParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
+        // ============================================================
+        //  PARSER: Uses js-yaml for robust frontmatter parsing
+        // ============================================================
         function parseFrontmatter(markdown) {
             const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
-            if (!match) return { data: {}, content: markdown };
+            if (!match) {
+                return { data: {}, content: markdown };
+            }
+
             const frontmatter = match[1];
             const content = markdown.replace(match[0], '').trim();
-            const data = {};
-            frontmatter.split('\n').forEach(line => {
-                const [key, ...val] = line.split(':');
-                if (key && val.length) {
-                    let value = val.join(':').trim();
-                    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-                        value = value.slice(1, -1);
+            let data = {};
+
+            try {
+                data = jsyaml.load(frontmatter) || {};
+            } catch (err) {
+                console.warn('YAML parse error:', err.message);
+                // Fallback: simple key:value parsing
+                const lines = frontmatter.split('\n');
+                const fallbackData = {};
+                lines.forEach(line => {
+                    const colon = line.indexOf(':');
+                    if (colon > 0) {
+                        const key = line.slice(0, colon).trim();
+                        let val = line.slice(colon + 1).trim();
+                        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+                        if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+                        fallbackData[key] = val;
                     }
-                    if (value.startsWith('[') && value.endsWith(']')) {
-                        value = value.slice(1, -1).split(',').map(v => v.trim());
-                    }
-                    data[key.trim()] = value;
-                }
-            });
+                });
+                data = fallbackData;
+            }
+
             return { data, content };
         }
 
+        // ============================================================
+        //  API: Fetch a single post by slug
+        // ============================================================
         async function fetchPost(slug) {
             try {
                 const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/src/posts/${slug}.md?ref=${BRANCH}`;
@@ -347,14 +375,25 @@
                 const file = await response.json();
                 const markdown = atob(file.content);
                 const { data, content } = parseFrontmatter(markdown);
-                return { ...data, content };
+
+                // Normalise gallery: handle both string[] and object[] formats
+                let gallery = data.gallery || [];
+                if (Array.isArray(gallery) && gallery.length > 0) {
+                    if (typeof gallery[0] === 'object' && gallery[0].image) {
+                        gallery = gallery.map(item => item.image);
+                    }
+                }
+
+                return { ...data, gallery, content };
             } catch (error) {
                 console.error('Error fetching post:', error);
                 return null;
             }
         }
 
-        // Toggle gallery visibility
+        // ============================================================
+        //  TOGGLE GALLERY
+        // ============================================================
         function toggleGallery() {
             const gallery = document.getElementById('galleryContainer');
             const btn = document.querySelector('.gallery-toggle-btn');
@@ -369,28 +408,37 @@
             }
         }
 
+        // ============================================================
+        //  RENDER DETAIL
+        // ============================================================
         async function renderDetail() {
             const slug = getParam('slug');
             const container = document.getElementById('blogDetailContainer');
             if (!slug) {
-                container.innerHTML = `<p style="text-align:center;color:red;">No blog post selected.</p><a href="index.html" class="back-to-portfolio">Go back</a>`;
+                container.innerHTML = `
+                    <p style="text-align:center;color:red;">No blog post selected.</p>
+                    <a href="index.html" class="back-to-portfolio">Go back</a>
+                `;
                 return;
             }
 
             const post = await fetchPost(slug);
             if (!post) {
-                container.innerHTML = `<p style="text-align:center;color:red;">Post not found.</p><a href="index.html" class="back-to-portfolio">Go back</a>`;
+                container.innerHTML = `
+                    <p style="text-align:center;color:red;">Post not found.</p>
+                    <a href="index.html" class="back-to-portfolio">Go back</a>
+                `;
                 return;
             }
 
             // --- COVER ---
-            const coverHtml = post.coverImage 
-                ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" />` 
+            const coverHtml = post.coverImage
+                ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" />`
                 : '';
 
             // --- DATE ---
-            const dateHtml = post.date 
-                ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>` 
+            const dateHtml = post.date
+                ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>`
                 : '';
 
             // --- TAGS ---
@@ -399,7 +447,7 @@
                 tagsHtml = `<div class="detail-tags">${post.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
             }
 
-            // --- GALLERY (with toggle) ---
+            // --- GALLERY ---
             let galleryHtml = '';
             if (post.gallery && post.gallery.length > 0) {
                 const firstImage = post.gallery[0];
@@ -442,7 +490,7 @@
                 certHtml = `<a href="${post.certificate}" target="_blank" class="detail-cert-btn"><i class="fas fa-certificate"></i> View Certificate</a>`;
             }
 
-            // --- BODY ---
+            // --- BODY (Markdown) ---
             const bodyHtml = post.content ? marked.parse(post.content) : '';
 
             container.innerHTML = `
@@ -458,14 +506,11 @@
                     <a href="index.html" class="back-to-portfolio"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
                 </div>
             `;
-
-            // If gallery exists but no images, hide the gallery container
-            if (post.gallery && post.gallery.length === 0) {
-                const galleryContainer = document.querySelector('.detail-gallery-container');
-                if (galleryContainer) galleryContainer.style.display = 'none';
-            }
         }
 
+        // ============================================================
+        //  INIT
+        // ============================================================
         renderDetail();
     </script>
 </body>
