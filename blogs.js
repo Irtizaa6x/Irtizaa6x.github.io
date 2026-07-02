@@ -1,22 +1,21 @@
 /* ============================================================
-   BLOGS.JS — Professional Blog Engine
-   Fetches posts from GitHub API, renders cards,
-   handles hover expansion, and navigates to detail pages.
-   Works seamlessly with Decap CMS and your GitHub repo.
+   BLOGS.JS — Professional Blog Engine (YAML Ready)
+   Fetches posts from GitHub API, parses frontmatter with js-yaml,
+   renders cards with hover preview, and navigates to detail.
    ============================================================ */
 
 (function() {
     'use strict';
 
     // ============================================================
-    //  CONFIGURATION — Edit these 3 values
+    //  CONFIGURATION
     // ============================================================
-    const GITHUB_USER = "Irtizaa6x";        // e.g., "irtija-talha"
-    const GITHUB_REPO = "Irtizaa6x.github.io";       // e.g., "my-portfolio"
+    const GITHUB_USER = "Irtizaa6x";
+    const GITHUB_REPO = "Irtizaa6x.github.io";
     const BRANCH = "main";
 
     // ============================================================
-    //  CORE: Parse Frontmatter from Markdown
+    //  PARSER: Uses js-yaml for robust frontmatter handling
     // ============================================================
     function parseFrontmatter(markdown) {
         const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
@@ -26,62 +25,26 @@
 
         const frontmatter = match[1];
         const content = markdown.replace(match[0], '').trim();
-        const data = {};
+        let data = {};
 
-        // Simple YAML-like parser (handles strings, arrays, and quoted values)
-        const lines = frontmatter.split('\n');
-        let currentKey = null;
-        let currentArray = [];
-
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim();
-            if (!line) continue;
-
-            // Check if line contains a key:value pair
-            const colonIndex = line.indexOf(':');
-            if (colonIndex !== -1) {
-                // If we were building an array, save it
-                if (currentKey && currentArray.length > 0) {
-                    data[currentKey] = currentArray;
-                    currentArray = [];
-                    currentKey = null;
+        try {
+            data = jsyaml.load(frontmatter) || {};
+        } catch (err) {
+            console.warn('YAML parse error:', err.message);
+            // Fallback: try simple key:value parse (for safety)
+            const lines = frontmatter.split('\n');
+            const fallbackData = {};
+            lines.forEach(line => {
+                const colon = line.indexOf(':');
+                if (colon > 0) {
+                    const key = line.slice(0, colon).trim();
+                    let val = line.slice(colon + 1).trim();
+                    if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+                    if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+                    fallbackData[key] = val;
                 }
-
-                const key = line.slice(0, colonIndex).trim();
-                let value = line.slice(colonIndex + 1).trim();
-
-                // Remove quotes
-                if ((value.startsWith('"') && value.endsWith('"')) ||
-                    (value.startsWith("'") && value.endsWith("'"))) {
-                    value = value.slice(1, -1);
-                }
-
-                // Parse array: [item1, item2, item3]
-                if (value.startsWith('[') && value.endsWith(']')) {
-                    const inner = value.slice(1, -1).trim();
-                    if (inner) {
-                        data[key] = inner.split(',').map(v => v.trim());
-                    } else {
-                        data[key] = [];
-                    }
-                } else {
-                    data[key] = value;
-                }
-
-                // If the value was a multi-line array indicator, prepare for next lines
-                if (value === '[' || value === '[' || value === '[') {
-                    currentKey = key;
-                    currentArray = [];
-                }
-            } else if (currentKey) {
-                // This is a continuation of a multi-line array (if supported)
-                // For simplicity, we skip multi-line array parsing; user should use inline arrays.
-            }
-        }
-
-        // Save any remaining array
-        if (currentKey && currentArray.length > 0) {
-            data[currentKey] = currentArray;
+            });
+            data = fallbackData;
         }
 
         return { data, content };
@@ -103,7 +66,6 @@
             const posts = [];
 
             for (const file of files) {
-                // Only process .md files
                 if (!file.name.endsWith('.md')) continue;
 
                 try {
@@ -111,10 +73,20 @@
                     const markdown = await contentRes.text();
                     const { data, content } = parseFrontmatter(markdown);
 
-                    // Only include posts that have a title (i.e., valid published posts)
+                    // Only include posts that have a title
                     if (data.title) {
+                        // Normalise gallery: handle both string[] and object[] formats
+                        let gallery = data.gallery || [];
+                        if (Array.isArray(gallery) && gallery.length > 0) {
+                            // Check if it's an array of objects with 'image' key
+                            if (typeof gallery[0] === 'object' && gallery[0].image) {
+                                gallery = gallery.map(item => item.image);
+                            }
+                        }
+
                         posts.push({
                             ...data,
+                            gallery: gallery,
                             content: content,
                             slug: data.slug || file.name.replace('.md', ''),
                             download_url: file.download_url,
@@ -126,13 +98,11 @@
                 }
             }
 
-            // Sort by date (newest first), fallback to filename if no date
+            // Sort by date (newest first)
             posts.sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
-                if (!isNaN(dateA) && !isNaN(dateB)) {
-                    return dateB - dateA;
-                }
+                if (!isNaN(dateA) && !isNaN(dateB)) return dateB - dateA;
                 return a.fileName.localeCompare(b.fileName);
             });
 
@@ -151,22 +121,19 @@
         const container = document.getElementById('blogContainer');
         if (!container) return;
 
-        // Show empty state
         if (!posts || posts.length === 0) {
             container.innerHTML = `
                 <div class="blog-empty">
                     <i class="fas fa-book-open"></i>
-                    <p>No blog posts published yet.<br />Check back soon for updates on my journey!</p>
+                    <p>No blog posts published yet.<br />Check back soon for updates!</p>
                 </div>
             `;
             return;
         }
 
-        // Build grid
         let html = '<div class="blog-grid">';
 
         posts.forEach(post => {
-            // Use coverImage from frontmatter, or a fallback placeholder
             const coverUrl = post.coverImage || 'https://via.placeholder.com/600x400/216869/fff?text=Blog+Post';
             const preview = post.previewText || 'Click to read the full story.';
             const title = post.title || 'Untitled';
@@ -191,7 +158,6 @@
             const preview = card.querySelector('.preview-area');
             if (!preview) return;
 
-            // On hover: expand preview
             card.addEventListener('mouseenter', function() {
                 preview.classList.add('open');
             });
@@ -200,18 +166,12 @@
                 preview.classList.remove('open');
             });
 
-            // On click: navigate to detail page
             card.addEventListener('click', function() {
                 const slug = this.dataset.slug;
                 if (slug) {
                     window.location.href = `blog-detail.html?slug=${slug}`;
                 }
             });
-
-            // Touch support for mobile: tap to toggle expansion (optional)
-            // We keep it simple: tap acts as click, so they navigate directly.
-            // Mobile users will see the preview only if they long-press or on hover (not common).
-            // We'll keep the click navigation as the primary action.
         });
     }
 
@@ -222,7 +182,6 @@
         const container = document.getElementById('blogContainer');
         if (!container) return;
 
-        // Show loading state
         container.innerHTML = `
             <div class="blog-loading">
                 <i class="fas fa-spinner"></i>
@@ -235,17 +194,14 @@
     }
 
     // ============================================================
-    //  AUTO-INIT: If the page directly contains #blogContainer,
-    //  load blogs automatically (e.g., when navigating to index.html#blog)
+    //  AUTO-INIT: If container exists, load blogs
     // ============================================================
     if (document.getElementById('blogContainer')) {
-        // Check if we should auto-load (if the page is not the main portfolio,
-        // or if the container is present, it's safe to load)
         loadBlogs();
     }
 
     // ============================================================
-    //  EXPOSE: Make loadBlogs globally accessible for script.js
+    //  EXPOSE: Make loadBlogs globally accessible
     // ============================================================
     window.loadBlogs = loadBlogs;
 
