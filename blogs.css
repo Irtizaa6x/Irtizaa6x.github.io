@@ -32,7 +32,7 @@
 }
 
 /* ============================================================
-   BLOG GRID LAYOUT
+   BLOG GRID LAYOUT — Responsive, clean, modern
    ============================================================ */
 .blog-grid {
     display: grid;
@@ -42,7 +42,7 @@
 }
 
 /* ============================================================
-   INDIVIDUAL BLOG CARD — Premium Design
+   INDIVIDUAL BLOG CARD — Premium, interactive
    ============================================================ */
 .blog-card {
     background: var(--bg-card);
@@ -65,7 +65,7 @@
     border-color: rgba(73, 160, 120, 0.15);
 }
 
-/* --- COVER IMAGE (Fixed sizing) --- */
+/* --- COVER IMAGE (fixed aspect ratio) --- */
 .blog-card .cover-image {
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -80,7 +80,7 @@
     filter: brightness(0.98) saturate(1.02);
 }
 
-/* --- PREVIEW AREA (Hover expansion) --- */
+/* --- PREVIEW AREA (hover expansion) --- */
 .blog-card .preview-area {
     padding: 1.2rem 1.4rem 0.8rem 1.4rem;
     background: var(--bg-card);
@@ -102,7 +102,7 @@
     transition: -webkit-line-clamp 0.4s ease;
 }
 
-/* --- Read more hint (always visible, subtle) --- */
+/* --- "Read more" hint (always visible) --- */
 .blog-card .preview-area .read-more-hint {
     display: inline-block;
     margin-top: 0.6rem;
@@ -135,10 +135,10 @@
 }
 
 /* ============================================================
-   BLOG DETAIL PAGE — Professional & Clean
+   BLOG DETAIL PAGE — Clean, spacious, readable
    ============================================================ */
 
-/* --- Back button (styled to match portfolio) --- */
+/* --- Back button --- */
 .back-to-portfolio {
     display: inline-flex;
     align-items: center;
@@ -182,10 +182,10 @@
     border: 1px solid rgba(156, 197, 161, 0.08);
 }
 
-/* --- Cover Image (Fixed: not too big) --- */
+/* --- Detail Cover Image --- */
 .blog-detail-container .detail-cover {
     width: 100%;
-    max-height: 420px;          /* Perfect size — not overwhelming */
+    max-height: 420px;
     object-fit: cover;
     border-radius: var(--radius-sm);
     margin-bottom: 1.8rem;
@@ -194,7 +194,7 @@
     background: var(--alabaster-light);
 }
 
-/* --- Title --- */
+/* --- Detail Title --- */
 .blog-detail-container .detail-title {
     font-family: 'Playfair Display', serif;
     font-size: 2.6rem;
@@ -205,7 +205,7 @@
     letter-spacing: -0.5px;
 }
 
-/* --- Date --- */
+/* --- Detail Date --- */
 .blog-detail-container .detail-date {
     color: var(--text-muted);
     font-size: 0.9rem;
@@ -324,46 +324,10 @@
 }
 
 /* ============================================================
-   GALLERY — Beautiful Grid with Toggle
+   GALLERY — Professional collage (visible by default)
    ============================================================ */
 .detail-gallery-container {
     margin: 2rem 0 1.5rem 0;
-}
-
-/* --- Preview Image (first gallery image) --- */
-.detail-gallery-preview {
-    position: relative;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.detail-gallery-preview img {
-    width: 100%;
-    max-height: 320px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-.detail-gallery-preview:hover img {
-    transform: scale(1.02);
-}
-
-.detail-gallery-preview .gallery-count {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    background: rgba(31, 36, 33, 0.8);
-    backdrop-filter: blur(8px);
-    color: #ffffff;
-    padding: 0.3rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
 }
 
 /* --- Toggle Button --- */
@@ -380,7 +344,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    margin: 0.5rem 0 0.2rem 0;
+    margin: 0 0 1rem 0;
     font-family: 'Inter', sans-serif;
     box-shadow: var(--shadow-sm);
 }
@@ -397,23 +361,24 @@
     font-size: 0.9rem;
 }
 
-/* --- Gallery Grid (hidden by default, toggled) --- */
+/* --- Gallery Grid — VISIBLE BY DEFAULT (professional collage) --- */
 .detail-gallery {
-    display: none;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    display: grid; /* ← Changed from 'none' to 'grid' – visible by default */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 0.8rem;
-    margin-top: 1.2rem;
+    margin-top: 0.2rem;
     animation: fadeUp 0.4s ease;
 }
 
 .detail-gallery img {
     width: 100%;
-    aspect-ratio: 1 / 1;          /* Square crop — looks professional */
+    aspect-ratio: 1 / 1;          /* Square crop — professional, consistent */
     object-fit: cover;
     border-radius: var(--radius-sm);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
+    background: var(--alabaster-light);
 }
 
 .detail-gallery img:hover {
@@ -557,6 +522,10 @@
     .blog-detail-container .detail-cover {
         max-height: 350px;
     }
+
+    .detail-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 }
 
 /* --- Mobile (≤768px) --- */
@@ -649,9 +618,5 @@
     .detail-gallery {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
         gap: 0.5rem;
-    }
-
-    .detail-gallery-preview img {
-        max-height: 200px;
     }
 }
