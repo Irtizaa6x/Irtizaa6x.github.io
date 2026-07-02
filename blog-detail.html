@@ -5,24 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Detail · Irtija</title>
 
-    <!-- Google Fonts -->
+    <!-- ===== SEO / Open Graph ===== -->
+    <meta property="og:title" content="Blog Post · Irtija" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/blog-detail" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- ===== Fonts & Icons ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
-    <!-- Core Styles -->
+    <!-- ===== Core Styles ===== -->
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="blogs.css" />
 
-    <!-- ===== REQUIRED: js-yaml for frontmatter parsing ===== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    
-    <!-- ===== REQUIRED: marked for Markdown rendering ===== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
+    <!-- ===== Required Libraries ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js" defer></script>
 
+    <!-- ===== Page‑specific overrides (keeps layout clean) ===== -->
     <style>
-        /* Minimal page-level overrides — everything else comes from blogs.css */
+        /* Minimal overrides – everything else comes from blogs.css */
         body {
             background: var(--alabaster, #dce1de);
             padding: 2rem 1rem;
@@ -39,12 +44,10 @@
             background: transparent;
         }
 
-        /* Additional spacing for the back button container */
         .back-to-portfolio-wrapper {
             margin-bottom: 1.8rem;
         }
 
-        /* Footer spacing */
         .detail-footer {
             margin-top: 2.5rem;
             border-top: 1px solid rgba(31, 36, 33, 0.06);
@@ -78,11 +81,36 @@
                 justify-content: center;
             }
         }
+
+        /* Gallery grid (equal size) – already defined in blogs.css,
+           but we ensure it's applied even if the stylesheet hasn't loaded. */
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+        .detail-gallery img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: var(--radius-sm, 10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.04));
+        }
+        .detail-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow, 0 8px 32px rgba(73,160,120,0.10));
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <main class="main-content" id="mainContent">
+
+            <!-- ===== DYNAMIC CONTENT CONTAINER ===== -->
             <div id="blogDetailContainer" class="blog-detail-container">
                 <!-- Loading state -->
                 <div class="blog-loading" style="padding:3rem 0;">
@@ -90,241 +118,300 @@
                     <p>Loading post...</p>
                 </div>
             </div>
+
         </main>
     </div>
 
+    <!-- ============================================================
+       MAIN SCRIPT
+    ============================================================ -->
     <script>
-        // ============================================================
-        //  CONFIGURATION
-        // ============================================================
-        const GITHUB_USER = "Irtizaa6x";
-        const GITHUB_REPO = "Irtizaa6x.github.io";
-        const BRANCH = "main";
+        (function() {
+            'use strict';
 
-        // ============================================================
-        //  HELPERS
-        // ============================================================
-        function getParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+            // ============================================================
+            //  1.  CONFIGURATION
+            // ============================================================
 
-        // ============================================================
-        //  PARSER: Uses js-yaml for robust frontmatter parsing
-        // ============================================================
-        function parseFrontmatter(markdown) {
-            const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
-            if (!match) {
-                return { data: {}, content: markdown };
+            const GITHUB_USER = 'Irtizaa6x';
+            const GITHUB_REPO = 'Irtizaa6x.github.io';
+            const BRANCH = 'main';
+            const POSTS_PATH = 'src/posts';
+
+            // ============================================================
+            //  2.  HELPERS
+            // ============================================================
+
+            /**
+             * Get a URL parameter by name.
+             * @param {string} param – The parameter name.
+             * @returns {string|null} – The value or null if not found.
+             */
+            function getParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
             }
 
-            const frontmatter = match[1];
-            const content = markdown.replace(match[0], '').trim();
-            let data = {};
+            /**
+             * Parse YAML frontmatter from a Markdown string.
+             * Uses js-yaml if available; falls back to a simple key-value parser.
+             */
+            function parseFrontmatter(markdown) {
+                const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
+                if (!match) {
+                    return { data: {}, content: markdown };
+                }
+                const frontmatter = match[1];
+                const content = markdown.replace(match[0], '').trim();
+                let data = {};
 
-            try {
-                data = jsyaml.load(frontmatter) || {};
-            } catch (err) {
-                console.warn('YAML parse error:', err.message);
-                // Fallback: simple key:value parsing
-                const lines = frontmatter.split('\n');
-                const fallbackData = {};
-                lines.forEach(line => {
-                    const colon = line.indexOf(':');
-                    if (colon > 0) {
-                        const key = line.slice(0, colon).trim();
-                        let val = line.slice(colon + 1).trim();
-                        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-                        if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
-                        fallbackData[key] = val;
+                try {
+                    if (typeof jsyaml !== 'undefined' && jsyaml.load) {
+                        data = jsyaml.load(frontmatter) || {};
+                    } else {
+                        // Fallback: simple key:value lines
+                        const lines = frontmatter.split('\n');
+                        const fallbackData = {};
+                        lines.forEach(line => {
+                            const colon = line.indexOf(':');
+                            if (colon > 0) {
+                                const key = line.slice(0, colon).trim();
+                                let val = line.slice(colon + 1).trim();
+                                if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+                                if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+                                fallbackData[key] = val;
+                            }
+                        });
+                        data = fallbackData;
                     }
-                });
-                data = fallbackData;
+                } catch (err) {
+                    console.warn('YAML parse error:', err.message);
+                    data = {};
+                }
+
+                return { data, content };
             }
 
-            return { data, content };
-        }
+            /**
+             * Build a cache‑busted GitHub API URL for a single file.
+             */
+            function buildFileUrl(slug) {
+                const path = `${POSTS_PATH}/${slug}.md`;
+                return `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${BRANCH}&_t=${Date.now()}`;
+            }
 
-        // ============================================================
-        //  API: Fetch a single post by slug
-        // ============================================================
-        async function fetchPost(slug) {
-            try {
-                const url =
-                    `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/src/posts/${slug}.md?ref=${BRANCH}`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Post not found');
-                const file = await response.json();
-                const markdown = atob(file.content);
-                const { data, content } = parseFrontmatter(markdown);
+            // ============================================================
+            //  3.  FETCH POST DATA
+            // ============================================================
 
-                // Normalise gallery: handle both string[] and object[] formats
-                let gallery = data.gallery || [];
-                if (Array.isArray(gallery) && gallery.length > 0) {
-                    if (typeof gallery[0] === 'object' && gallery[0].image) {
-                        gallery = gallery.map(item => item.image);
+            async function fetchPost(slug) {
+                try {
+                    const url = buildFileUrl(slug);
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('Post not found.');
+                        }
+                        throw new Error(`GitHub API responded with ${response.status}`);
+                    }
+                    const file = await response.json();
+                    // The content is Base64‑encoded
+                    const markdown = atob(file.content);
+                    const { data, content } = parseFrontmatter(markdown);
+
+                    // Normalise gallery: handle both string[] and object[] formats
+                    let gallery = data.gallery || [];
+                    if (Array.isArray(gallery) && gallery.length > 0) {
+                        if (typeof gallery[0] === 'object' && gallery[0].image) {
+                            gallery = gallery.map(item => item.image);
+                        }
+                    }
+
+                    return { ...data, gallery, content };
+                } catch (error) {
+                    console.error('Error fetching post:', error);
+                    return null;
+                }
+            }
+
+            // ============================================================
+            //  4.  GALLERY TOGGLE
+            // ============================================================
+
+            function toggleGallery() {
+                const gallery = document.getElementById('galleryContainer');
+                const btn = document.querySelector('.gallery-toggle-btn');
+                if (!gallery || !btn) return;
+
+                if (gallery.style.display === 'none' || gallery.style.display === '') {
+                    gallery.style.display = 'grid';
+                    btn.innerHTML = '<i class="fas fa-times"></i> Hide Gallery';
+                } else {
+                    gallery.style.display = 'none';
+                    const count = gallery.children.length;
+                    btn.innerHTML = `<i class="fas fa-images"></i> View Gallery (${count} images)`;
+                }
+            }
+
+            // Make toggleGallery globally accessible for inline onclick
+            window.toggleGallery = toggleGallery;
+
+            // ============================================================
+            //  5.  RENDER DETAIL
+            // ============================================================
+
+            async function renderDetail() {
+                const slug = getParam('slug');
+                const container = document.getElementById('blogDetailContainer');
+                if (!container) return;
+
+                if (!slug) {
+                    container.innerHTML = `
+                        <div style="text-align:center;padding:3rem 1rem;">
+                            <p style="color:#b91c1c;font-weight:600;">❌ No blog post selected.</p>
+                            <a href="/blog" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
+                                <i class="fas fa-arrow-left"></i> Back to Blog
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const post = await fetchPost(slug);
+                if (!post) {
+                    container.innerHTML = `
+                        <div style="text-align:center;padding:3rem 1rem;">
+                            <p style="color:#b91c1c;font-weight:600;">❌ Post not found.</p>
+                            <a href="/blog" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
+                                <i class="fas fa-arrow-left"></i> Back to Blog
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // --- Update document title ---
+                document.title = `${post.title || 'Blog Post'} · Irtija`;
+
+                // --- Cover image ---
+                const coverHtml = post.coverImage
+                    ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" loading="lazy" />`
+                    : '';
+
+                // --- Date ---
+                const dateHtml = post.date
+                    ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>`
+                    : '';
+
+                // --- Tags ---
+                let tagsHtml = '';
+                if (post.tags && post.tags.length) {
+                    tagsHtml = `<div class="detail-tags">${post.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
+                }
+
+                // --- Gallery (equal grid, visible by default) ---
+                let galleryHtml = '';
+                if (post.gallery && post.gallery.length > 0) {
+                    const allImages = post.gallery.map(img =>
+                        `<img src="${img}" alt="Gallery image" loading="lazy" />`
+                    ).join('');
+
+                    galleryHtml = `
+                        <div class="detail-gallery-container">
+                            <button class="gallery-toggle-btn" onclick="toggleGallery()">
+                                <i class="fas fa-times"></i> Hide Gallery
+                            </button>
+                            <div class="detail-gallery" id="galleryContainer" style="display:grid;">
+                                ${allImages}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // --- Video embed ---
+                let videoHtml = '';
+                if (post.videoURL) {
+                    let embedUrl = post.videoURL;
+                    if (post.videoURL.includes('watch?v=')) {
+                        embedUrl = post.videoURL.replace('watch?v=', 'embed/');
+                    } else if (post.videoURL.includes('youtu.be/')) {
+                        embedUrl = post.videoURL.replace('youtu.be/', 'youtube.com/embed/');
+                    }
+                    if (embedUrl.includes('youtube')) {
+                        videoHtml = `
+                            <div class="detail-video">
+                                <iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                        `;
                     }
                 }
 
-                return { ...data, gallery, content };
-            } catch (error) {
-                console.error('Error fetching post:', error);
-                return null;
+                // --- Certificate button ---
+                let certHtml = '';
+                if (post.certificate) {
+                    certHtml = `
+                        <a href="${post.certificate}" target="_blank" class="detail-cert-btn">
+                            <i class="fas fa-certificate"></i> View Certificate
+                        </a>
+                    `;
+                }
+
+                // --- Body (Markdown -> HTML) ---
+                let bodyHtml = '';
+                if (post.content) {
+                    try {
+                        bodyHtml = marked.parse(post.content);
+                    } catch (err) {
+                        console.warn('Markdown parsing failed:', err);
+                        bodyHtml = `<p>${post.content}</p>`;
+                    }
+                }
+
+                // --- Assemble full HTML ---
+                container.innerHTML = `
+                    <!-- Back button (top) -->
+                    <div class="back-to-portfolio-wrapper">
+                        <a href="/blog" class="back-to-portfolio">
+                            <i class="fas fa-arrow-left"></i> Back to Blog
+                        </a>
+                    </div>
+
+                    ${coverHtml}
+                    <h1 class="detail-title">${post.title || 'Untitled'}</h1>
+                    ${dateHtml}
+                    ${tagsHtml}
+
+                    <div class="detail-body">${bodyHtml}</div>
+
+                    ${galleryHtml}
+                    ${videoHtml}
+                    ${certHtml}
+
+                    <!-- Footer with back button -->
+                    <div class="detail-footer">
+                        <span class="footer-note">
+                            <i class="fas fa-feather-alt"></i> Published via Irtija's Admin Panel
+                        </span>
+                        <a href="/blog" class="back-to-portfolio" style="margin:0;">
+                            <i class="fas fa-arrow-left"></i> Back to Blog
+                        </a>
+                    </div>
+                `;
             }
-        }
 
-        // ============================================================
-        //  TOGGLE GALLERY
-        // ============================================================
-        function toggleGallery() {
-            const gallery = document.getElementById('galleryContainer');
-            const btn = document.querySelector('.gallery-toggle-btn');
-            if (!gallery || !btn) return;
+            // ============================================================
+            //  6.  BOOTSTRAP
+            // ============================================================
 
-            if (gallery.style.display === 'none' || gallery.style.display === '') {
-                gallery.style.display = 'grid';
-                btn.innerHTML = '<i class="fas fa-times"></i> Hide Gallery';
+            // Wait for the DOM and the required libraries to load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', renderDetail);
             } else {
-                gallery.style.display = 'none';
-                const count = gallery.children.length;
-                btn.innerHTML = `<i class="fas fa-images"></i> View Gallery (${count} images)`;
-            }
-        }
-
-        // ============================================================
-        //  RENDER DETAIL
-        // ============================================================
-        async function renderDetail() {
-            const slug = getParam('slug');
-            const container = document.getElementById('blogDetailContainer');
-
-            if (!slug) {
-                container.innerHTML = `
-                    <div style="text-align:center;padding:3rem 1rem;">
-                        <p style="color:#b91c1c;font-weight:600;">❌ No blog post selected.</p>
-                        <a href="/#blog" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
-                            <i class="fas fa-arrow-left"></i> Back to Portfolio
-                        </a>
-                    </div>
-                `;
-                return;
+                renderDetail();
             }
 
-            const post = await fetchPost(slug);
-            if (!post) {
-                container.innerHTML = `
-                    <div style="text-align:center;padding:3rem 1rem;">
-                        <p style="color:#b91c1c;font-weight:600;">❌ Post not found.</p>
-                        <a href="/#blog-page" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
-                            <i class="fas fa-arrow-left"></i> Back to Portfolio
-                        </a>
-                    </div>
-                `;
-                return;
-            }
-
-            // --- COVER ---
-            const coverHtml = post.coverImage
-                ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" loading="lazy" />`
-                : '';
-
-            // --- DATE ---
-            const dateHtml = post.date
-                ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>`
-                : '';
-
-            // --- TAGS ---
-            let tagsHtml = '';
-            if (post.tags && post.tags.length) {
-                tagsHtml = `<div class="detail-tags">${post.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
-            }
-
-            // --- GALLERY (with toggle, visible by default) ---
-            let galleryHtml = '';
-            let galleryCount = 0;
-            if (post.gallery && post.gallery.length > 0) {
-                galleryCount = post.gallery.length;
-                const firstImage = post.gallery[0];
-                const remainingCount = galleryCount - 1;
-                const allImages = post.gallery.map(img =>
-                    `<img src="${img}" alt="Gallery image" loading="lazy" />`
-                ).join('');
-
-                galleryHtml = `
-                    <div class="detail-gallery-container">
-                        <div class="detail-gallery-preview">
-                            <img src="${firstImage}" alt="Gallery preview" loading="lazy" />
-                            ${remainingCount > 0 ? `<span class="gallery-count">+${remainingCount} more</span>` : ''}
-                        </div>
-                        <button class="gallery-toggle-btn" onclick="toggleGallery()">
-                            <i class="fas fa-times"></i> Hide Gallery
-                        </button>
-                        <div class="detail-gallery" id="galleryContainer" style="display:grid;">
-                            ${allImages}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // --- VIDEO ---
-            let videoHtml = '';
-            if (post.videoURL) {
-                let embedUrl = post.videoURL;
-                if (post.videoURL.includes('watch?v=')) {
-                    embedUrl = post.videoURL.replace('watch?v=', 'embed/');
-                } else if (post.videoURL.includes('youtu.be/')) {
-                    embedUrl = post.videoURL.replace('youtu.be/', 'youtube.com/embed/');
-                }
-                if (embedUrl.includes('youtube')) {
-                    videoHtml =
-                        `<div class="detail-video"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy"></iframe></div>`;
-                }
-            }
-
-            // --- CERTIFICATE ---
-            let certHtml = '';
-            if (post.certificate) {
-                certHtml =
-                    `<a href="${post.certificate}" target="_blank" class="detail-cert-btn"><i class="fas fa-certificate"></i> View Certificate</a>`;
-            }
-
-            // --- BODY (Markdown) ---
-            const bodyHtml = post.content ? marked.parse(post.content) : '';
-
-            // --- FULL HTML ---
-            container.innerHTML = `
-                <!-- Back button (top) -->
-                <div class="back-to-portfolio-wrapper">
-                    <a href="/#blog-page" class="back-to-portfolio">
-                        <i class="fas fa-arrow-left"></i> Back to Blog
-                    </a>
-                </div>
-
-                ${coverHtml}
-                <h1 class="detail-title">${post.title}</h1>
-                ${dateHtml}
-                ${tagsHtml}
-                <div class="detail-body">${bodyHtml}</div>
-                ${galleryHtml}
-                ${videoHtml}
-                ${certHtml}
-
-                <!-- Footer with back button -->
-                <div class="detail-footer">
-                    <span class="footer-note">
-                        <i class="fas fa-feather-alt"></i> Published via Irtija's Admin Panel
-                    </span>
-                    <a href="/#blog-page" class="back-to-portfolio" style="margin:0;">
-                        <i class="fas fa-arrow-left"></i> Back to Blog
-                    </a>
-                </div>
-            `;
-        }
-
-        // ============================================================
-        //  INIT
-        // ============================================================
-        renderDetail();
+        })();
     </script>
+
 </body>
 </html>
