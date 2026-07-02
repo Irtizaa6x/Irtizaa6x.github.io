@@ -3,6 +3,7 @@
 //  Fetches Markdown posts from a public GitHub repo,
 //  parses frontmatter, and renders them as beautiful cards.
 //  Uses cache‑busting to ensure fresh content every time.
+//  Enhanced with: hover on desktop, tap‑to‑expand on mobile.
 // ============================================================
 
 (function () {
@@ -233,23 +234,63 @@
             const preview = card.querySelector('.preview-area');
             if (!preview) return;
 
-            // Expand preview on hover (desktop)
+            let isMobile = window.innerWidth <= 768;
+            let isExpanded = false;
+
+            // Check window resize to update isMobile
+            window.addEventListener('resize', () => {
+                isMobile = window.innerWidth <= 768;
+            });
+
+            // --- Desktop: hover to expand ---
             card.addEventListener('mouseenter', function () {
-                preview.classList.add('open');
+                if (!isMobile) {
+                    preview.classList.add('open');
+                }
             });
 
             card.addEventListener('mouseleave', function () {
-                preview.classList.remove('open');
-            });
-
-            // Navigate to detail page on click (clean URL)
-            card.addEventListener('click', function () {
-                const slug = this.dataset.slug;
-                if (slug) {
-                    // Use clean URL without hash: /blog-detail?slug=xyz
-                    window.location.href = `${DETAIL_PAGE}?slug=${slug}`;
+                if (!isMobile) {
+                    preview.classList.remove('open');
+                    isExpanded = false;
                 }
             });
+
+            // --- Mobile: tap to expand, tap again to go to detail ---
+            card.addEventListener('click', function (e) {
+                const slug = this.dataset.slug;
+
+                if (isMobile) {
+                    // If not expanded yet, expand and prevent navigation
+                    if (!isExpanded) {
+                        e.preventDefault();
+                        preview.classList.toggle('open');
+                        isExpanded = true;
+                    } else {
+                        // Already expanded – now navigate to detail
+                        if (slug) {
+                            window.location.href = `${DETAIL_PAGE}?slug=${slug}`;
+                        }
+                    }
+                } else {
+                    // Desktop: click always goes to detail
+                    if (slug) {
+                        window.location.href = `${DETAIL_PAGE}?slug=${slug}`;
+                    }
+                }
+            });
+
+            // Also handle the read-more hint click separately (so it doesn't trigger double navigation)
+            const hint = card.querySelector('.read-more-hint');
+            if (hint) {
+                hint.addEventListener('click', function (e) {
+                    e.stopPropagation(); // Prevent card click from firing
+                    const slug = card.dataset.slug;
+                    if (slug) {
+                        window.location.href = `${DETAIL_PAGE}?slug=${slug}`;
+                    }
+                });
+            }
         });
     }
 
@@ -278,7 +319,6 @@
     }
 
     // Expose `loadBlogs` globally so `script.js` can call it
-    // when navigating to the blog page via the clean router.
     window.loadBlogs = loadBlogs;
 
     // ============================================================
@@ -299,6 +339,6 @@
 
     console.log('%c📚 Blog loader initialised', 'color:#49a078;font-weight:600;');
     console.log(`   ↳ Repo: ${GITHUB_USER}/${GITHUB_REPO}/${POSTS_PATH}`);
-    console.log('   ↳ Cache‑busting enabled · Clean URLs active');
+    console.log('   ↳ Cache‑busting enabled · Hover on desktop · Tap to expand on mobile');
 
 })();
