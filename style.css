@@ -209,10 +209,13 @@ body::before {
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 24px rgba(212, 168, 83, 0.10);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
 }
 .sidebar-logo:hover {
-    transform: scale(1.05);
+    transform: scale(1.06);
+    box-shadow: 0 8px 40px rgba(212, 168, 83, 0.25);
 }
 /* ----- BRAND ----- */
 .brand {
@@ -320,6 +323,11 @@ body::before {
     font-family: inherit;
     letter-spacing: -0.2px;
     position: relative;
+    text-decoration: none;          /* Remove underline on navbar links */
+}
+
+.nav-item span {
+    text-decoration: none;          /* Ensure no underline on the text inside */
 }
 
 .nav-item i {
@@ -1113,6 +1121,8 @@ body::before {
     border-radius: var(--radius-sm);
     border: 1px solid rgba(0, 70, 67, 0.04);
     background: white;
+    width: 100%;
+    display: block;
 }
 
 .academic-table {
@@ -1143,12 +1153,18 @@ body::before {
     border-bottom: none;
 }
 
+/* Fixed row colors – distinct from page background */
 .academic-table tbody tr:nth-child(even) {
-    background: var(--bg-body);
+    background: #f7f5ef;  /* slightly lighter than sand, creates contrast */
 }
 
+.academic-table tbody tr:nth-child(odd) {
+    background: #ffffff;  /* white for odd rows */
+}
+
+/* No hover effect – rows stay fixed */
 .academic-table tbody tr:hover {
-    background: transparent;
+    background: inherit;  /* prevents any hover background change */
 }
 
 .details-footer {
@@ -2063,9 +2079,10 @@ footer strong {
         order: 0;
     }
 
+    /* Education tables – mobile fix */
     .academic-table {
         font-size: 0.65rem;
-        min-width: 380px;
+        min-width: 380px;  /* forces horizontal scroll */
     }
     .academic-table thead th,
     .academic-table tbody td {
