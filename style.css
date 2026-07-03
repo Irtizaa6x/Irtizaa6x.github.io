@@ -1,10 +1,10 @@
 /* ==========================================
-   FOREST GREEN · EXECUTIVE PORTFOLIO
-   Palette: #1f2421 · #216869 · #49a078 · #9cc5a1 · #dce1de
+   CYPRUS & SAND · EXECUTIVE PORTFOLIO
+   Palette: #004643 · #1A7A74 · #D4A853 · #D5CFC4 · #F0EDE5
    ICON HIERARCHY (Refined):
-   - Sidebar Big (Avatar)        : #49a078 (Seaweed) — user loves it
-   - Inside All Icons (content)  : #216869 (Stormy) — dark & visible on light bg
-   - Skill Tags / Small helpers  : #49a078 (Seaweed) — consistent pop
+   - Sidebar Big (Avatar)        : #D4A853 (Gold) — warm premium accent
+   - Inside All Icons (content)  : #1A7A74 (Cyprus Light) — crisp on light bg
+   - Skill Tags / Small helpers  : #D4A853 (Gold) — consistent luxury pop
    ========================================== */
 
 /* ----- RESET & BASE ----- */
@@ -15,39 +15,43 @@
 }
 
 :root {
-    --carbon: #1f2421;
-    --stormy: #216869;
-    --seaweed: #49a078;
-    --muted-teal: #9cc5a1;
-    --alabaster: #dce1de;
-    --alabaster-light: #e8efeb;
+    --cyprus: #004643;
+    --cyprus-light: #1A7A74;
+    --cyprus-dark: #002B29;
+    --gold: #D4A853;
+    --gold-light: #E8D5A8;
+    --sand: #F0EDE5;
+    --sand-light: #F5F2EA;
+    --sand-dark: #D5CFC4;
+    --warm-white: #FCFAF5;
 
-    --bg-body: var(--alabaster);
-    --bg-card: #ffffff;
-    --bg-sidebar: var(--carbon);
-    --text-primary: #1a2a2a;
-    --text-secondary: #3a4a4a;
-    --text-muted: #6a7a7a;
+    --bg-body: var(--sand);
+    --bg-card: var(--warm-white);
+    --bg-sidebar: var(--cyprus);
+    --text-primary: #1A1A1A;
+    --text-secondary: #4A4A4A;
+    --text-muted: #7A7A7A;
     --text-light: rgba(255, 255, 255, 0.88);
+    --text-light-muted: rgba(255, 255, 255, 0.55);
 
-    --shadow-sm: 0 1px 4px rgba(31, 36, 33, 0.04);
-    --shadow-md: 0 6px 28px rgba(31, 36, 33, 0.06);
-    --shadow-lg: 0 16px 52px rgba(31, 36, 33, 0.08);
-    --shadow-glow: 0 8px 32px rgba(73, 160, 120, 0.10);
+    --shadow-sm: 0 1px 4px rgba(0, 70, 67, 0.04);
+    --shadow-md: 0 6px 28px rgba(0, 70, 67, 0.06);
+    --shadow-lg: 0 16px 52px rgba(0, 70, 67, 0.08);
+    --shadow-glow: 0 8px 32px rgba(212, 168, 83, 0.12);
 
     --radius: 18px;
     --radius-sm: 10px;
     --transition: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-smooth: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 
-    --gradient-primary: linear-gradient(135deg, var(--seaweed), var(--stormy));
-    --gradient-subtle: linear-gradient(135deg, rgba(156, 197, 161, 0.12), rgba(73, 160, 120, 0.06));
-    --gradient-footer: linear-gradient(135deg, var(--carbon) 60%, var(--stormy) 100%);
+    --gradient-primary: linear-gradient(135deg, var(--cyprus), var(--cyprus-light));
+    --gradient-subtle: linear-gradient(135deg, rgba(212, 168, 83, 0.08), rgba(26, 122, 116, 0.04));
+    --gradient-footer: linear-gradient(135deg, var(--cyprus) 60%, var(--cyprus-dark) 100%);
 
     /* Icon Colors — Clean, visible hierarchy */
-    --icon-sidebar-big: #49a078;   /* Seaweed — user says perfect */
-    --icon-inside: #216869;         /* Stormy — dark & crisp on light bg */
-    --icon-small: #49a078;          /* Seaweed — for tags & helpers */
+    --icon-sidebar-big: #D4A853;   /* Gold — warm premium accent */
+    --icon-inside: #1A7A74;        /* Cyprus Light — crisp on light bg */
+    --icon-small: #D4A853;         /* Gold — consistent luxury pop */
 }
 
 html {
@@ -69,9 +73,9 @@ body::before {
     inset: 0;
     z-index: -1;
     background:
-        radial-gradient(ellipse at 15% 30%, rgba(156, 197, 161, 0.06) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 70%, rgba(73, 160, 120, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 95%, rgba(33, 104, 105, 0.03) 0%, transparent 40%);
+        radial-gradient(ellipse at 15% 30%, rgba(212, 168, 83, 0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 70%, rgba(26, 122, 116, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 95%, rgba(0, 70, 67, 0.03) 0%, transparent 40%);
     pointer-events: none;
 }
 
@@ -92,14 +96,14 @@ body::before {
     left: 0;
     right: 0;
     z-index: 1002;
-    background: rgba(220, 225, 222, 0.94);
+    background: rgba(240, 237, 229, 0.94);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(31, 36, 33, 0.04);
+    border-bottom: 1px solid rgba(0, 70, 67, 0.04);
     padding: 0.5rem 1rem;
     display: none;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-    box-shadow: 0 2px 20px rgba(31, 36, 33, 0.04);
+    box-shadow: 0 2px 20px rgba(0, 70, 67, 0.04);
     will-change: transform;
 }
 
@@ -138,8 +142,8 @@ body::before {
 .mobile-header .hamburger-toggle {
     position: static;
     display: flex;
-    background: rgba(31, 36, 33, 0.04);
-    border: 1px solid rgba(31, 36, 33, 0.06);
+    background: rgba(0, 70, 67, 0.04);
+    border: 1px solid rgba(0, 70, 67, 0.06);
     color: var(--text-primary);
     width: 42px;
     height: 42px;
@@ -153,13 +157,13 @@ body::before {
 }
 
 .mobile-header .hamburger-toggle:hover {
-    background: rgba(73, 160, 120, 0.06);
-    border-color: rgba(73, 160, 120, 0.12);
+    background: rgba(212, 168, 83, 0.06);
+    border-color: rgba(212, 168, 83, 0.12);
 }
 
 .mobile-header .hamburger-toggle.open {
-    background: rgba(73, 160, 120, 0.08);
-    border-color: rgba(73, 160, 120, 0.18);
+    background: rgba(212, 168, 83, 0.08);
+    border-color: rgba(212, 168, 83, 0.18);
 }
 
 .mobile-header .hamburger-toggle i {
@@ -171,11 +175,11 @@ body::before {
 }
 
 /* ==========================================
-   SIDEBAR — Solid Carbon Black
+   SIDEBAR — Cyprus Deep Teal
    ========================================== */
 .sidebar {
     width: 280px;
-    background: var(--carbon);
+    background: var(--cyprus);
     border-right: 1px solid rgba(255, 255, 255, 0.03);
     padding: 2rem 1.5rem 0rem 1.5rem;
     height: 100vh;
@@ -186,7 +190,7 @@ body::before {
     z-index: 1001;
     position: sticky;
     top: 0;
-    box-shadow: 4px 0 40px rgba(31, 36, 33, 0.06);
+    box-shadow: 4px 0 40px rgba(0, 70, 67, 0.06);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -196,7 +200,7 @@ body::before {
     background: transparent;
 }
 .sidebar::-webkit-scrollbar-thumb {
-    background: rgba(156, 197, 161, 0.12);
+    background: rgba(212, 168, 83, 0.12);
     border-radius: 10px;
 }
 .sidebar-logo {
@@ -204,7 +208,7 @@ body::before {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 4px 24px rgba(73, 160, 120, 0.08);
+    box-shadow: 0 4px 24px rgba(212, 168, 83, 0.10);
     transition: transform 0.3s ease;
 }
 .sidebar-logo:hover {
@@ -228,7 +232,7 @@ body::before {
 }
 
 .brand-name span {
-    color: var(--seaweed);
+    color: var(--gold);
 }
 
 .brand-sub {
@@ -240,7 +244,7 @@ body::before {
     font-weight: 400;
 }
 
-/* ----- NAV ICON (BIG) — Seaweed, user loves it ----- */
+/* ----- NAV ICON (BIG) — Gold, warm premium accent ----- */
 .nav-icon-display {
     font-size: 3.8rem;
     line-height: 1;
@@ -254,7 +258,7 @@ body::before {
 .nav-icon-display i {
     display: inline-block;
     color: var(--icon-sidebar-big);
-    filter: drop-shadow(0 4px 24px rgba(73, 160, 120, 0.08));
+    filter: drop-shadow(0 4px 24px rgba(212, 168, 83, 0.08));
     transition: opacity 0.25s ease, transform 0.3s ease;
     will-change: transform, opacity;
 }
@@ -289,7 +293,7 @@ body::before {
     animation: settleBackSubtle 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* ----- NAVIGATION (inside icons — Stormy) ----- */
+/* ----- NAVIGATION (inside icons — Cyprus Light) ----- */
 .nav-menu {
     flex: 1;
     display: flex;
@@ -327,7 +331,7 @@ body::before {
 }
 
 .nav-item:hover {
-    background: rgba(156, 197, 161, 0.05);
+    background: rgba(212, 168, 83, 0.05);
     color: rgba(255, 255, 255, 0.85);
     transform: translateX(4px);
 }
@@ -338,9 +342,9 @@ body::before {
 }
 
 .nav-item.active {
-    background: rgba(156, 197, 161, 0.06);
+    background: rgba(212, 168, 83, 0.06);
     color: #fff;
-    box-shadow: inset 0 0 0 1px rgba(156, 197, 161, 0.06);
+    box-shadow: inset 0 0 0 1px rgba(212, 168, 83, 0.06);
 }
 
 .nav-item.active i {
@@ -354,27 +358,27 @@ body::before {
     top: 20%;
     height: 60%;
     width: 3px;
-    background: linear-gradient(to bottom, var(--seaweed), var(--muted-teal));
+    background: linear-gradient(to bottom, var(--gold), var(--gold-light));
     border-radius: 0 4px 4px 0;
 }
 
 .nav-item .nav-badge {
     margin-left: auto;
     font-size: 0.5rem;
-    background: rgba(73, 160, 120, 0.12);
-    color: var(--seaweed);
+    background: rgba(212, 168, 83, 0.12);
+    color: var(--gold);
     padding: 0.15rem 0.6rem;
     border-radius: 20px;
     letter-spacing: 0.5px;
     font-weight: 600;
 }
 
-/* ----- SIDEBAR FOOTER — Premium blend with carbon ----- */
+/* ----- SIDEBAR FOOTER — Premium blend with Cyprus ----- */
 .sidebar-footer {
     margin-top: auto;
     text-align: center;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
     letter-spacing: 0.8px;
     padding: 1rem 0 1.2rem 0;
     font-weight: 500;
@@ -385,7 +389,7 @@ body::before {
 .sidebar-footer i {
     margin-right: 0.4rem;
     color: var(--icon-sidebar-big);
-    text-shadow: 0 0 12px rgba(73, 160, 120, 0.15);
+    text-shadow: 0 0 12px rgba(212, 168, 83, 0.12);
     transition: text-shadow 0.3s ease;
 }
 
@@ -394,7 +398,7 @@ body::before {
 }
 
 .sidebar-footer:hover i {
-    text-shadow: 0 0 18px rgba(73, 160, 120, 0.3);
+    text-shadow: 0 0 18px rgba(212, 168, 83, 0.25);
 }
 
 .sidebar-footer strong {
@@ -444,7 +448,7 @@ body::before {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: var(--radius);
-    border: 1px solid rgba(156, 197, 161, 0.20);
+    border: 1px solid rgba(213, 207, 196, 0.30);
     box-shadow: var(--shadow-sm);
     padding: 1.75rem;
     transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
@@ -453,11 +457,11 @@ body::before {
 .glass-card:hover {
     box-shadow: var(--shadow-glow);
     transform: translateY(-2px);
-    border-color: rgba(73, 160, 120, 0.12);
+    border-color: rgba(212, 168, 83, 0.12);
 }
 
 /* ==========================================
-   SECTION TITLES — Inside icons: Stormy
+   SECTION TITLES — Inside icons: Cyprus Light
    ========================================== */
 .section-title {
     font-family: 'Playfair Display', serif;
@@ -483,7 +487,7 @@ body::before {
     height: 2px;
     min-width: 40px;
     margin-left: 0.8rem;
-    background: linear-gradient(to right, var(--muted-teal), transparent);
+    background: linear-gradient(to right, var(--sand-dark), transparent);
 }
 
 /* ==========================================
@@ -525,14 +529,14 @@ body::before {
     margin: 0 auto 1.2rem;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid rgba(156, 197, 161, 0.20);
-    background: var(--alabaster-light);
-    box-shadow: 0 8px 32px rgba(31, 36, 33, 0.04);
+    border: 3px solid rgba(213, 207, 196, 0.25);
+    background: var(--sand-light);
+    box-shadow: 0 8px 32px rgba(0, 70, 67, 0.04);
     transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
 .profile-pic-placeholder:hover {
-    box-shadow: 0 12px 48px rgba(73, 160, 120, 0.08);
+    box-shadow: 0 12px 48px rgba(212, 168, 83, 0.08);
     transform: scale(1.02);
 }
 
@@ -543,7 +547,7 @@ body::before {
     display: block;
 }
 
-/* PERSONAL DETAILS — Small icons: Seaweed */
+/* PERSONAL DETAILS — Small icons: Gold */
 .personal-details p {
     margin-bottom: 0.5rem;
     font-size: 0.88rem;
@@ -552,7 +556,7 @@ body::before {
     align-items: center;
     gap: 0.5rem;
     padding: 0.2rem 0;
-    border-bottom: 1px solid rgba(31, 36, 33, 0.03);
+    border-bottom: 1px solid rgba(0, 70, 67, 0.03);
 }
 
 .personal-details p:last-child {
@@ -578,10 +582,10 @@ body::before {
     align-items: center;
     gap: 0.6rem;
     flex-wrap: wrap;
-    background: #ffffff;
+    background: var(--warm-white);
     padding: 0.4rem 1.4rem 0.4rem 1.2rem;
     border-radius: 9999px;
-    border: 1px solid rgba(31, 36, 33, 0.04);
+    border: 1px solid rgba(0, 70, 67, 0.04);
     box-shadow: var(--shadow-sm);
     transition: background 0.8s ease, box-shadow 0.8s ease, border-color 0.8s ease;
     font-family: 'Inter', sans-serif;
@@ -600,7 +604,7 @@ body::before {
 }
 
 .local-time-wrapper:hover {
-    border-color: rgba(73, 160, 120, 0.12);
+    border-color: rgba(212, 168, 83, 0.12);
     box-shadow: var(--shadow-glow);
     transform: translateY(-1px);
 }
@@ -637,7 +641,7 @@ body::before {
     transition: transform 0.5s ease, width 0.5s, height 0.5s;
 }
 
-/* Moon phase shadow – uses CSS custom property for rotation */
+/* Moon phase shadow */
 .astro-display .moon::after {
     content: '';
     position: absolute;
@@ -646,14 +650,13 @@ body::before {
     right: -2px;
     bottom: -2px;
     border-radius: 50%;
-    background: #1a2f3f; /* dark night sky color, matches night background */
+    background: #0a1a1a;
     clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
     transform: rotate(var(--rotation, 0deg));
     transition: transform 0.5s ease;
     transform-origin: center;
 }
 
-/* Moon size variations */
 .astro-display .moon.size-small { transform: scale(0.8); }
 .astro-display .moon.size-medium { transform: scale(1); }
 .astro-display .moon.size-large { transform: scale(1.15); }
@@ -680,13 +683,13 @@ body::before {
 }
 
 .local-time-wrapper.noon {
-    background: linear-gradient(135deg, #a8d8ea 0%, #7fc1d9 100%);
-    border-color: #5fa8c4;
-    box-shadow: 0 0 40px rgba(127, 193, 217, 0.25);
+    background: linear-gradient(135deg, #b5d9e0 0%, #89c4d6 100%);
+    border-color: #6aaec4;
+    box-shadow: 0 0 40px rgba(137, 196, 214, 0.25);
 }
 .local-time-wrapper.noon .time-digital {
     background: rgba(255, 255, 255, 0.6);
-    color: #1f4a5e;
+    color: #1a4a5a;
 }
 
 .local-time-wrapper.afternoon {
@@ -709,8 +712,7 @@ body::before {
     color: #3d2a2a;
 }
 
-/* ----- Night Variants (new) ----- */
-/* Light night – just after dusk, softer */
+/* ----- Night Variants ----- */
 .local-time-wrapper.night-light {
     background: linear-gradient(135deg, #1a2f3f 0%, #2a4a5a 100%);
     border-color: #3a5a6a;
@@ -724,7 +726,6 @@ body::before {
 .local-time-wrapper.night-light .time-zone {
     color: #8ab0c0;
 }
-/* Fewer stars */
 .local-time-wrapper.night-light::before {
     opacity: 0.3;
 }
@@ -732,7 +733,6 @@ body::before {
     display: none;
 }
 
-/* Deep night – dark, many stars */
 .local-time-wrapper.night-deep {
     background: linear-gradient(135deg, #0b1a2e 0%, #0f2535 100%);
     border-color: #1a3a4a;
@@ -750,7 +750,6 @@ body::before {
     background: #7fc1d9;
     box-shadow: 0 0 10px #7fc1d9;
 }
-/* Many stars */
 .local-time-wrapper.night-deep::before {
     opacity: 0.9;
 }
@@ -775,7 +774,7 @@ body::before {
 
 .local-time-wrapper.night-light::before,
 .local-time-wrapper.night-deep::before {
-    background-image: 
+    background-image:
         radial-gradient(2px 2px at 10% 20%, #fff, transparent),
         radial-gradient(2px 2px at 30% 60%, #fff, transparent),
         radial-gradient(1px 1px at 50% 10%, #fff, transparent),
@@ -791,7 +790,7 @@ body::before {
 }
 
 .local-time-wrapper.night-deep::after {
-    background-image: 
+    background-image:
         radial-gradient(1px 1px at 20% 40%, #fff, transparent),
         radial-gradient(1px 1px at 60% 20%, #fff, transparent),
         radial-gradient(2px 2px at 80% 70%, #fff, transparent),
@@ -807,7 +806,6 @@ body::before {
     100% { opacity: 0.9; }
 }
 
-/* Moon position: higher in deep night, lower in light night */
 .local-time-wrapper.night-deep .astro-display .moon {
     transform: translateY(-6px) scale(var(--moon-scale, 1));
 }
@@ -815,25 +813,23 @@ body::before {
     transform: translateY(2px) scale(var(--moon-scale, 1));
 }
 
-/* Ensure the astro display sits above pseudo-elements */
 .local-time-wrapper > * {
     position: relative;
     z-index: 1;
 }
 
-/* ----- Old icon wrapper – kept for compatibility, but not used ----- */
 .time-icon-wrapper {
-    display: none; /* hidden because we use astro-display */
+    display: none;
 }
 
 .live-indicator {
     display: inline-block;
     width: 8px;
     height: 8px;
-    background: var(--seaweed);
+    background: var(--gold);
     border-radius: 50%;
     flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(73, 160, 120, 0.10);
+    box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.10);
     animation: pulse-dot 2s ease-in-out infinite;
 }
 
@@ -842,12 +838,12 @@ body::before {
     100% {
         opacity: 1;
         transform: scale(1);
-        box-shadow: 0 0 0 3px rgba(73, 160, 120, 0.10);
+        box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.10);
     }
     50% {
         opacity: 0.4;
         transform: scale(0.8);
-        box-shadow: 0 0 0 6px rgba(73, 160, 120, 0.03);
+        box-shadow: 0 0 0 6px rgba(212, 168, 83, 0.03);
     }
 }
 
@@ -857,7 +853,7 @@ body::before {
     font-size: 0.65rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    border-right: 1px solid rgba(31, 36, 33, 0.06);
+    border-right: 1px solid rgba(0, 70, 67, 0.06);
     padding-right: 0.6rem;
     display: flex;
     align-items: center;
@@ -879,7 +875,7 @@ body::before {
     padding: 0.05rem 0.7rem;
     border-radius: 6px;
     letter-spacing: 0.5px;
-    border: 1px solid rgba(31, 36, 33, 0.04);
+    border: 1px solid rgba(0, 70, 67, 0.04);
     min-width: 78px;
     text-align: center;
 }
@@ -892,7 +888,7 @@ body::before {
     background: var(--bg-body);
     padding: 0.08rem 0.7rem;
     border-radius: 9999px;
-    border: 1px solid rgba(31, 36, 33, 0.04);
+    border: 1px solid rgba(0, 70, 67, 0.04);
     white-space: nowrap;
 }
 
@@ -912,7 +908,7 @@ body::before {
     display: flex;
     gap: 1.2rem;
     align-items: flex-start;
-    border: 1px solid rgba(156, 197, 161, 0.15);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     box-shadow: var(--shadow-sm);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
@@ -932,7 +928,7 @@ body::before {
 .qual-card:hover {
     box-shadow: var(--shadow-glow);
     transform: translateX(4px);
-    border-color: rgba(73, 160, 120, 0.10);
+    border-color: rgba(212, 168, 83, 0.10);
 }
 
 .qual-card:hover::before {
@@ -963,7 +959,7 @@ body::before {
 
 .qual-institution {
     font-weight: 600;
-    color: var(--stormy);
+    color: var(--cyprus-light);
     font-size: 0.85rem;
 }
 
@@ -982,11 +978,11 @@ body::before {
 }
 
 .qual-gpa {
-    background: rgba(156, 197, 161, 0.15);
+    background: rgba(212, 168, 83, 0.12);
     padding: 0.15rem 0.7rem;
     border-radius: 20px;
     font-weight: 700;
-    color: var(--stormy);
+    color: var(--cyprus-light);
 }
 
 .qual-year-range {
@@ -1017,7 +1013,7 @@ body::before {
 
 .qual-note {
     font-size: 0.75rem;
-    color: var(--seaweed);
+    color: var(--gold);
     margin-top: 0.2rem;
     font-weight: 500;
 }
@@ -1025,12 +1021,12 @@ body::before {
 /* ----- Toggle Button ----- */
 .btn-toggle-details {
     background: transparent;
-    border: 1px solid rgba(33, 104, 105, 0.12);
+    border: 1px solid rgba(26, 122, 116, 0.12);
     border-radius: 2rem;
     padding: 0.35rem 1.2rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--stormy);
+    color: var(--cyprus-light);
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 0.8rem;
@@ -1041,10 +1037,10 @@ body::before {
 }
 
 .btn-toggle-details:hover {
-    background: var(--stormy);
+    background: var(--cyprus-light);
     color: #fff;
-    box-shadow: 0 4px 16px rgba(33, 104, 105, 0.15);
-    border-color: var(--stormy);
+    box-shadow: 0 4px 16px rgba(26, 122, 116, 0.15);
+    border-color: var(--cyprus-light);
 }
 
 .btn-toggle-details i {
@@ -1060,7 +1056,7 @@ body::before {
 .details-content {
     display: none;
     padding-top: 1.2rem;
-    border-top: 1px solid rgba(31, 36, 33, 0.04);
+    border-top: 1px solid rgba(0, 70, 67, 0.04);
     margin-top: 0.8rem;
     animation: fadeUp 0.4s ease;
 }
@@ -1073,7 +1069,7 @@ body::before {
     background: var(--bg-body);
     border-radius: var(--radius-sm);
     padding: 1.2rem;
-    border: 1px solid rgba(156, 197, 161, 0.12);
+    border: 1px solid rgba(213, 207, 196, 0.25);
 }
 
 .details-note {
@@ -1115,7 +1111,7 @@ body::before {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(31, 36, 33, 0.04);
+    border: 1px solid rgba(0, 70, 67, 0.04);
     background: white;
 }
 
@@ -1127,7 +1123,7 @@ body::before {
 }
 
 .academic-table thead th {
-    background: var(--carbon);
+    background: var(--cyprus);
     color: #fff;
     padding: 0.6rem 0.8rem;
     text-align: left;
@@ -1139,7 +1135,7 @@ body::before {
 
 .academic-table tbody td {
     padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid rgba(31, 36, 33, 0.04);
+    border-bottom: 1px solid rgba(0, 70, 67, 0.04);
     color: var(--text-secondary);
 }
 
@@ -1151,7 +1147,6 @@ body::before {
     background: var(--bg-body);
 }
 
-/* ——— NO HOVER EFFECT on academic tables (user request) ——— */
 .academic-table tbody tr:hover {
     background: transparent;
 }
@@ -1161,7 +1156,7 @@ body::before {
     color: var(--text-muted);
     margin-top: 0.8rem;
     text-align: right;
-    border-top: 1px dashed rgba(31, 36, 33, 0.06);
+    border-top: 1px dashed rgba(0, 70, 67, 0.06);
     padding-top: 0.6rem;
     display: flex;
     align-items: center;
@@ -1174,7 +1169,7 @@ body::before {
 }
 
 /* ==========================================
-   SKILLS / CAPABILITIES — Fresh color combo
+   SKILLS / CAPABILITIES
    ========================================== */
 .grid-2col {
     display: grid;
@@ -1187,7 +1182,7 @@ body::before {
     border-radius: var(--radius);
     padding: 1.5rem;
     box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(156, 197, 161, 0.12);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
 }
@@ -1195,11 +1190,11 @@ body::before {
 .skill-category:hover {
     box-shadow: var(--shadow-glow);
     transform: translateY(-3px);
-    border-color: rgba(73, 160, 120, 0.06);
+    border-color: rgba(212, 168, 83, 0.08);
 }
-/* ----- CLICKABLE TEXT HINT – hidden on desktop, shown on mobile ----- */
+
 .scroll-to-cert-hint {
-    display: none; /* hidden by default (desktop) */
+    display: none;
     font-size: 0.95rem;
     color: var(--text-muted);
     margin-bottom: 1.2rem;
@@ -1214,21 +1209,20 @@ body::before {
 }
 
 #scrollToCertTrigger {
-    color: var(--stormy);
+    color: var(--cyprus-light);
     font-weight: 700;
     cursor: pointer;
-    border-bottom: 1.5px dashed rgba(33, 104, 105, 0.25);
+    border-bottom: 1.5px dashed rgba(26, 122, 116, 0.25);
     transition: all 0.3s ease;
     padding: 0 0.1rem;
 }
 
 #scrollToCertTrigger:hover {
-    color: var(--seaweed);
-    border-bottom-color: var(--seaweed);
+    color: var(--gold);
+    border-bottom-color: var(--gold);
     transform: translateY(-0.5px);
 }
 
-/* On mobile (≤768px) – show the hint */
 @media (max-width: 768px) {
     .scroll-to-cert-hint {
         display: flex;
@@ -1237,7 +1231,7 @@ body::before {
         font-size: 0.85rem;
     }
 }
-/* Category headers — use Stormy for icon, with a subtle gradient bg */
+
 .skill-category h3 {
     font-size: 1.1rem;
     margin-bottom: 0.8rem;
@@ -1248,20 +1242,20 @@ body::before {
     font-weight: 700;
     letter-spacing: -0.3px;
     padding-bottom: 0.4rem;
-    border-bottom: 2px solid rgba(33, 104, 105, 0.06);
+    border-bottom: 2px solid rgba(26, 122, 116, 0.06);
 }
 
 .skill-category h3 i {
     color: var(--icon-inside);
     font-size: 1.2rem;
-    background: rgba(33, 104, 105, 0.04);
+    background: rgba(26, 122, 116, 0.04);
     padding: 0.2rem 0.4rem;
     border-radius: 8px;
     transition: background 0.3s ease;
 }
 
 .skill-category:hover h3 i {
-    background: rgba(33, 104, 105, 0.08);
+    background: rgba(26, 122, 116, 0.08);
 }
 
 .skills-list-wrapper {
@@ -1304,23 +1298,23 @@ body::before {
 .skills-list.fade-gradient~.fade-overlay {
     opacity: 1;
     pointer-events: auto;
-    background: linear-gradient(to top, #ffffff, transparent);
+    background: linear-gradient(to top, var(--warm-white), transparent);
 }
 
 .fade-overlay::after {
     content: "⋯ show all";
     font-size: 0.65rem;
     font-weight: 600;
-    background: rgba(156, 197, 161, 0.10);
+    background: rgba(212, 168, 83, 0.08);
     padding: 0.2rem 0.9rem;
     border-radius: 20px;
-    color: var(--stormy);
+    color: var(--cyprus-light);
     letter-spacing: 0.3px;
     transition: background 0.3s ease;
 }
 
 .fade-overlay:hover::after {
-    background: rgba(156, 197, 161, 0.18);
+    background: rgba(212, 168, 83, 0.16);
 }
 
 .skill-category.expanded .skills-list {
@@ -1333,7 +1327,7 @@ body::before {
     display: none;
 }
 
-/* Skill tags — new color combo: soft background with Seaweed icons */
+/* Skill tags */
 .skill-tag {
     display: inline-flex;
     align-items: center;
@@ -1344,14 +1338,14 @@ body::before {
     font-weight: 500;
     color: var(--text-secondary);
     transition: all 0.25s ease;
-    border: 1px solid rgba(156, 197, 161, 0.08);
+    border: 1px solid rgba(213, 207, 196, 0.15);
 }
 
 .skill-tag:hover {
-    background: rgba(73, 160, 120, 0.04);
-    border-color: rgba(73, 160, 120, 0.10);
+    background: rgba(212, 168, 83, 0.04);
+    border-color: rgba(212, 168, 83, 0.10);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(73, 160, 120, 0.04);
+    box-shadow: 0 2px 8px rgba(212, 168, 83, 0.04);
 }
 
 .skill-tag i {
@@ -1372,8 +1366,8 @@ body::before {
     cursor: pointer;
     font-size: 0.7rem;
     font-weight: 600;
-    color: var(--stormy);
-    background: rgba(156, 197, 161, 0.06);
+    color: var(--cyprus-light);
+    background: rgba(212, 168, 83, 0.06);
     width: fit-content;
     padding: 0.2rem 0.9rem;
     border-radius: 20px;
@@ -1383,7 +1377,7 @@ body::before {
 }
 
 .show-less-btn-inline:hover {
-    background: rgba(156, 197, 161, 0.12);
+    background: rgba(212, 168, 83, 0.12);
 }
 
 .helper-text {
@@ -1409,14 +1403,14 @@ body::before {
    CAREER OBJECTIVE
    ========================================== */
 .career-objective-highlight {
-    background: linear-gradient(135deg, rgba(156, 197, 161, 0.10), rgba(73, 160, 120, 0.06));
+    background: linear-gradient(135deg, rgba(212, 168, 83, 0.08), rgba(26, 122, 116, 0.04));
     border-radius: var(--radius);
     padding: 1.8rem 2rem;
     display: flex;
     gap: 1.5rem;
     align-items: center;
     margin-bottom: 2rem;
-    border: 1px solid rgba(156, 197, 161, 0.12);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.4s ease;
 }
@@ -1428,14 +1422,14 @@ body::before {
 .obj-icon {
     font-size: 2rem;
     color: var(--icon-inside);
-    background: white;
+    background: var(--warm-white);
     width: 56px;
     height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 60px;
-    box-shadow: 0 4px 16px rgba(73, 160, 120, 0.06);
+    box-shadow: 0 4px 16px rgba(212, 168, 83, 0.06);
     flex-shrink: 0;
 }
 
@@ -1468,7 +1462,7 @@ body::before {
     top: 0.5rem;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--seaweed), rgba(73, 160, 120, 0.05));
+    background: linear-gradient(to bottom, var(--gold), rgba(212, 168, 83, 0.05));
     border-radius: 4px;
 }
 
@@ -1484,18 +1478,18 @@ body::before {
     top: 0.5rem;
     width: 16px;
     height: 16px;
-    background: var(--seaweed);
-    border: 3px solid white;
+    background: var(--gold);
+    border: 3px solid var(--warm-white);
     border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(73, 160, 120, 0.10);
+    box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.10);
     z-index: 2;
     transition: all 0.3s ease;
 }
 
 .timeline-entry:hover .timeline-marker {
     transform: scale(1.2);
-    box-shadow: 0 0 0 5px rgba(73, 160, 120, 0.12);
-    background: var(--stormy);
+    box-shadow: 0 0 0 5px rgba(212, 168, 83, 0.12);
+    background: var(--cyprus-light);
 }
 
 .timeline-content {
@@ -1504,14 +1498,14 @@ body::before {
     backdrop-filter: blur(8px);
     border-radius: var(--radius-sm);
     padding: 1.2rem 1.5rem;
-    border-left: 3px solid var(--seaweed);
+    border-left: 3px solid var(--gold);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     margin-left: 1rem;
     box-shadow: var(--shadow-sm);
 }
 
 .timeline-content:hover {
-    background: #ffffff;
+    background: var(--warm-white);
     box-shadow: var(--shadow-glow);
     transform: translateX(4px);
 }
@@ -1519,8 +1513,8 @@ body::before {
 .timeline-date {
     font-size: 0.65rem;
     font-weight: 700;
-    color: var(--stormy);
-    background: rgba(156, 197, 161, 0.10);
+    color: var(--cyprus-light);
+    background: rgba(212, 168, 83, 0.10);
     display: inline-block;
     padding: 0.15rem 0.7rem;
     border-radius: 20px;
@@ -1571,8 +1565,8 @@ body::before {
 
 .parent-club {
     font-size: 0.72rem;
-    color: var(--stormy);
-    background: rgba(156, 197, 161, 0.06);
+    color: var(--cyprus-light);
+    background: rgba(212, 168, 83, 0.06);
     display: inline-block;
     padding: 0.15rem 0.7rem;
     border-radius: 20px;
@@ -1596,13 +1590,13 @@ body::before {
 
 .btn-outline {
     background: transparent;
-    border: 1px solid rgba(33, 104, 105, 0.12);
+    border: 1px solid rgba(26, 122, 116, 0.12);
     padding: 0.35rem 1rem;
     border-radius: 2rem;
     font-weight: 600;
     font-size: 0.7rem;
     text-decoration: none;
-    color: var(--stormy);
+    color: var(--cyprus-light);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -1612,10 +1606,10 @@ body::before {
 }
 
 .btn-outline:hover {
-    background: var(--stormy);
+    background: var(--cyprus-light);
     color: white;
-    border-color: var(--stormy);
-    box-shadow: 0 4px 16px rgba(33, 104, 105, 0.12);
+    border-color: var(--cyprus-light);
+    box-shadow: 0 4px 16px rgba(26, 122, 116, 0.12);
     transform: translateY(-1px);
 }
 
@@ -1637,7 +1631,6 @@ body::before {
 
 /* ==========================================
    ACTIVITIES PAGE – TWO‑COLUMN LAYOUT
-   (Experience 2/3 + Certifications 1/3)
    ========================================== */
 .experience-row {
     display: flex;
@@ -1647,7 +1640,7 @@ body::before {
 
 .experience-main {
     flex: 2;
-    min-width: 0; /* prevent overflow */
+    min-width: 0;
 }
 
 .certifications-side {
@@ -1660,7 +1653,7 @@ body::before {
     background: var(--bg-card);
     border-radius: var(--radius);
     padding: 1.5rem;
-    border: 1px solid rgba(156, 197, 161, 0.15);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     box-shadow: var(--shadow-sm);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1668,7 +1661,7 @@ body::before {
 .cert-card:hover {
     box-shadow: var(--shadow-glow);
     transform: translateY(-2px);
-    border-color: rgba(73, 160, 120, 0.06);
+    border-color: rgba(212, 168, 83, 0.08);
 }
 
 .cert-header {
@@ -1694,11 +1687,11 @@ body::before {
     font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: rgba(73, 160, 120, 0.08);
-    color: var(--stormy);
+    background: rgba(212, 168, 83, 0.08);
+    color: var(--cyprus-light);
     padding: 0.15rem 0.7rem;
     border-radius: 20px;
-    border: 1px solid rgba(73, 160, 120, 0.10);
+    border: 1px solid rgba(212, 168, 83, 0.10);
     letter-spacing: 0.5px;
     white-space: nowrap;
 }
@@ -1728,7 +1721,6 @@ body::before {
     color: var(--icon-inside);
 }
 
-/* ----- MOBILE CLUE (hidden on desktop) ----- */
 .mobile-clue {
     display: none;
     text-align: center;
@@ -1736,9 +1728,9 @@ body::before {
     color: var(--text-muted);
     margin-top: 1.2rem;
     padding: 0.6rem;
-    background: rgba(156, 197, 161, 0.04);
+    background: rgba(212, 168, 83, 0.04);
     border-radius: var(--radius-sm);
-    border: 1px dashed rgba(156, 197, 161, 0.15);
+    border: 1px dashed rgba(213, 207, 196, 0.25);
 }
 
 .mobile-clue strong {
@@ -1746,9 +1738,8 @@ body::before {
 }
 
 /* ============================================================
-   CONTACT PAGE – PROFESSIONAL REFINEMENTS (FULL REPLACEMENT)
+   CONTACT PAGE – PROFESSIONAL REFINEMENTS
    ============================================================ */
-/* --- Page header (added for professional touch) --- */
 .contact-page-header {
     margin-bottom: 1.5rem;
 }
@@ -1781,7 +1772,7 @@ body::before {
     border-radius: var(--radius);
     padding: 1.5rem 1.2rem;
     text-align: center;
-    border: 1px solid rgba(156, 197, 161, 0.12);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     box-shadow: var(--shadow-sm);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1789,7 +1780,7 @@ body::before {
 .contact-grid.primary .contact-card:hover {
     box-shadow: var(--shadow-glow);
     transform: translateY(-3px);
-    border-color: rgba(73, 160, 120, 0.06);
+    border-color: rgba(212, 168, 83, 0.08);
 }
 
 .contact-grid.primary .contact-card i {
@@ -1817,8 +1808,8 @@ body::before {
     font-size: 0.65rem;
     border-radius: 20px;
     font-weight: 600;
-    border: 1px solid rgba(33, 104, 105, 0.12);
-    color: var(--stormy);
+    border: 1px solid rgba(26, 122, 116, 0.12);
+    color: var(--cyprus-light);
     background: transparent;
     transition: all 0.2s ease;
     margin-top: 0.2rem;
@@ -1827,14 +1818,14 @@ body::before {
 .contact-grid.primary .contact-card .btn-outline i {
     font-size: 0.55rem;
     margin-right: 0.2rem;
-    color: var(--stormy);
+    color: var(--cyprus-light);
 }
 
 .contact-grid.primary .contact-card .btn-outline:hover {
-    background: var(--stormy);
+    background: var(--cyprus-light);
     color: #fff;
-    border-color: var(--stormy);
-    box-shadow: 0 2px 8px rgba(33, 104, 105, 0.10);
+    border-color: var(--cyprus-light);
+    box-shadow: 0 2px 8px rgba(26, 122, 116, 0.10);
     transform: translateY(-1px);
 }
 
@@ -1855,8 +1846,8 @@ body::before {
     flex: 0 0 calc((100% - 3 * 1.2rem) / 4);
     max-width: calc((100% - 3 * 1.2rem) / 4);
     min-height: 48px;
-    background: #ffffff;
-    border: 1px solid rgba(31, 36, 33, 0.04);
+    background: var(--warm-white);
+    border: 1px solid rgba(0, 70, 67, 0.04);
     padding: 0.4rem 0.5rem;
     border-radius: 2rem;
     text-align: center;
@@ -1875,10 +1866,10 @@ body::before {
 }
 
 .social-grid .social-btn:hover {
-    background: var(--stormy);
+    background: var(--cyprus-light);
     color: white;
-    border-color: var(--stormy);
-    box-shadow: 0 4px 20px rgba(33, 104, 105, 0.10);
+    border-color: var(--cyprus-light);
+    box-shadow: 0 4px 20px rgba(26, 122, 116, 0.10);
     transform: translateY(-2px);
 }
 
@@ -1892,7 +1883,6 @@ body::before {
     color: white;
 }
 
-/* TryHackMe icon – match other icons */
 .social-grid .social-btn .thm-icon {
     width: 18px;
     height: 18px;
@@ -1911,7 +1901,7 @@ body::before {
     padding: 1.5rem 1.8rem;
     background: var(--bg-card);
     border-radius: var(--radius);
-    border: 1px solid rgba(156, 197, 161, 0.12);
+    border: 1px solid rgba(213, 207, 196, 0.25);
     box-shadow: var(--shadow-sm);
     transition: all 0.35s ease;
 }
@@ -1926,21 +1916,21 @@ body::before {
 }
 
 .phone-card a {
-    color: var(--seaweed);
+    color: var(--cyprus-light);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .phone-card a:hover {
-    color: var(--stormy);
+    color: var(--gold);
 }
 
 .phone-card hr {
     margin: 0.8rem 0;
     opacity: 0.06;
     border: none;
-    border-top: 1px solid rgba(31, 36, 33, 0.12);
+    border-top: 1px solid rgba(0, 70, 67, 0.12);
 }
 
 /* ==========================================
@@ -1951,7 +1941,7 @@ footer {
     text-align: center;
     font-size: 0.6rem;
     color: var(--text-muted);
-    border-top: 1px solid rgba(31, 36, 33, 0.04);
+    border-top: 1px solid rgba(0, 70, 67, 0.04);
     padding-top: 1.2rem;
     letter-spacing: 0.3px;
 }
@@ -2004,12 +1994,10 @@ footer strong {
         font-size: 0.6rem;
     }
 
-    /* Contact: 2 columns */
     .contact-grid.primary .contact-card {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
     }
-    /* Social: 2 columns */
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
         max-width: calc((100% - 1.2rem) / 2);
@@ -2043,7 +2031,7 @@ footer strong {
         top: 0;
         right: 0;
         transform: translateX(100%);
-        box-shadow: -8px 0 40px rgba(31, 36, 33, 0.06);
+        box-shadow: -8px 0 40px rgba(0, 70, 67, 0.06);
         padding-top: 4.5rem;
         padding-bottom: 0rem;
         width: 280px;
@@ -2151,7 +2139,6 @@ footer strong {
         padding: 1.5rem;
     }
 
-    /* Mobile: 2 columns for contact & social */
     .contact-grid.primary .contact-card,
     .social-grid .social-btn {
         flex: 0 0 calc((100% - 1.2rem) / 2);
@@ -2185,7 +2172,6 @@ footer strong {
         padding: 1.2rem 1rem;
     }
 
-    /* ----- ACTIVITIES PAGE — MOBILE STACKING ----- */
     .experience-row {
         flex-direction: column;
         gap: 1.5rem;
@@ -2205,7 +2191,6 @@ footer strong {
         margin-top: 0.5rem;
     }
 
-    /* Contact mobile refinements */
     .contact-grid.primary .contact-card {
         flex: 0 0 100%;
         max-width: 100%;
@@ -2277,7 +2262,6 @@ footer strong {
         height: 22px;
     }
 
-    /* Small phones: 1 column for contact & social */
     .contact-grid.primary .contact-card,
     .social-grid .social-btn {
         flex: 0 0 100%;
