@@ -1,16 +1,17 @@
 // ============================================================
-//  BLOGS.JS — GitHub-Powered Blog Loader (Production Ready)
+//  BLOGS.JS — GitHub‑Powered Blog Loader
+//  Earthy Forest Edition · Production-Ready
 //  Fetches Markdown posts from a public GitHub repo,
 //  parses frontmatter, and renders them as beautiful cards.
-//  Implements retry logic, error handling, and cache-busting.
-//  Designed to be called by the main script (script.js) once.
+//  Features: retry logic, error handling, cache-busting,
+//  responsive hover/click interactions, and modular design.
 // ============================================================
 
 (function () {
     'use strict';
 
     // ============================================================
-    //  1.  CONFIGURATION (with fallbacks)
+    //  1.  CONFIGURATION (from config.js or fallback)
     // ============================================================
 
     const CONFIG = window.CONFIG || {
@@ -18,18 +19,69 @@
         GITHUB_REPO: 'Irtizaa6x.github.io',
         BRANCH: 'main',
         POSTS_PATH: 'src/posts',
-        DETAIL_PAGE: '/blog-detail',
+        BLOG_DETAIL_PATH: '/blog-detail',
     };
 
+    const RETRY_ATTEMPTS = 3;
+    const RETRY_DELAY_MS = 1000;
+
     // ============================================================
-    //  2.  HELPERS
+    //  2.  FETCH WITH RETRY (exponential backoff)
+    // ============================================================
+
+    /**
+     * Fetch a URL with automatic retry on failure.
+     * @param {string} url - The URL to fetch.
+     * @param {number} retries - Number of retry attempts (default: RETRY_ATTEMPTS).
+     * @param {number} delay - Initial delay in ms (default: RETRY_DELAY_MS).
+     * @returns {Promise<Response>} - The fetch response.
+     * @throws {Error} - If all retries fail.
+     */
+    async function fetchWithRetry(url, retries = RETRY_ATTEMPTS, delay = RETRY_DELAY_MS) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response;
+        } catch (error) {
+            if (retries <= 0) {
+                throw error;
+            }
+            console.warn(`Fetch failed (${retries} retries left):`, error.message);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return fetchWithRetry(url, retries - 1, delay * 1.5);
+        }
+    }
+
+    // ============================================================
+    //  3.  BUILD GITHUB API URL (with cache-busting)
+    // ============================================================
+
+    /**
+     * Build a cache‑busted GitHub API URL for a given path.
+     * @param {string} path - The API path (e.g., 'contents/src/posts').
+     * @param {Record<string, string>} extraParams - Additional query parameters.
+     * @returns {string} - The full API URL with a timestamp.
+     */
+    function buildApiUrl(path, extraParams = {}) {
+        const base = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/${path}?ref=${CONFIG.BRANCH}`;
+        const params = new URLSearchParams({
+            ...extraParams,
+            _t: Date.now(), // ← Cache‑buster
+        });
+        return `${base}&${params.toString()}`;
+    }
+
+    // ============================================================
+    //  4.  PARSE FRONTMATTER (YAML or simple key-value)
     // ============================================================
 
     /**
      * Parse YAML frontmatter from a Markdown string.
-     * Uses js-yaml if available; falls back to a simple key-value parser.
+     * Uses js‑yaml if available; falls back to a simple key‑value parser.
      * @param {string} markdown – The raw Markdown content.
-     * @returns {{ data: Object, content: string }}
+     * @returns {{ data: Object, content: string }} – Parsed metadata and the rest of the content.
      */
     function parseFrontmatter(markdown) {
         const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
@@ -41,6 +93,7 @@
         const content = markdown.replace(match[0], '').trim();
         let data = {};
 
+        // Try parsing with js-yaml first
         try {
             if (typeof jsyaml !== 'undefined' && jsyaml.load) {
                 data = jsyaml.load(frontmatter) || {};
@@ -53,6 +106,7 @@
                     if (colon > 0) {
                         const key = line.slice(0, colon).trim();
                         let val = line.slice(colon + 1).trim();
+                        // Remove surrounding quotes if present
                         if (
                             (val.startsWith('"') && val.endsWith('"')) ||
                             (val.startsWith("'") && val.endsWith("'"))
@@ -72,62 +126,13 @@
         return { data, content };
     }
 
-    /**
-     * Build a cache-busted GitHub API URL for a given path.
-     * @param {string} path – The API path (e.g., 'contents/src/posts').
-     * @param {Record<string, string>} extraParams – Additional query parameters.
-     * @returns {string} – The full API URL with a timestamp.
-     */
-    function buildApiUrl(path, extraParams = {}) {
-        const base = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/${path}?ref=${CONFIG.BRANCH}`;
-        const params = new URLSearchParams({
-            ...extraParams,
-            _t: Date.now(), // Cache-buster
-        });
-        return `${base}&${params.toString()}`;
-    }
-
-    /**
-     * Fetch with retry and exponential backoff.
-     * @param {string} url – The URL to fetch.
-     * @param {number} retries – Max retries.
-     * @param {number} delay – Initial delay in ms.
-     * @returns {Promise<Response>}
-     */
-    async function fetchWithRetry(url, retries = 3, delay = 1000) {
-        for (let attempt = 1; attempt <= retries; attempt++) {
-            try {
-                const response = await fetch(url);
-                if (response.ok) return response;
-                // If rate limit, wait longer
-                if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
-                    const reset = response.headers.get('X-RateLimit-Reset');
-                    if (reset) {
-                        const waitTime = (parseInt(reset, 10) * 1000) - Date.now() + 5000;
-                        if (waitTime > 0) {
-                            console.warn(`GitHub rate limit hit. Waiting ${Math.ceil(waitTime / 1000)}s...`);
-                            await new Promise(r => setTimeout(r, waitTime));
-                            continue;
-                        }
-                    }
-                }
-                throw new Error(`HTTP ${response.status} – ${response.statusText}`);
-            } catch (err) {
-                if (attempt === retries) throw err;
-                const backoff = delay * Math.pow(2, attempt - 1);
-                console.warn(`Fetch attempt ${attempt} failed. Retrying in ${backoff}ms...`);
-                await new Promise(r => setTimeout(r, backoff));
-            }
-        }
-    }
-
     // ============================================================
-    //  3.  FETCH POSTS
+    //  5.  FETCH POSTS (with parallel loading)
     // ============================================================
 
     /**
      * Fetch all blog posts from GitHub.
-     * @returns {Promise<Array<Object>>} – Sorted posts (newest first).
+     * @returns {Promise<Array<Object>>} – An array of post objects (sorted newest first).
      */
     async function fetchPosts() {
         try {
@@ -136,13 +141,15 @@
             const listResponse = await fetchWithRetry(listUrl);
 
             const files = await listResponse.json();
+
+            // Check if the response is an array (GitHub API returns array for folder contents)
             if (!Array.isArray(files)) {
-                console.warn('Unexpected response from GitHub API.');
+                console.warn('GitHub API returned unexpected response:', files);
                 return [];
             }
 
-            const mdFiles = files.filter((file) =>
-                file.name.endsWith('.md') && file.download_url
+            const mdFiles = files.filter(
+                (file) => file.name && file.name.endsWith('.md') && file.download_url
             );
 
             if (mdFiles.length === 0) {
@@ -153,16 +160,17 @@
             // 2. Fetch and parse all Markdown files in parallel
             const fetchPromises = mdFiles.map(async (file) => {
                 try {
-                    const contentRes = await fetchWithRetry(file.download_url, 2);
+                    const contentRes = await fetchWithRetry(file.download_url);
                     const markdown = await contentRes.text();
                     const { data, content } = parseFrontmatter(markdown);
 
+                    // Only include posts that have at least a title
                     if (!data.title) {
                         console.warn(`⏩ Skipping ${file.name} – missing "title" in frontmatter.`);
                         return null;
                     }
 
-                    // Normalise gallery (handle both string[] and object[] formats)
+                    // Normalise the gallery field (handle both string[] and object[] formats)
                     let gallery = data.gallery || [];
                     if (Array.isArray(gallery) && gallery.length > 0) {
                         if (typeof gallery[0] === 'object' && gallery[0].image) {
@@ -201,18 +209,18 @@
             return posts;
         } catch (error) {
             console.error('❌ Failed to fetch blog posts:', error);
-            throw error; // Re-throw to be handled by caller
+            throw error; // Re-throw for the caller to handle
         }
     }
 
     // ============================================================
-    //  4.  RENDER POSTS
+    //  6.  RENDER POSTS (Card Grid)
     // ============================================================
 
     /**
      * Render blog cards into the container.
      * @param {Array<Object>} posts – The list of posts to display.
-     * @param {HTMLElement} container – The DOM container.
+     * @param {HTMLElement} container – The container element.
      */
     function renderPosts(posts, container) {
         if (!container) return;
@@ -232,7 +240,7 @@
         posts.forEach((post) => {
             const coverUrl =
                 post.coverImage ||
-                'https://via.placeholder.com/600x400/1A7A74/fff?text=Blog+Post';
+                'https://via.placeholder.com/600x400/3a5a40/dad7cd?text=Blog+Post';
             const preview = post.previewText || 'Click to read the full story.';
             const title = post.title || 'Untitled';
 
@@ -281,66 +289,52 @@
                 const slug = this.dataset.slug;
 
                 if (isMobile) {
+                    // If not expanded yet, expand and prevent navigation
                     if (!isExpanded) {
                         e.preventDefault();
                         preview.classList.toggle('open');
                         isExpanded = true;
                     } else {
+                        // Already expanded – now navigate to detail
                         if (slug) {
-                            window.location.href = `${CONFIG.DETAIL_PAGE}?slug=${slug}`;
+                            window.location.href = `${CONFIG.BLOG_DETAIL_PATH}?slug=${slug}`;
                         }
                     }
                 } else {
+                    // Desktop: click always goes to detail
                     if (slug) {
-                        window.location.href = `${CONFIG.DETAIL_PAGE}?slug=${slug}`;
+                        window.location.href = `${CONFIG.BLOG_DETAIL_PATH}?slug=${slug}`;
                     }
                 }
             });
 
-            // Handle read-more hint click separately
+            // Also handle the read-more hint click separately
             const hint = card.querySelector('.read-more-hint');
             if (hint) {
                 hint.addEventListener('click', function (e) {
-                    e.stopPropagation();
+                    e.stopPropagation(); // Prevent card click from firing
                     const slug = card.dataset.slug;
                     if (slug) {
-                        window.location.href = `${CONFIG.DETAIL_PAGE}?slug=${slug}`;
+                        window.location.href = `${CONFIG.BLOG_DETAIL_PATH}?slug=${slug}`;
                     }
                 });
             }
         });
     }
 
-    /**
-     * Show an error message in the container.
-     * @param {string} message – User-friendly error message.
-     * @param {HTMLElement} container – The DOM container.
-     */
-    function showError(message, container) {
-        if (!container) return;
-        container.innerHTML = `
-            <div class="blog-empty" style="border-color: #e74c3c;">
-                <i class="fas fa-exclamation-triangle" style="color: #e74c3c; opacity: 0.7;"></i>
-                <p>${message}</p>
-                <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--cyprus-light); color: white; border: none; border-radius: 2rem; cursor: pointer; font-weight: 600;">
-                    <i class="fas fa-sync-alt"></i> Try Again
-                </button>
-            </div>
-        `;
-    }
-
     // ============================================================
-    //  5.  PUBLIC LOADER
+    //  7.  MAIN LOADER FUNCTION (Exposed globally)
     // ============================================================
 
     /**
      * Load and render blog posts.
-     * Shows a loading state while fetching, then renders the cards or error.
+     * Shows a loading state while fetching, then renders the cards.
+     * @returns {Promise<void>}
      */
-    async function loadBlogs() {
+    async function loadBlogPosts() {
         const container = document.getElementById('blogContainer');
         if (!container) {
-            console.warn('⚠️ Blog container not found.');
+            console.warn('Blog container not found.');
             return;
         }
 
@@ -356,26 +350,30 @@
             const posts = await fetchPosts();
             renderPosts(posts, container);
         } catch (error) {
-            let userMessage = 'Unable to load blog posts. Please try again later.';
-            if (error.message && error.message.includes('403')) {
-                userMessage = 'GitHub API rate limit exceeded. Please wait a few minutes and refresh.';
-            } else if (error.message && error.message.includes('404')) {
-                userMessage = 'Blog posts folder not found. Please check the configuration.';
-            }
-            showError(userMessage, container);
-            console.error('Blog loading error:', error);
+            console.error('Blog loading failed:', error);
+            container.innerHTML = `
+                <div class="blog-empty">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Could not load blog posts. Please refresh or try again later.</p>
+                    <p style="font-size:0.8rem;margin-top:0.5rem;opacity:0.6;">Error: ${error.message || 'Unknown error'}</p>
+                </div>
+            `;
         }
     }
 
-    // Expose `loadBlogs` globally so `script.js` can call it
-    window.loadBlogs = loadBlogs;
-
     // ============================================================
-    //  6.  CONSOLE BRANDING
+    //  8.  EXPOSE PUBLIC API
     // ============================================================
 
-    console.log('%c📚 Blog loader (production ready)', 'color:#1A7A74;font-weight:600;');
+    // Expose `loadBlogPosts` globally so `script.js` can call it
+    window.loadBlogPosts = loadBlogPosts;
+
+    // ============================================================
+    //  9.  CONSOLE BRANDING
+    // ============================================================
+
+    console.log('%c📚 Blog loader initialised (Earthy Forest Edition)', 'color:#588157;font-weight:600;');
     console.log(`   ↳ Repo: ${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/${CONFIG.POSTS_PATH}`);
-    console.log('   ↳ Retry & error handling enabled');
+    console.log('   ↳ Retry enabled · Cache-busting enabled · Responsive interactions');
 
 })();
