@@ -1,27 +1,45 @@
 // ============================================================
-//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES
-//  Forest Green Edition · No Router (separate HTML pages)
+//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES (Production Ready)
 //  Handles: Clock, Data Rendering, Interactions, Animations
+//  Modular, with error boundaries and graceful fallbacks.
 // ============================================================
 
 (function () {
     'use strict';
 
     // ============================================================
-    //  1.  DOM REFS (safe access)
+    //  1.  CONFIGURATION (with fallback)
+    // ============================================================
+
+    const CONFIG = window.CONFIG || {
+        GITHUB_USER: 'Irtizaa6x',
+        GITHUB_REPO: 'Irtizaa6x.github.io',
+        BRANCH: 'main',
+        POSTS_PATH: 'src/posts',
+        DETAIL_PAGE: '/blog-detail',
+    };
+
+    // ============================================================
+    //  2.  DOM REFS (safe access)
     // ============================================================
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
     const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
     // ============================================================
-    //  2.  REAL‑TIME CLOCK (Dhaka) + SUN/MOON (SunCalc)
+    //  3.  REAL‑TIME CLOCK (Dhaka) + SUN/MOON (SunCalc)
     // ============================================================
 
     const DHAKA_LAT = 23.8103;
     const DHAKA_LON = 90.4125;
 
     function updateTimeOfDay() {
+        // Guard: SunCalc must be loaded
+        if (typeof SunCalc === 'undefined') {
+            console.warn('SunCalc not loaded — skipping time-of-day update');
+            return;
+        }
+
         const now = new Date();
         const wrapper = document.getElementById('localTimeWrapper');
         const astroDisplay = document.getElementById('astroDisplay');
@@ -108,7 +126,7 @@
     }
 
     // ============================================================
-    //  3.  DURATION CALCULATOR (from data.js)
+    //  4.  DURATION CALCULATOR (from data.js)
     // ============================================================
 
     function calculateDuration(startDate, endDate) {
@@ -142,7 +160,7 @@
     }
 
     // ============================================================
-    //  4.  RENDER EXPERIENCES + CERTIFICATIONS (from data.js)
+    //  5.  RENDER EXPERIENCES + CERTIFICATIONS (from data.js)
     // ============================================================
 
     function renderExperiences() {
@@ -234,7 +252,7 @@
     }
 
     // ============================================================
-    //  5.  RENDER SKILLS (from data.js)
+    //  6.  RENDER SKILLS (from data.js)
     // ============================================================
 
     function renderSkills() {
@@ -272,7 +290,7 @@
     }
 
     // ============================================================
-    //  6.  COLLAPSIBLE SKILLS (Show All / Show Less)
+    //  7.  COLLAPSIBLE SKILLS (Show All / Show Less)
     // ============================================================
 
     function initCollapsibleSkills() {
@@ -296,8 +314,8 @@
                 cursor: 'pointer',
                 fontSize: '0.7rem',
                 fontWeight: '600',
-                color: '#216869',
-                background: 'rgba(156,197,161,0.06)',
+                color: '#1A7A74',
+                background: 'rgba(26,122,116,0.06)',
                 width: 'fit-content',
                 padding: '0.2rem 0.9rem',
                 borderRadius: '20px',
@@ -327,7 +345,7 @@
     }
 
     // ============================================================
-    //  7.  ACADEMIC DETAILS TOGGLE
+    //  8.  ACADEMIC DETAILS TOGGLE
     // ============================================================
 
     function initAcademicDetails() {
@@ -345,7 +363,7 @@
     }
 
     // ============================================================
-    //  8.  SCROLL TO CERTIFICATIONS (clickable hint)
+    //  9.  SCROLL TO CERTIFICATIONS (clickable hint)
     // ============================================================
 
     function initScrollToCert() {
@@ -360,25 +378,70 @@
     }
 
     // ============================================================
-    //  9.  DISCORD COPY TO CLIPBOARD
+    //  10. DISCORD COPY TO CLIPBOARD (with toast notification)
     // ============================================================
 
     function initDiscordCopy() {
         const discordBtn = document.querySelector('.discord-copy');
         if (!discordBtn) return;
+
         const originalHTML = discordBtn.innerHTML;
+
+        // Create a toast container if it doesn't exist
+        let toast = document.querySelector('.toast-notification');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            Object.assign(toast.style, {
+                position: 'fixed',
+                bottom: '2rem',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                background: '#004643',
+                color: '#fff',
+                padding: '0.8rem 1.8rem',
+                borderRadius: '2rem',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                zIndex: '9999',
+                opacity: '0',
+                transition: 'opacity 0.3s ease, transform 0.3s ease',
+                pointerEvents: 'none',
+            });
+            document.body.appendChild(toast);
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            clearTimeout(toast._hideTimeout);
+            toast._hideTimeout = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(10px)';
+            }, 2500);
+        }
+
         discordBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigator.clipboard.writeText('naz.irt.k6');
-            discordBtn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
-            setTimeout(() => {
-                discordBtn.innerHTML = originalHTML;
-            }, 1800);
+            navigator.clipboard.writeText('naz.irt.k6')
+                .then(() => {
+                    showToast('✅ Discord username copied!');
+                    discordBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        discordBtn.innerHTML = originalHTML;
+                    }, 1800);
+                })
+                .catch(() => {
+                    showToast('❌ Failed to copy. Please copy manually: naz.irt.k6');
+                });
         });
     }
 
     // ============================================================
-    //  10. HAMBURGER MENU TOGGLE
+    //  11. HAMBURGER MENU TOGGLE
     // ============================================================
 
     function initHamburger() {
@@ -405,7 +468,7 @@
     }
 
     // ============================================================
-    //  11. MOBILE HEADER SCROLL HIDE/SHOW
+    //  12. MOBILE HEADER SCROLL HIDE/SHOW
     // ============================================================
 
     function initScrollHeader() {
@@ -445,7 +508,7 @@
     }
 
     // ============================================================
-    //  12. ACTIVE NAV ITEM (based on current page)
+    //  13. ACTIVE NAV ITEM (based on current page)
     // ============================================================
 
     function setActiveNav() {
@@ -461,7 +524,7 @@
     }
 
     // ============================================================
-    //  13. BOOTSTRAP (DOM ready)
+    //  14. BOOTSTRAP (DOM ready)
     // ============================================================
 
     function init() {
@@ -484,17 +547,17 @@
             setInterval(updateDhakaTime, 1000);
         }
 
-        // Load blogs only if on blog page
+        // Load blogs only if on blog page (call once)
         if (document.getElementById('blogContainer') && typeof loadBlogs === 'function') {
             loadBlogs();
         }
 
         console.log(
-            '%c✦ Md. Irtija Azad Talha · Forest Green %cExecutive Portfolio',
-            'background:#1f2421;color:#9cc5a1;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
-            'background:#9cc5a1;color:#1f2421;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
+            '%c✦ Md. Irtija Azad Talha · Cyprus & Sand %cExecutive Portfolio',
+            'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
+            'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
         );
-        console.log('%c🌿 Separate HTML pages · Utility mode active', 'color:#216869;font-weight:500;');
+        console.log('%c🌿 Production-ready · Utility mode active', 'color:#1A7A74;font-weight:500;');
     }
 
     // --- Run when DOM is ready ---
