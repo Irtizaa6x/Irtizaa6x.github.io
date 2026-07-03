@@ -3,13 +3,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Detail · Irtija</title>
+    <title>Blog Post · IrtiJa</title>
 
-    <!-- ===== SEO / Open Graph ===== -->
-    <meta property="og:title" content="Blog Post · Irtija" />
+    <!-- ===== SEO & Open Graph ===== -->
+    <meta name="description" content="Read the latest blog post from Md. Irtija Azad Talha — cybersecurity, technology, and personal journey." />
+    <meta name="keywords" content="blog, cybersecurity, programming, Irtija, portfolio" />
+    <link rel="canonical" href="https://irtizaa6x.github.io/blog-detail" />
+
+    <meta property="og:title" content="Blog Post · IrtiJa" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://irtizaa6x.github.io/blog-detail" />
+    <meta property="og:description" content="Read the latest blog post from Md. Irtija Azad Talha." />
+    <meta property="og:image" content="https://irtizaa6x.github.io/irtija.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog Post · IrtiJa" />
+    <meta name="twitter:description" content="Read the latest blog post from Md. Irtija Azad Talha." />
+    <meta name="twitter:image" content="https://irtizaa6x.github.io/irtija.png" />
+
+    <!-- ===== JSON-LD Structured Data (Article) ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Blog Post",
+        "author": {
+            "@type": "Person",
+            "name": "Md. Irtija Azad Talha"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IrtiJa Portfolio"
+        },
+        "datePublished": "2026-07-03",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://irtizaa6x.github.io/blog-detail"
+        }
+    }
+    </script>
 
     <!-- ===== Fonts & Icons ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,18 +56,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js" defer></script>
 
-    <!-- ===== Page‑specific overrides (keeps layout clean) ===== -->
+    <!-- ===== Minimal Page‑specific Overrides ===== -->
     <style>
-        /* Minimal overrides – everything else comes from blogs.css */
+        /* Ensure the detail page uses the full width and proper spacing */
         body {
-            background: var(--alabaster, #dce1de);
+            background: var(--bg-body, #F0EDE5);
             padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .app-wrapper {
             max-width: 1100px;
             margin: 0 auto;
-            display: block;
+            width: 100%;
         }
 
         .main-content {
@@ -44,13 +79,15 @@
             background: transparent;
         }
 
+        /* Back button wrapper */
         .back-to-portfolio-wrapper {
             margin-bottom: 1.8rem;
         }
 
+        /* Detail footer */
         .detail-footer {
             margin-top: 2.5rem;
-            border-top: 1px solid rgba(31, 36, 33, 0.06);
+            border-top: 1px solid rgba(0, 70, 67, 0.06);
             padding-top: 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -61,11 +98,11 @@
 
         .detail-footer .footer-note {
             font-size: 0.75rem;
-            color: var(--text-muted, #6a7a7a);
+            color: var(--text-muted, #7A7A7A);
         }
 
         .detail-footer .footer-note i {
-            color: var(--seaweed, #49a078);
+            color: var(--gold, #D4A853);
         }
 
         @media (max-width: 768px) {
@@ -81,81 +118,53 @@
                 justify-content: center;
             }
         }
-
-        /* Gallery grid (equal size) – already defined in blogs.css,
-           but we ensure it's applied even if the stylesheet hasn't loaded. */
-        .detail-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 0.8rem;
-            margin-top: 1.2rem;
-        }
-        .detail-gallery img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: var(--radius-sm, 10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.04));
-        }
-        .detail-gallery img:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-glow, 0 8px 32px rgba(73,160,120,0.10));
-            z-index: 2;
-        }
     </style>
 </head>
 <body>
+
     <div class="app-wrapper">
-        <main class="main-content" id="mainContent">
+        <main class="main-content" id="mainContent" role="main">
 
             <!-- ===== DYNAMIC CONTENT CONTAINER ===== -->
-            <div id="blogDetailContainer" class="blog-detail-container">
+            <article id="blogDetailContainer" class="blog-detail-container" aria-label="Blog post content">
                 <!-- Loading state -->
-                <div class="blog-loading" style="padding:3rem 0;">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading post...</p>
+                <div class="blog-loading" style="padding:3rem 0;" aria-live="polite">
+                    <i class="fas fa-spinner" aria-hidden="true"></i>
+                    <p>Loading post…</p>
                 </div>
-            </div>
+            </article>
 
         </main>
     </div>
 
     <!-- ============================================================
-       MAIN SCRIPT
+       MAIN SCRIPT — Fetches and renders the post
     ============================================================ -->
     <script>
         (function() {
             'use strict';
 
             // ============================================================
-            //  1.  CONFIGURATION
+            //  1.  CONFIGURATION (matching blogs.js)
             // ============================================================
 
-            const GITHUB_USER = 'Irtizaa6x';
-            const GITHUB_REPO = 'Irtizaa6x.github.io';
-            const BRANCH = 'main';
-            const POSTS_PATH = 'src/posts';
+            const CONFIG = window.CONFIG || {
+                GITHUB_USER: 'Irtizaa6x',
+                GITHUB_REPO: 'Irtizaa6x.github.io',
+                BRANCH: 'main',
+                POSTS_PATH: 'src/posts',
+                DETAIL_PAGE: '/blog-detail',
+            };
 
             // ============================================================
             //  2.  HELPERS
             // ============================================================
 
-            /**
-             * Get a URL parameter by name.
-             * @param {string} param – The parameter name.
-             * @returns {string|null} – The value or null if not found.
-             */
             function getParam(param) {
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
             }
 
-            /**
-             * Parse YAML frontmatter from a Markdown string.
-             * Uses js-yaml if available; falls back to a simple key-value parser.
-             */
             function parseFrontmatter(markdown) {
                 const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
                 if (!match) {
@@ -192,34 +201,50 @@
                 return { data, content };
             }
 
-            /**
-             * Build a cache‑busted GitHub API URL for a single file.
-             */
             function buildFileUrl(slug) {
-                const path = `${POSTS_PATH}/${slug}.md`;
-                return `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${BRANCH}&_t=${Date.now()}`;
+                const path = `${CONFIG.POSTS_PATH}/${slug}.md`;
+                return `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/${path}?ref=${CONFIG.BRANCH}&_t=${Date.now()}`;
             }
 
             // ============================================================
-            //  3.  FETCH POST DATA
+            //  3.  FETCH POST DATA (with retry)
             // ============================================================
+
+            async function fetchWithRetry(url, retries = 3, delay = 1000) {
+                for (let attempt = 1; attempt <= retries; attempt++) {
+                    try {
+                        const response = await fetch(url);
+                        if (response.ok) return response;
+                        if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
+                            const reset = response.headers.get('X-RateLimit-Reset');
+                            if (reset) {
+                                const waitTime = (parseInt(reset, 10) * 1000) - Date.now() + 5000;
+                                if (waitTime > 0) {
+                                    console.warn(`GitHub rate limit hit. Waiting ${Math.ceil(waitTime / 1000)}s...`);
+                                    await new Promise(r => setTimeout(r, waitTime));
+                                    continue;
+                                }
+                            }
+                        }
+                        throw new Error(`HTTP ${response.status}`);
+                    } catch (err) {
+                        if (attempt === retries) throw err;
+                        const backoff = delay * Math.pow(2, attempt - 1);
+                        console.warn(`Fetch attempt ${attempt} failed. Retrying in ${backoff}ms...`);
+                        await new Promise(r => setTimeout(r, backoff));
+                    }
+                }
+            }
 
             async function fetchPost(slug) {
                 try {
                     const url = buildFileUrl(slug);
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        if (response.status === 404) {
-                            throw new Error('Post not found.');
-                        }
-                        throw new Error(`GitHub API responded with ${response.status}`);
-                    }
+                    const response = await fetchWithRetry(url);
                     const file = await response.json();
-                    // The content is Base64‑encoded
                     const markdown = atob(file.content);
                     const { data, content } = parseFrontmatter(markdown);
 
-                    // Normalise gallery: handle both string[] and object[] formats
+                    // Normalise gallery
                     let gallery = data.gallery || [];
                     if (Array.isArray(gallery) && gallery.length > 0) {
                         if (typeof gallery[0] === 'object' && gallery[0].image) {
@@ -252,8 +277,6 @@
                     btn.innerHTML = `<i class="fas fa-images"></i> View Gallery (${count} images)`;
                 }
             }
-
-            // Make toggleGallery globally accessible for inline onclick
             window.toggleGallery = toggleGallery;
 
             // ============================================================
@@ -270,7 +293,7 @@
                         <div style="text-align:center;padding:3rem 1rem;">
                             <p style="color:#b91c1c;font-weight:600;">❌ No blog post selected.</p>
                             <a href="/blog.html" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
-                                <i class="fas fa-arrow-left"></i> Back to Blog
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog
                             </a>
                         </div>
                     `;
@@ -283,24 +306,51 @@
                         <div style="text-align:center;padding:3rem 1rem;">
                             <p style="color:#b91c1c;font-weight:600;">❌ Post not found.</p>
                             <a href="/blog.html" class="back-to-portfolio" style="margin-top:1.2rem;display:inline-flex;">
-                                <i class="fas fa-arrow-left"></i> Back to Blog
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog
                             </a>
                         </div>
                     `;
                     return;
                 }
 
-                // --- Update document title ---
-                document.title = `${post.title || 'Blog Post'} · Irtija`;
+                // --- Update document metadata dynamically ---
+                document.title = `${post.title || 'Blog Post'} · IrtiJa`;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc && post.previewText) {
+                    metaDesc.setAttribute('content', post.previewText);
+                }
+                const ogTitle = document.querySelector('meta[property="og:title"]');
+                if (ogTitle) ogTitle.setAttribute('content', post.title || 'Blog Post · IrtiJa');
+                const ogDesc = document.querySelector('meta[property="og:description"]');
+                if (ogDesc && post.previewText) {
+                    ogDesc.setAttribute('content', post.previewText);
+                }
+                if (post.coverImage) {
+                    const ogImage = document.querySelector('meta[property="og:image"]');
+                    if (ogImage) ogImage.setAttribute('content', post.coverImage);
+                    const twitterImage = document.querySelector('meta[name="twitter:image"]');
+                    if (twitterImage) twitterImage.setAttribute('content', post.coverImage);
+                }
+                // Update JSON-LD
+                const jsonLd = document.querySelector('script[type="application/ld+json"]');
+                if (jsonLd) {
+                    try {
+                        const data = JSON.parse(jsonLd.textContent);
+                        data.headline = post.title || 'Blog Post';
+                        if (post.date) data.datePublished = post.date;
+                        if (post.coverImage) data.image = post.coverImage;
+                        jsonLd.textContent = JSON.stringify(data, null, 2);
+                    } catch (e) { /* ignore */ }
+                }
 
                 // --- Cover image ---
                 const coverHtml = post.coverImage
-                    ? `<img src="${post.coverImage}" alt="${post.title}" class="detail-cover" loading="lazy" />`
+                    ? `<img src="${post.coverImage}" alt="${post.title || 'Cover image'}" class="detail-cover" loading="lazy" />`
                     : '';
 
                 // --- Date ---
                 const dateHtml = post.date
-                    ? `<p class="detail-date"><i class="far fa-calendar-alt"></i> ${post.date}</p>`
+                    ? `<p class="detail-date"><i class="far fa-calendar-alt" aria-hidden="true"></i> ${post.date}</p>`
                     : '';
 
                 // --- Tags ---
@@ -309,7 +359,7 @@
                     tagsHtml = `<div class="detail-tags">${post.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
                 }
 
-                // --- Gallery (equal grid, visible by default) ---
+                // --- Gallery ---
                 let galleryHtml = '';
                 if (post.gallery && post.gallery.length > 0) {
                     const allImages = post.gallery.map(img =>
@@ -318,8 +368,8 @@
 
                     galleryHtml = `
                         <div class="detail-gallery-container">
-                            <button class="gallery-toggle-btn" onclick="toggleGallery()">
-                                <i class="fas fa-times"></i> Hide Gallery
+                            <button class="gallery-toggle-btn" onclick="toggleGallery()" aria-label="Toggle gallery">
+                                <i class="fas fa-times" aria-hidden="true"></i> Hide Gallery
                             </button>
                             <div class="detail-gallery" id="galleryContainer" style="display:grid;">
                                 ${allImages}
@@ -340,7 +390,7 @@
                     if (embedUrl.includes('youtube')) {
                         videoHtml = `
                             <div class="detail-video">
-                                <iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy"></iframe>
+                                <iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" title="Video content"></iframe>
                             </div>
                         `;
                     }
@@ -350,8 +400,8 @@
                 let certHtml = '';
                 if (post.certificate) {
                     certHtml = `
-                        <a href="${post.certificate}" target="_blank" class="detail-cert-btn">
-                            <i class="fas fa-certificate"></i> View Certificate
+                        <a href="${post.certificate}" target="_blank" class="detail-cert-btn" rel="noopener noreferrer">
+                            <i class="fas fa-certificate" aria-hidden="true"></i> View Certificate
                         </a>
                     `;
                 }
@@ -360,7 +410,12 @@
                 let bodyHtml = '';
                 if (post.content) {
                     try {
-                        bodyHtml = marked.parse(post.content);
+                        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+                            bodyHtml = marked.parse(post.content);
+                        } else {
+                            // Fallback: simple paragraph conversion
+                            bodyHtml = `<p>${post.content.replace(/\n/g, '</p><p>')}</p>`;
+                        }
                     } catch (err) {
                         console.warn('Markdown parsing failed:', err);
                         bodyHtml = `<p>${post.content}</p>`;
@@ -371,8 +426,8 @@
                 container.innerHTML = `
                     <!-- Back button (top) -->
                     <div class="back-to-portfolio-wrapper">
-                        <a href="/blog.html" class="back-to-portfolio">
-                            <i class="fas fa-arrow-left"></i> Back to Blog
+                        <a href="/blog.html" class="back-to-portfolio" aria-label="Back to blog list">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog
                         </a>
                     </div>
 
@@ -390,10 +445,10 @@
                     <!-- Footer with back button -->
                     <div class="detail-footer">
                         <span class="footer-note">
-                            <i class="fas fa-feather-alt"></i> Published via Irtija's Admin Panel
+                            <i class="fas fa-feather-alt" aria-hidden="true"></i> Published via Irtija's Admin Panel
                         </span>
-                        <a href="/blog.html" class="back-to-portfolio" style="margin:0;">
-                            <i class="fas fa-arrow-left"></i> Back to Blog
+                        <a href="/blog.html" class="back-to-portfolio" style="margin:0;" aria-label="Back to blog list">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog
                         </a>
                     </div>
                 `;
@@ -403,7 +458,6 @@
             //  6.  BOOTSTRAP
             // ============================================================
 
-            // Wait for the DOM and the required libraries to load
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', renderDetail);
             } else {
