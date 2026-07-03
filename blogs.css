@@ -62,10 +62,23 @@
     flex-direction: column;
 }
 
-.blog-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(212, 168, 83, 0.15);
+/* --- Hover effect (works on desktop & touch devices with hover capability) --- */
+@media (hover: hover) {
+    .blog-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(212, 168, 83, 0.15);
+    }
+
+    .blog-card:hover .cover-image {
+        transform: scale(1.02);
+        filter: brightness(0.98) saturate(1.02);
+    }
+
+    .blog-card:hover .read-more-hint {
+        border-bottom-color: var(--cyprus-light);
+        transform: translateX(4px);
+    }
 }
 
 /* --- COVER IMAGE (Fixed sizing) --- */
@@ -76,11 +89,6 @@
     display: block;
     background: var(--sand-light);
     transition: transform 0.6s ease, filter 0.4s ease;
-}
-
-.blog-card:hover .cover-image {
-    transform: scale(1.02);
-    filter: brightness(0.98) saturate(1.02);
 }
 
 /* --- PREVIEW AREA (Hover expansion) --- */
@@ -118,12 +126,7 @@
     align-self: flex-start;
 }
 
-.blog-card:hover .read-more-hint {
-    border-bottom-color: var(--cyprus-light);
-    transform: translateX(4px);
-}
-
-/* --- Expanded preview (on hover) --- */
+/* --- Expanded preview (on hover or open state) --- */
 .blog-card .preview-area.open {
     padding: 1.2rem 1.4rem 1.4rem 1.4rem;
 }
