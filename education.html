@@ -3,19 +3,42 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Qualifications · IrtiJa</title>
 
-    <!-- ===== SEO & Meta ===== -->
-    <meta name="description" content="Educational qualifications of Md. Irtija Azad Talha — B.Sc. in CSE, HSC, and SSC academic achievements." />
-    <meta name="keywords" content="education, qualifications, CSE, HSC, SSC, academic, Irtija" />
+    <!-- ===== SEO & Open Graph ===== -->
+    <title>Qualifications · Md. Irtija Azad Talha</title>
+    <meta name="description" content="View the complete educational qualifications of Md. Irtija Azad Talha — B.Sc. in CSE, HSC, and SSC with detailed academic transcripts." />
+    <meta property="og:title" content="Qualifications · Md. Irtija Azad Talha" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/education.html" />
+    <meta property="og:description" content="Complete academic record and qualifications of Md. Irtija Azad Talha." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://irtizaa6x.github.io/education.html" />
 
-    <!-- ===== Open Graph ===== -->
-    <meta property="og:title" content="Qualifications · IrtiJa" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://irtizaa6x.github.io/education.html" />
-    <meta property="og:description" content="Educational qualifications of Md. Irtija Azad Talha." />
-    <meta property="og:image" content="https://irtizaa6x.github.io/irtija.png" />
+    <!-- ===== Schema.org Structured Data (Educational Qualifications) ===== -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Md. Irtija Azad Talha",
+            "alumniOf": [{
+                "@type": "CollegeOrUniversity",
+                "name": "Green University of Bangladesh",
+                "department": "Computer Science & Engineering",
+                "startDate": "2025",
+                "endDate": "Present"
+            }, {
+                "@type": "CollegeOrUniversity",
+                "name": "Giasuddin Islamic Model College",
+                "startDate": "2022",
+                "endDate": "2024"
+            }, {
+                "@type": "CollegeOrUniversity",
+                "name": "Rafiqul Islam School & College",
+                "startDate": "2017",
+                "endDate": "2022"
+            }]
+        }
+    </script>
 
     <!-- ===== Fonts & Icons ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,15 +50,13 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="blogs.css" />
 
-    <!-- ===== Favicon ===== -->
     <link rel="icon" type="image/png" href="irtija.png" />
 </head>
 <body>
+
     <div class="app-wrapper">
 
-        <!-- ============================================================
-        MOBILE HEADER
-        ============================================================ -->
+        <!-- ===== MOBILE HEADER ===== -->
         <header class="mobile-header" id="mobileHeader" role="banner" aria-label="Mobile header">
             <div class="header-inner">
                 <div class="header-title">
@@ -48,13 +69,11 @@
             </div>
         </header>
 
-        <!-- ============================================================
-        SIDEBAR
-        ============================================================ -->
+        <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
             <div class="brand">
                 <div class="nav-icon-display" id="activeNavIcon">
-                    <img src="logo.png" alt="Irtija Logo — brand mark" class="sidebar-logo" />
+                    <img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />
                 </div>
                 <div class="brand-name"><span>IrtiJa</span></div>
                 <div class="brand-sub">
@@ -63,7 +82,7 @@
                 </div>
             </div>
 
-            <nav class="nav-menu" role="navigation" aria-label="Primary navigation">
+            <nav class="nav-menu" aria-label="Main menu">
                 <a class="nav-item" href="index.html">
                     <i class="fas fa-user-astronaut" aria-hidden="true"></i>
                     <span>Profile</span>
@@ -96,12 +115,10 @@
             </div>
         </aside>
 
-        <!-- ============================================================
-        MAIN CONTENT
-        ============================================================ -->
-        <main class="main-content" role="main" aria-label="Educational qualifications">
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content" id="mainContent" role="main">
 
-            <!-- Page Header -->
+            <!-- ===== PAGE HEADER ===== -->
             <header class="page-header">
                 <h1 class="section-title">
                     <i class="fas fa-graduation-cap" aria-hidden="true"></i>
@@ -109,12 +126,10 @@
                 </h1>
             </header>
 
-            <!-- ============================================================
-            QUALIFICATIONS GRID
-            ============================================================ -->
-            <section class="qualifications-grid" aria-label="List of educational qualifications">
+            <!-- ===== QUALIFICATIONS GRID ===== -->
+            <section class="qualifications-grid" aria-label="Educational qualifications">
 
-                <!-- ----- B.Sc. in CSE ----- -->
+                <!-- ===== B.SC. IN CSE ===== -->
                 <article class="qual-card" aria-label="Bachelor of Science in Computer Science and Engineering">
                     <div class="qual-icon" aria-hidden="true">
                         <i class="fas fa-university"></i>
@@ -129,20 +144,20 @@
                         </div>
                         <p class="qual-note">4<sup>th</sup> semester (Trimester) • Ongoing</p>
 
-                        <button class="btn-toggle-details" data-target="bsc-details" aria-expanded="false">
+                        <button class="btn-toggle-details" data-target="bsc-details" aria-expanded="false" aria-controls="bsc-details">
                             <i class="fas fa-chevron-down" aria-hidden="true"></i>
                             View Semester Details
                         </button>
 
-                        <div id="bsc-details" class="details-content" role="region" aria-label="B.Sc. semester details">
+                        <div id="bsc-details" class="details-content" role="region" aria-label="B.Sc. semester-wise academic transcript">
                             <div class="details-inner">
                                 <p class="details-note">
                                     <i class="fas fa-info-circle" aria-hidden="true"></i>
                                     Detailed academic transcript — semester-wise course breakdown with credits, grades, and grade points.
                                 </p>
 
-                                <!-- Semester 250 -->
-                                <div class="semester-group">
+                                <!-- ===== Semester 250 ===== -->
+                                <section class="semester-group">
                                     <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 250</h3>
                                     <div class="table-responsive" role="table" aria-label="Semester 250 courses">
                                         <table class="academic-table">
@@ -156,34 +171,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>CSE 100</td>
-                                                    <td>Computational Thinking and Problem Solving</td>
-                                                    <td>1.5</td>
-                                                    <td>A+</td>
-                                                    <td>4.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CSE 101-CSE(181)</td>
-                                                    <td>Discrete Mathematics</td>
-                                                    <td>3</td>
-                                                    <td>A-</td>
-                                                    <td>3.50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>ESP 009</td>
-                                                    <td>Academic English</td>
-                                                    <td>0</td>
-                                                    <td>A</td>
-                                                    <td>3.75</td>
-                                                </tr>
+                                                <tr><td>CSE 100</td><td>Computational Thinking and Problem Solving</td><td>1.5</td><td>A+</td><td>4.00</td></tr>
+                                                <tr><td>CSE 101-CSE(181)</td><td>Discrete Mathematics</td><td>3</td><td>A-</td><td>3.50</td></tr>
+                                                <tr><td>ESP 009</td><td>Academic English</td><td>0</td><td>A</td><td>3.75</td></tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </section>
 
-                                <!-- Semester 252 -->
-                                <div class="semester-group">
+                                <!-- ===== Semester 252 ===== -->
+                                <section class="semester-group">
                                     <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 252</h3>
                                     <div class="table-responsive" role="table" aria-label="Semester 252 courses">
                                         <table class="academic-table">
@@ -197,55 +194,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>CSE 103-CSE(181)</td>
-                                                    <td>Structured Programming</td>
-                                                    <td>3</td>
-                                                    <td>C+</td>
-                                                    <td>2.50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CHE 101-CSE(181)</td>
-                                                    <td>Chemistry</td>
-                                                    <td>3</td>
-                                                    <td>B</td>
-                                                    <td>3.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CSE 104-CSE(181)</td>
-                                                    <td>Structured Programming Lab</td>
-                                                    <td>1.5</td>
-                                                    <td>A-</td>
-                                                    <td>3.50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>ESP 101</td>
-                                                    <td>Academic English I</td>
-                                                    <td>3</td>
-                                                    <td>B-</td>
-                                                    <td>2.75</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>MAT 101(V1)</td>
-                                                    <td>Calculus for Computing</td>
-                                                    <td>3</td>
-                                                    <td>C+</td>
-                                                    <td>2.50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CHE 102-CSE(181)</td>
-                                                    <td>Chemistry Lab</td>
-                                                    <td>1</td>
-                                                    <td>A+</td>
-                                                    <td>4.00</td>
-                                                </tr>
+                                                <tr><td>CSE 103-CSE(181)</td><td>Structured Programming</td><td>3</td><td>C+</td><td>2.50</td></tr>
+                                                <tr><td>CHE 101-CSE(181)</td><td>Chemistry</td><td>3</td><td>B</td><td>3.00</td></tr>
+                                                <tr><td>CSE 104-CSE(181)</td><td>Structured Programming Lab</td><td>1.5</td><td>A-</td><td>3.50</td></tr>
+                                                <tr><td>ESP 101</td><td>Academic English I</td><td>3</td><td>B-</td><td>2.75</td></tr>
+                                                <tr><td>MAT 101(V1)</td><td>Calculus for Computing</td><td>3</td><td>C+</td><td>2.50</td></tr>
+                                                <tr><td>CHE 102-CSE(181)</td><td>Chemistry Lab</td><td>1</td><td>A+</td><td>4.00</td></tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </section>
 
-                                <!-- Semester 261 -->
-                                <div class="semester-group">
+                                <!-- ===== Semester 261 ===== -->
+                                <section class="semester-group">
                                     <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 261</h3>
                                     <div class="table-responsive" role="table" aria-label="Semester 261 courses">
                                         <table class="academic-table">
@@ -259,52 +220,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>CSE 205 (V1)</td>
-                                                    <td>Data Structures</td>
-                                                    <td>3</td>
-                                                    <td>A-</td>
-                                                    <td>3.50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>EEE 101</td>
-                                                    <td>Introduction to Electrical Engineering</td>
-                                                    <td>3</td>
-                                                    <td>B</td>
-                                                    <td>3.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>MAT 103(V1)</td>
-                                                    <td>Linear Algebra and Vector Analysis</td>
-                                                    <td>3</td>
-                                                    <td>B</td>
-                                                    <td>3.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CSE 206 (V1)</td>
-                                                    <td>Data Structures Lab</td>
-                                                    <td>1.5</td>
-                                                    <td>B+</td>
-                                                    <td>3.25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>PHY 101-CSE(181)</td>
-                                                    <td>Physics I</td>
-                                                    <td>3</td>
-                                                    <td>B+</td>
-                                                    <td>3.25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>EEE 102 (V1)</td>
-                                                    <td>Introduction to Electrical Engineering Lab</td>
-                                                    <td>1</td>
-                                                    <td>A+</td>
-                                                    <td>4.00</td>
-                                                </tr>
+                                                <tr><td>CSE 205 (V1)</td><td>Data Structures</td><td>3</td><td>A-</td><td>3.50</td></tr>
+                                                <tr><td>EEE 101</td><td>Introduction to Electrical Engineering</td><td>3</td><td>B</td><td>3.00</td></tr>
+                                                <tr><td>MAT 103(V1)</td><td>Linear Algebra and Vector Analysis</td><td>3</td><td>B</td><td>3.00</td></tr>
+                                                <tr><td>CSE 206 (V1)</td><td>Data Structures Lab</td><td>1.5</td><td>B+</td><td>3.25</td></tr>
+                                                <tr><td>PHY 101-CSE(181)</td><td>Physics I</td><td>3</td><td>B+</td><td>3.25</td></tr>
+                                                <tr><td>EEE 102 (V1)</td><td>Introduction to Electrical Engineering Lab</td><td>1</td><td>A+</td><td>4.00</td></tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </section>
 
                                 <p class="details-footer">
                                     <i class="fas fa-file-alt" aria-hidden="true"></i>
@@ -315,7 +240,7 @@
                     </div>
                 </article>
 
-                <!-- ----- HSC ----- -->
+                <!-- ===== HSC ===== -->
                 <article class="qual-card" aria-label="Higher Secondary Certificate">
                     <div class="qual-icon" aria-hidden="true">
                         <i class="fas fa-school"></i>
@@ -333,18 +258,18 @@
                         </p>
                         <p class="qual-board">Board: Dhaka</p>
 
-                        <button class="btn-toggle-details" data-target="hsc-details" aria-expanded="false">
+                        <button class="btn-toggle-details" data-target="hsc-details" aria-expanded="false" aria-controls="hsc-details">
                             <i class="fas fa-chevron-down" aria-hidden="true"></i>
                             View Subject Details
                         </button>
 
-                        <div id="hsc-details" class="details-content" role="region" aria-label="HSC subject details">
+                        <div id="hsc-details" class="details-content" role="region" aria-label="HSC subject-wise grade breakdown">
                             <div class="details-inner">
                                 <p class="details-note">
                                     <i class="fas fa-info-circle" aria-hidden="true"></i>
                                     Subject-wise grade breakdown for Higher Secondary Certificate (HSC).
                                 </p>
-                                <div class="table-responsive" role="table" aria-label="HSC subjects">
+                                <div class="table-responsive" role="table" aria-label="HSC subjects and grades">
                                     <table class="academic-table">
                                         <thead>
                                             <tr>
@@ -373,7 +298,7 @@
                     </div>
                 </article>
 
-                <!-- ----- SSC ----- -->
+                <!-- ===== SSC ===== -->
                 <article class="qual-card" aria-label="Secondary School Certificate">
                     <div class="qual-icon" aria-hidden="true">
                         <i class="fas fa-school"></i>
@@ -391,18 +316,18 @@
                         </p>
                         <p class="qual-board">Board: Dhaka</p>
 
-                        <button class="btn-toggle-details" data-target="ssc-details" aria-expanded="false">
+                        <button class="btn-toggle-details" data-target="ssc-details" aria-expanded="false" aria-controls="ssc-details">
                             <i class="fas fa-chevron-down" aria-hidden="true"></i>
                             View Subject Details
                         </button>
 
-                        <div id="ssc-details" class="details-content" role="region" aria-label="SSC subject details">
+                        <div id="ssc-details" class="details-content" role="region" aria-label="SSC subject-wise grade breakdown">
                             <div class="details-inner">
                                 <p class="details-note">
                                     <i class="fas fa-info-circle" aria-hidden="true"></i>
                                     Subject-wise grade breakdown for Secondary School Certificate (SSC).
                                 </p>
-                                <div class="table-responsive" role="table" aria-label="SSC subjects">
+                                <div class="table-responsive" role="table" aria-label="SSC subjects and grades">
                                     <table class="academic-table">
                                         <thead>
                                             <tr>
@@ -438,23 +363,21 @@
 
             </section>
 
-            <!-- ============================================================
-            FOOTER
-            ============================================================ -->
+            <!-- ===== FOOTER ===== -->
             <footer role="contentinfo">
                 <i class="far fa-copyright" aria-hidden="true"></i>
                 2026 Md. Irtija Azad Talha — Helped by <strong>Ai</strong>
             </footer>
 
         </main>
+
     </div>
 
-    <!-- ============================================================
-    SCRIPTS
-    ============================================================ -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <!-- ===== SCRIPTS ===== -->
+    <script src="config.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
 
 </body>
 </html>
