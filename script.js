@@ -1,14 +1,14 @@
 // ============================================================
-//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES (Production Ready)
+//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES
+//  Earthy Forest Edition · No Router (separate HTML pages)
 //  Handles: Clock, Data Rendering, Interactions, Animations
-//  Modular, with error boundaries and graceful fallbacks.
 // ============================================================
 
 (function () {
     'use strict';
 
     // ============================================================
-    //  1.  CONFIGURATION (with fallback)
+    //  1.  CONFIGURATION (centralised – can be overridden by config.js)
     // ============================================================
 
     const CONFIG = window.CONFIG || {
@@ -16,11 +16,14 @@
         GITHUB_REPO: 'Irtizaa6x.github.io',
         BRANCH: 'main',
         POSTS_PATH: 'src/posts',
-        DETAIL_PAGE: '/blog-detail',
+        BLOG_DETAIL_PATH: '/blog-detail',
+        BLOG_CONTAINER_ID: 'blogContainer',
+        BLOG_LOAD_RETRIES: 3,
+        BLOG_LOAD_DELAY: 1000,
     };
 
     // ============================================================
-    //  2.  DOM REFS (safe access)
+    //  2.  DOM HELPERS
     // ============================================================
 
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -34,17 +37,17 @@
     const DHAKA_LON = 90.4125;
 
     function updateTimeOfDay() {
-        // Guard: SunCalc must be loaded
+        // Guard against missing SunCalc
         if (typeof SunCalc === 'undefined') {
             console.warn('SunCalc not loaded — skipping time-of-day update');
             return;
         }
 
-        const now = new Date();
         const wrapper = document.getElementById('localTimeWrapper');
         const astroDisplay = document.getElementById('astroDisplay');
         if (!wrapper || !astroDisplay) return;
 
+        const now = new Date();
         const sunTimes = SunCalc.getTimes(now, DHAKA_LAT, DHAKA_LON);
         const sunrise = sunTimes.sunrise;
         const sunset = sunTimes.sunset;
@@ -314,8 +317,8 @@
                 cursor: 'pointer',
                 fontSize: '0.7rem',
                 fontWeight: '600',
-                color: '#1A7A74',
-                background: 'rgba(26,122,116,0.06)',
+                color: '#344e41',
+                background: 'rgba(163,177,138,0.08)',
                 width: 'fit-content',
                 padding: '0.2rem 0.9rem',
                 borderRadius: '20px',
@@ -378,65 +381,28 @@
     }
 
     // ============================================================
-    //  10. DISCORD COPY TO CLIPBOARD (with toast notification)
+    //  10. DISCORD COPY TO CLIPBOARD (improved)
     // ============================================================
 
     function initDiscordCopy() {
         const discordBtn = document.querySelector('.discord-copy');
         if (!discordBtn) return;
-
         const originalHTML = discordBtn.innerHTML;
-
-        // Create a toast container if it doesn't exist
-        let toast = document.querySelector('.toast-notification');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            Object.assign(toast.style, {
-                position: 'fixed',
-                bottom: '2rem',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: '#004643',
-                color: '#fff',
-                padding: '0.8rem 1.8rem',
-                borderRadius: '2rem',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.9rem',
-                fontWeight: '500',
-                zIndex: '9999',
-                opacity: '0',
-                transition: 'opacity 0.3s ease, transform 0.3s ease',
-                pointerEvents: 'none',
-            });
-            document.body.appendChild(toast);
-        }
-
-        function showToast(message) {
-            toast.textContent = message;
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateX(-50%) translateY(0)';
-            clearTimeout(toast._hideTimeout);
-            toast._hideTimeout = setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(10px)';
-            }, 2500);
-        }
-
         discordBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigator.clipboard.writeText('naz.irt.k6')
-                .then(() => {
-                    showToast('✅ Discord username copied!');
-                    discordBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    setTimeout(() => {
-                        discordBtn.innerHTML = originalHTML;
-                    }, 1800);
-                })
-                .catch(() => {
-                    showToast('❌ Failed to copy. Please copy manually: naz.irt.k6');
-                });
+            navigator.clipboard.writeText('naz.irt.k6').catch(() => {
+                // Fallback for non-secure contexts
+                const textArea = document.createElement('textarea');
+                textArea.value = 'naz.irt.k6';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+            discordBtn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
+            setTimeout(() => {
+                discordBtn.innerHTML = originalHTML;
+            }, 1800);
         });
     }
 
@@ -524,7 +490,108 @@
     }
 
     // ============================================================
-    //  14. BOOTSTRAP (DOM ready)
+    //  14. LOGO LOGIC — show image on profile, placeholder on others
+    // ============================================================
+
+    function initLogo() {
+        const navIconDisplay = document.getElementById('activeNavIcon');
+        if (!navIconDisplay) return;
+
+        const isProfilePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+        if (isProfilePage) {
+            // Show actual logo image
+            navIconDisplay.innerHTML = `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
+        } else {
+            // Show animated placeholder
+            navIconDisplay.innerHTML = `<div class="sidebar-logo-placeholder">I</div>`;
+        }
+    }
+
+    // ============================================================
+    //  15. BLOG LOADER (single source of truth)
+    // ============================================================
+
+    /**
+     * Load blogs only once, with retry logic.
+     * Exposed globally via window.loadBlogs for external calls.
+     */
+    let blogLoadAttempted = false;
+
+    async function loadBlogs() {
+        // Prevent duplicate loads
+        if (blogLoadAttempted) {
+            console.log('Blogs already loaded or loading — skipping duplicate call.');
+            return;
+        }
+        const container = document.getElementById(CONFIG.BLOG_CONTAINER_ID);
+        if (!container) return;
+
+        blogLoadAttempted = true;
+
+        // Show loading state
+        container.innerHTML = `
+            <div class="blog-loading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading blog posts...</p>
+            </div>
+        `;
+
+        // Check if the blog loader function is available
+        if (typeof window.loadBlogPosts === 'function') {
+            // Use the dedicated blog loader from blogs.js
+            try {
+                await window.loadBlogPosts();
+            } catch (err) {
+                console.error('Blog loader failed:', err);
+                container.innerHTML = `
+                    <div class="blog-empty">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Could not load blog posts. Please refresh or try again later.</p>
+                    </div>
+                `;
+            }
+        } else {
+            // Fallback: try to load the blogs.js script dynamically
+            console.warn('Blog loader not found — attempting to load blogs.js');
+            try {
+                const script = document.createElement('script');
+                script.src = 'blogs.js';
+                script.async = false;
+                document.head.appendChild(script);
+                // Wait for it to load
+                await new Promise((resolve, reject) => {
+                    script.onload = resolve;
+                    script.onerror = reject;
+                });
+                // Now call again after a short delay
+                setTimeout(() => {
+                    if (typeof window.loadBlogPosts === 'function') {
+                        window.loadBlogPosts().catch(console.error);
+                    } else {
+                        container.innerHTML = `
+                            <div class="blog-empty">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Blog loader not available. Please check your internet connection and refresh.</p>
+                            </div>
+                        `;
+                    }
+                }, 300);
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="blog-empty">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Failed to load blog module. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // Expose loadBlogs globally so other scripts can call it
+    window.loadBlogs = loadBlogs;
+
+    // ============================================================
+    //  16. BOOTSTRAP (DOM ready)
     // ============================================================
 
     function init() {
@@ -540,6 +607,7 @@
         initHamburger();
         initScrollHeader();
         setActiveNav();
+        initLogo();
 
         // Start clock (if element exists)
         if (document.querySelector('.dhaka-time')) {
@@ -547,17 +615,18 @@
             setInterval(updateDhakaTime, 1000);
         }
 
-        // Load blogs only if on blog page (call once)
-        if (document.getElementById('blogContainer') && typeof loadBlogs === 'function') {
-            loadBlogs();
+        // Load blogs only if on blog page and not already loaded
+        if (document.getElementById(CONFIG.BLOG_CONTAINER_ID)) {
+            // Use a small delay to ensure everything else is ready
+            setTimeout(loadBlogs, 300);
         }
 
         console.log(
-            '%c✦ Md. Irtija Azad Talha · Cyprus & Sand %cExecutive Portfolio',
-            'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
-            'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
+            '%c✦ Md. Irtija Azad Talha · Earthy Forest %cExecutive Portfolio',
+            'background:#3a5a40;color:#dad7cd;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
+            'background:#dad7cd;color:#1e2b1e;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
         );
-        console.log('%c🌿 Production-ready · Utility mode active', 'color:#1A7A74;font-weight:500;');
+        console.log('%c🌿 Separate HTML pages · Utility mode active', 'color:#588157;font-weight:500;');
     }
 
     // --- Run when DOM is ready ---
