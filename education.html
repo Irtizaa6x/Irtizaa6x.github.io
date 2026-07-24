@@ -3,378 +3,689 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Education · IrtiJa</title>
 
-    <!-- ===== SEO & Open Graph ===== -->
-    <title>Qualifications · Md. Irtija Azad Talha</title>
-    <meta name="description" content="View the complete educational qualifications of Md. Irtija Azad Talha — B.Sc. in CSE, HSC, and SSC with detailed academic transcripts." />
-    <meta property="og:title" content="Qualifications · Md. Irtija Azad Talha" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:url" content="https://irtizaa6x.github.io/education.html" />
-    <meta property="og:description" content="Complete academic record and qualifications of Md. Irtija Azad Talha." />
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- SEO Meta -->
+    <meta name="description" content="Educational qualifications of Md. Irtija Azad Talha — B.Sc. in CSE, HSC, and SSC academic achievements." />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://irtizaa6x.github.io/education.html" />
 
-    <!-- ===== Schema.org Structured Data (Educational Qualifications) ===== -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "Md. Irtija Azad Talha",
-            "alumniOf": [{
-                "@type": "CollegeOrUniversity",
-                "name": "Green University of Bangladesh",
-                "department": "Computer Science & Engineering",
-                "startDate": "2025",
-                "endDate": "Present"
-            }, {
-                "@type": "CollegeOrUniversity",
-                "name": "Giasuddin Islamic Model College",
-                "startDate": "2022",
-                "endDate": "2024"
-            }, {
-                "@type": "CollegeOrUniversity",
-                "name": "Rafiqul Islam School & College",
-                "startDate": "2017",
-                "endDate": "2022"
-            }]
-        }
-    </script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="Education · IrtiJa" />
+    <meta property="og:description" content="Educational qualifications of Md. Irtija Azad Talha — B.Sc. in CSE, HSC, and SSC." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/education.html" />
 
-    <!-- ===== Fonts & Icons ===== -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="irtija.png" />
+
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
-    <!-- ===== Core Styles ===== -->
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="blogs.css" />
-
-    <link rel="icon" type="image/png" href="irtija.png" />
 </head>
+
 <body>
 
-    <div class="app-wrapper">
+    <!-- ============================================================
+         TOP NAVIGATION
+         ============================================================ -->
+    <header class="site-header" role="banner" aria-label="Main navigation">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-link" aria-label="IrtiJa home">
+                <img src="logo.png" alt="IrtiJa Logo" class="brand-logo" width="40" height="40" />
+                <span class="brand-name">Irti<span class="gold">Ja</span></span>
+            </a>
 
-        <!-- ===== MOBILE HEADER ===== -->
-        <header class="mobile-header" id="mobileHeader" role="banner" aria-label="Mobile header">
-            <div class="header-inner">
-                <div class="header-title">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                    <span>Qualifications</span>
-                </div>
-                <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <i class="fas fa-bars" aria-hidden="true"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- ===== SIDEBAR ===== -->
-        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
-            <div class="brand">
-                <div class="nav-icon-display" id="activeNavIcon">
-                    <img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />
-                </div>
-                <div class="brand-name"><span>IrtiJa</span></div>
-                <div class="brand-sub">
-                    CSE Student<br />
-                    <span>Cybersecurity Aspirant</span>
-                </div>
-            </div>
-
-            <nav class="nav-menu" aria-label="Main menu">
-                <a class="nav-item" href="index.html">
-                    <i class="fas fa-user-astronaut" aria-hidden="true"></i>
-                    <span>Profile</span>
-                </a>
-                <a class="nav-item active" href="education.html" aria-current="page">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                    <span>Qualifications</span>
-                </a>
-                <a class="nav-item" href="experience.html">
-                    <i class="fas fa-briefcase" aria-hidden="true"></i>
-                    <span>Activities</span>
-                </a>
-                <a class="nav-item" href="skills.html">
-                    <i class="fas fa-code-branch" aria-hidden="true"></i>
-                    <span>Capabilities</span>
-                </a>
-                <a class="nav-item" href="blog.html">
-                    <i class="fas fa-book-open" aria-hidden="true"></i>
-                    <span>Blogs</span>
-                </a>
-                <a class="nav-item" href="contact.html">
-                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                    <span>Connect</span>
-                </a>
+            <nav class="nav-desktop" aria-label="Primary navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">About</a></li>
+                    <li><a href="education.html" class="nav-link active">Education</a></li>
+                    <li><a href="experience.html" class="nav-link">Experience</a></li>
+                    <li><a href="skills.html" class="nav-link">Skills</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
             </nav>
 
-            <div class="sidebar-footer">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                <strong>ethical mindset</strong> · integrity first
-            </div>
-        </aside>
+            <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-        <!-- ===== MAIN CONTENT ===== -->
-        <main class="main-content" id="mainContent" role="main">
+        <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
+            <ul class="nav-mobile-list">
+                <li><a href="index.html" class="nav-mobile-link">About</a></li>
+                <li><a href="education.html" class="nav-mobile-link active">Education</a></li>
+                <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
+                <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
+                <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
+                <li><a href="blog.html" class="nav-mobile-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-mobile-link nav-mobile-cta">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-mobile-overlay" aria-hidden="true"></div>
+    </header>
 
-            <!-- ===== PAGE HEADER ===== -->
-            <header class="page-header">
-                <h1 class="section-title">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                    Educational Qualifications
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-labelledby="page-hero-title">
+        <div class="container">
+            <div class="page-hero-content">
+                <span class="section-tag">Education</span>
+                <h1 class="page-hero-title" id="page-hero-title">
+                    Academic Journey
                 </h1>
-            </header>
-
-            <!-- ===== QUALIFICATIONS GRID ===== -->
-            <section class="qualifications-grid" aria-label="Educational qualifications">
-
-                <!-- ===== B.SC. IN CSE ===== -->
-                <article class="qual-card" aria-label="Bachelor of Science in Computer Science and Engineering">
-                    <div class="qual-icon" aria-hidden="true">
-                        <i class="fas fa-university"></i>
+                <p class="page-hero-subtitle">
+                    A foundation built on excellence — from secondary school
+                    to university.
+                </p>
+                <div class="page-hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">3.14</span>
+                        <span class="hero-stat-label">Current CGPA</span>
                     </div>
-                    <div class="qual-content">
-                        <h2 class="qual-degree-name">B.Sc. in CSE</h2>
-                        <p class="qual-institution">Green University of Bangladesh</p>
-                        <p class="qual-major">Major: Computer Science &amp; Engineering (CSE)</p>
-                        <div class="qual-meta">
-                            <span class="qual-gpa">CGPA: 3.14</span>
-                            <span class="qual-year-range">2025 – Present</span>
-                        </div>
-                        <p class="qual-note">4<sup>th</sup> semester (Trimester) • Ongoing</p>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">5.00</span>
+                        <span class="hero-stat-label">HSC GPA</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">4.72</span>
+                        <span class="hero-stat-label">SSC GPA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <button class="btn-toggle-details" data-target="bsc-details" aria-expanded="false" aria-controls="bsc-details">
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                            View Semester Details
-                        </button>
+    <!-- ============================================================
+         EDUCATION TIMELINE (Visual summary)
+         ============================================================ -->
+    <section class="education-timeline" aria-labelledby="timeline-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Path</span>
+                <h2 class="section-title section-title-underline" id="timeline-title">
+                    My Educational Path
+                </h2>
+                <p class="section-subtitle">
+                    From secondary school to university — a journey of
+                    continuous learning and growth.
+                </p>
+            </div>
 
-                        <div id="bsc-details" class="details-content" role="region" aria-label="B.Sc. semester-wise academic transcript">
-                            <div class="details-inner">
-                                <p class="details-note">
-                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                    Detailed academic transcript — semester-wise course breakdown with credits, grades, and grade points.
-                                </p>
-
-                                <!-- ===== Semester 250 ===== -->
-                                <section class="semester-group">
-                                    <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 250</h3>
-                                    <div class="table-responsive" role="table" aria-label="Semester 250 courses">
-                                        <table class="academic-table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Course Code</th>
-                                                    <th scope="col">Course Title</th>
-                                                    <th scope="col">Credits</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Grade Point</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>CSE 100</td><td>Computational Thinking and Problem Solving</td><td>1.5</td><td>A+</td><td>4.00</td></tr>
-                                                <tr><td>CSE 101-CSE(181)</td><td>Discrete Mathematics</td><td>3</td><td>A-</td><td>3.50</td></tr>
-                                                <tr><td>ESP 009</td><td>Academic English</td><td>0</td><td>A</td><td>3.75</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-
-                                <!-- ===== Semester 252 ===== -->
-                                <section class="semester-group">
-                                    <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 252</h3>
-                                    <div class="table-responsive" role="table" aria-label="Semester 252 courses">
-                                        <table class="academic-table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Course Code</th>
-                                                    <th scope="col">Course Title</th>
-                                                    <th scope="col">Credits</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Grade Point</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>CSE 103-CSE(181)</td><td>Structured Programming</td><td>3</td><td>C+</td><td>2.50</td></tr>
-                                                <tr><td>CHE 101-CSE(181)</td><td>Chemistry</td><td>3</td><td>B</td><td>3.00</td></tr>
-                                                <tr><td>CSE 104-CSE(181)</td><td>Structured Programming Lab</td><td>1.5</td><td>A-</td><td>3.50</td></tr>
-                                                <tr><td>ESP 101</td><td>Academic English I</td><td>3</td><td>B-</td><td>2.75</td></tr>
-                                                <tr><td>MAT 101(V1)</td><td>Calculus for Computing</td><td>3</td><td>C+</td><td>2.50</td></tr>
-                                                <tr><td>CHE 102-CSE(181)</td><td>Chemistry Lab</td><td>1</td><td>A+</td><td>4.00</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-
-                                <!-- ===== Semester 261 ===== -->
-                                <section class="semester-group">
-                                    <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Semester 261</h3>
-                                    <div class="table-responsive" role="table" aria-label="Semester 261 courses">
-                                        <table class="academic-table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Course Code</th>
-                                                    <th scope="col">Course Title</th>
-                                                    <th scope="col">Credits</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Grade Point</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><td>CSE 205 (V1)</td><td>Data Structures</td><td>3</td><td>A-</td><td>3.50</td></tr>
-                                                <tr><td>EEE 101</td><td>Introduction to Electrical Engineering</td><td>3</td><td>B</td><td>3.00</td></tr>
-                                                <tr><td>MAT 103(V1)</td><td>Linear Algebra and Vector Analysis</td><td>3</td><td>B</td><td>3.00</td></tr>
-                                                <tr><td>CSE 206 (V1)</td><td>Data Structures Lab</td><td>1.5</td><td>B+</td><td>3.25</td></tr>
-                                                <tr><td>PHY 101-CSE(181)</td><td>Physics I</td><td>3</td><td>B+</td><td>3.25</td></tr>
-                                                <tr><td>EEE 102 (V1)</td><td>Introduction to Electrical Engineering Lab</td><td>1</td><td>A+</td><td>4.00</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-
-                                <p class="details-footer">
-                                    <i class="fas fa-file-alt" aria-hidden="true"></i>
-                                    Complete transcripts available upon request.
-                                </p>
-                            </div>
+            <div class="timeline-education">
+                <!-- SSC -->
+                <div class="timeline-edu-item fade-up">
+                    <div class="timeline-edu-marker">
+                        <span class="marker-dot"></span>
+                        <span class="marker-line"></span>
+                    </div>
+                    <div class="timeline-edu-content">
+                        <span class="timeline-edu-year">2022</span>
+                        <h3>Secondary School Certificate (SSC)</h3>
+                        <p class="timeline-edu-institution">Rafiqul Islam School &amp; College</p>
+                        <div class="timeline-edu-meta">
+                            <span class="edu-badge gold">GPA: 4.72 / 5.00</span>
+                            <span class="edu-badge">Science</span>
+                            <span class="edu-badge">Dhaka Board</span>
                         </div>
                     </div>
-                </article>
+                </div>
 
-                <!-- ===== HSC ===== -->
-                <article class="qual-card" aria-label="Higher Secondary Certificate">
-                    <div class="qual-icon" aria-hidden="true">
-                        <i class="fas fa-school"></i>
+                <!-- HSC -->
+                <div class="timeline-edu-item fade-up">
+                    <div class="timeline-edu-marker">
+                        <span class="marker-dot"></span>
+                        <span class="marker-line"></span>
                     </div>
-                    <div class="qual-content">
-                        <h2 class="qual-degree-name">Higher Secondary Certificate (HSC)</h2>
-                        <p class="qual-institution">Giasuddin Islamic Model College</p>
-                        <div class="qual-meta">
-                            <span class="qual-gpa">GPA: 5.00 / 5.00</span>
+                    <div class="timeline-edu-content">
+                        <span class="timeline-edu-year">2024</span>
+                        <h3>Higher Secondary Certificate (HSC)</h3>
+                        <p class="timeline-edu-institution">Giasuddin Islamic Model College</p>
+                        <div class="timeline-edu-meta">
+                            <span class="edu-badge gold">GPA: 5.00 / 5.00</span>
+                            <span class="edu-badge">Science</span>
+                            <span class="edu-badge">Dhaka Board</span>
                         </div>
-                        <p class="qual-subject-passing">
-                            <span class="qual-label">Subject Background:</span> Science
-                            <span class="qual-sep">|</span>
-                            <span class="qual-label">Passing Year:</span> 2024
-                        </p>
-                        <p class="qual-board">Board: Dhaka</p>
+                    </div>
+                </div>
 
-                        <button class="btn-toggle-details" data-target="hsc-details" aria-expanded="false" aria-controls="hsc-details">
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                            View Subject Details
-                        </button>
+                <!-- B.Sc. -->
+                <div class="timeline-edu-item fade-up">
+                    <div class="timeline-edu-marker">
+                        <span class="marker-dot current"></span>
+                        <span class="marker-line current-line"></span>
+                    </div>
+                    <div class="timeline-edu-content">
+                        <span class="timeline-edu-year">2025 – Present</span>
+                        <h3>B.Sc. in Computer Science &amp; Engineering</h3>
+                        <p class="timeline-edu-institution">Green University of Bangladesh</p>
+                        <div class="timeline-edu-meta">
+                            <span class="edu-badge gold">CGPA: 3.14</span>
+                            <span class="edu-badge">4<sup>th</sup> Semester</span>
+                            <span class="edu-badge">Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div id="hsc-details" class="details-content" role="region" aria-label="HSC subject-wise grade breakdown">
-                            <div class="details-inner">
-                                <p class="details-note">
-                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                    Subject-wise grade breakdown for Higher Secondary Certificate (HSC).
-                                </p>
-                                <div class="table-responsive" role="table" aria-label="HSC subjects and grades">
+    <!-- ============================================================
+         DEGREE CARDS (Detailed)
+         ============================================================ -->
+    <section class="degree-cards" aria-labelledby="degrees-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Qualifications</span>
+                <h2 class="section-title section-title-underline" id="degrees-title">
+                    Degrees &amp; Certificates
+                </h2>
+                <p class="section-subtitle">
+                    Detailed overview of my academic achievements.
+                </p>
+            </div>
+
+            <div class="degrees-grid">
+                <!-- B.Sc. Card -->
+                <div class="degree-card card">
+                    <div class="degree-card-header">
+                        <div class="degree-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <span class="degree-status ongoing">Ongoing</span>
+                    </div>
+                    <h3 class="degree-title">B.Sc. in Computer Science &amp; Engineering</h3>
+                    <p class="degree-institution">Green University of Bangladesh</p>
+                    <div class="degree-meta">
+                        <span class="degree-gpa"><i class="fas fa-star"></i> CGPA: 3.14</span>
+                        <span class="degree-year"><i class="far fa-calendar-alt"></i> 2025 – Present</span>
+                    </div>
+                    <p class="degree-description">
+                        Currently in the 4<sup>th</sup> semester (Trimester). Coursework
+                        includes Data Structures, Discrete Mathematics, Linear Algebra,
+                        and Network Security.
+                    </p>
+                    <button class="btn-toggle-details" data-target="bsc-details">
+                        <i class="fas fa-chevron-down"></i> View Semester Details
+                    </button>
+                    <div id="bsc-details" class="details-content">
+                        <div class="details-inner">
+                            <p class="details-note">
+                                <i class="fas fa-info-circle"></i>
+                                Detailed academic transcript — semester-wise course
+                                breakdown with credits, grades, and grade points.
+                            </p>
+
+                            <!-- Semester 250 -->
+                            <div class="semester-group">
+                                <h4><i class="fas fa-calendar-alt"></i> Semester 250</h4>
+                                <div class="table-responsive">
                                     <table class="academic-table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Subject Code</th>
-                                                <th scope="col">Subject Name</th>
-                                                <th scope="col">Grade</th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credits</th>
+                                                <th>Grade</th>
+                                                <th>Grade Point</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
-                                            <tr><td>107</td><td>ENGLISH</td><td>A</td></tr>
-                                            <tr><td>275</td><td>INFORMATION &amp; COMMUNICATION TECHNOLOGY</td><td>A+</td></tr>
-                                            <tr><td>174</td><td>PHYSICS</td><td>A+</td></tr>
-                                            <tr><td>176</td><td>CHEMISTRY</td><td>A+</td></tr>
-                                            <tr><td>178</td><td>BIOLOGY</td><td>A+</td></tr>
-                                            <tr><td>265</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
+                                            <tr>
+                                                <td>CSE 100</td>
+                                                <td>Computational Thinking and Problem Solving</td>
+                                                <td>1.5</td>
+                                                <td>A+</td>
+                                                <td>4.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CSE 101-CSE(181)</td>
+                                                <td>Discrete Mathematics</td>
+                                                <td>3</td>
+                                                <td>A-</td>
+                                                <td>3.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ESP 009</td>
+                                                <td>Academic English</td>
+                                                <td>0</td>
+                                                <td>A</td>
+                                                <td>3.75</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <p class="details-footer">
-                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                    HSC result published by Dhaka Board, 2024.
-                                </p>
                             </div>
-                        </div>
-                    </div>
-                </article>
 
-                <!-- ===== SSC ===== -->
-                <article class="qual-card" aria-label="Secondary School Certificate">
-                    <div class="qual-icon" aria-hidden="true">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <div class="qual-content">
-                        <h2 class="qual-degree-name">Secondary School Certificate (SSC)</h2>
-                        <p class="qual-institution">Rafiqul Islam School &amp; College</p>
-                        <div class="qual-meta">
-                            <span class="qual-gpa">GPA: 4.72 / 5.00</span>
-                        </div>
-                        <p class="qual-subject-passing">
-                            <span class="qual-label">Subject Background:</span> Science
-                            <span class="qual-sep">|</span>
-                            <span class="qual-label">Passing Year:</span> 2022
-                        </p>
-                        <p class="qual-board">Board: Dhaka</p>
-
-                        <button class="btn-toggle-details" data-target="ssc-details" aria-expanded="false" aria-controls="ssc-details">
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                            View Subject Details
-                        </button>
-
-                        <div id="ssc-details" class="details-content" role="region" aria-label="SSC subject-wise grade breakdown">
-                            <div class="details-inner">
-                                <p class="details-note">
-                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                    Subject-wise grade breakdown for Secondary School Certificate (SSC).
-                                </p>
-                                <div class="table-responsive" role="table" aria-label="SSC subjects and grades">
+                            <!-- Semester 252 -->
+                            <div class="semester-group">
+                                <h4><i class="fas fa-calendar-alt"></i> Semester 252</h4>
+                                <div class="table-responsive">
                                     <table class="academic-table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Subject Code</th>
-                                                <th scope="col">Subject Name</th>
-                                                <th scope="col">Grade</th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credits</th>
+                                                <th>Grade</th>
+                                                <th>Grade Point</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
-                                            <tr><td>107</td><td>ENGLISH</td><td>A+</td></tr>
-                                            <tr><td>109</td><td>MATHEMATICS</td><td>A+</td></tr>
-                                            <tr><td>150</td><td>BANGLADESH AND GLOBAL STUDIES</td><td>B</td></tr>
-                                            <tr><td>111</td><td>ISLAM AND MORAL EDUCATION</td><td>A-</td></tr>
-                                            <tr><td>136</td><td>PHYSICS</td><td>A+</td></tr>
-                                            <tr><td>137</td><td>CHEMISTRY</td><td>A+</td></tr>
-                                            <tr><td>126</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
-                                            <tr><td>154</td><td>INFORMATION AND COMMUNICATION TECHNOLOGY</td><td>A</td></tr>
-                                            <tr><td>138</td><td>BIOLOGY</td><td>A+</td></tr>
-                                            <tr><td>147</td><td>PHYSICAL EDUCATION, HEALTH AND SPORTS</td><td>A+</td></tr>
-                                            <tr><td>156</td><td>CAREER EDUCATION</td><td>A+</td></tr>
+                                            <tr>
+                                                <td>CSE 103-CSE(181)</td>
+                                                <td>Structured Programming</td>
+                                                <td>3</td>
+                                                <td>C+</td>
+                                                <td>2.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CHE 101-CSE(181)</td>
+                                                <td>Chemistry</td>
+                                                <td>3</td>
+                                                <td>B</td>
+                                                <td>3.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CSE 104-CSE(181)</td>
+                                                <td>Structured Programming Lab</td>
+                                                <td>1.5</td>
+                                                <td>A-</td>
+                                                <td>3.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ESP 101</td>
+                                                <td>Academic English I</td>
+                                                <td>3</td>
+                                                <td>B-</td>
+                                                <td>2.75</td>
+                                            </tr>
+                                            <tr>
+                                                <td>MAT 101(V1)</td>
+                                                <td>Calculus for Computing</td>
+                                                <td>3</td>
+                                                <td>C+</td>
+                                                <td>2.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CHE 102-CSE(181)</td>
+                                                <td>Chemistry Lab</td>
+                                                <td>1</td>
+                                                <td>A+</td>
+                                                <td>4.00</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <p class="details-footer">
-                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                    SSC result published by Dhaka Board, 2022.
-                                </p>
                             </div>
+
+                            <!-- Semester 261 -->
+                            <div class="semester-group">
+                                <h4><i class="fas fa-calendar-alt"></i> Semester 261</h4>
+                                <div class="table-responsive">
+                                    <table class="academic-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credits</th>
+                                                <th>Grade</th>
+                                                <th>Grade Point</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CSE 205 (V1)</td>
+                                                <td>Data Structures</td>
+                                                <td>3</td>
+                                                <td>A-</td>
+                                                <td>3.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td>EEE 101</td>
+                                                <td>Introduction to Electrical Engineering</td>
+                                                <td>3</td>
+                                                <td>B</td>
+                                                <td>3.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>MAT 103(V1)</td>
+                                                <td>Linear Algebra and Vector Analysis</td>
+                                                <td>3</td>
+                                                <td>B</td>
+                                                <td>3.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CSE 206 (V1)</td>
+                                                <td>Data Structures Lab</td>
+                                                <td>1.5</td>
+                                                <td>B+</td>
+                                                <td>3.25</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PHY 101-CSE(181)</td>
+                                                <td>Physics I</td>
+                                                <td>3</td>
+                                                <td>B+</td>
+                                                <td>3.25</td>
+                                            </tr>
+                                            <tr>
+                                                <td>EEE 102 (V1)</td>
+                                                <td>Introduction to Electrical Engineering Lab</td>
+                                                <td>1</td>
+                                                <td>A+</td>
+                                                <td>4.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <p class="details-footer">
+                                <i class="fas fa-file-alt"></i>
+                                Complete transcripts available upon request.
+                            </p>
                         </div>
                     </div>
-                </article>
+                </div>
 
-            </section>
+                <!-- HSC Card -->
+                <div class="degree-card card">
+                    <div class="degree-card-header">
+                        <div class="degree-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <span class="degree-status completed">Completed</span>
+                    </div>
+                    <h3 class="degree-title">Higher Secondary Certificate (HSC)</h3>
+                    <p class="degree-institution">Giasuddin Islamic Model College</p>
+                    <div class="degree-meta">
+                        <span class="degree-gpa"><i class="fas fa-star"></i> GPA: 5.00 / 5.00</span>
+                        <span class="degree-year"><i class="far fa-calendar-alt"></i> 2024</span>
+                    </div>
+                    <p class="degree-description">
+                        Science background with distinction. Subjects included
+                        Physics, Chemistry, Biology, and Higher Mathematics.
+                        Board: Dhaka.
+                    </p>
+                    <button class="btn-toggle-details" data-target="hsc-details">
+                        <i class="fas fa-chevron-down"></i> View Subject Details
+                    </button>
+                    <div id="hsc-details" class="details-content">
+                        <div class="details-inner">
+                            <p class="details-note">
+                                <i class="fas fa-info-circle"></i>
+                                Subject-wise grade breakdown for Higher Secondary
+                                Certificate (HSC).
+                            </p>
+                            <div class="table-responsive">
+                                <table class="academic-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject Code</th>
+                                            <th>Subject Name</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
+                                        <tr><td>107</td><td>ENGLISH</td><td>A</td></tr>
+                                        <tr><td>275</td><td>INFORMATION &amp; COMMUNICATION TECHNOLOGY</td><td>A+</td></tr>
+                                        <tr><td>174</td><td>PHYSICS</td><td>A+</td></tr>
+                                        <tr><td>176</td><td>CHEMISTRY</td><td>A+</td></tr>
+                                        <tr><td>178</td><td>BIOLOGY</td><td>A+</td></tr>
+                                        <tr><td>265</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="details-footer">
+                                <i class="fas fa-check-circle"></i>
+                                HSC result published by Dhaka Board, 2024.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- ===== FOOTER ===== -->
-            <footer role="contentinfo">
-                <i class="far fa-copyright" aria-hidden="true"></i>
-                2026 Md. Irtija Azad Talha — Helped by <strong>Ai</strong>
-            </footer>
+                <!-- SSC Card -->
+                <div class="degree-card card">
+                    <div class="degree-card-header">
+                        <div class="degree-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <span class="degree-status completed">Completed</span>
+                    </div>
+                    <h3 class="degree-title">Secondary School Certificate (SSC)</h3>
+                    <p class="degree-institution">Rafiqul Islam School &amp; College</p>
+                    <div class="degree-meta">
+                        <span class="degree-gpa"><i class="fas fa-star"></i> GPA: 4.72 / 5.00</span>
+                        <span class="degree-year"><i class="far fa-calendar-alt"></i> 2022</span>
+                    </div>
+                    <p class="degree-description">
+                        Science background with strong performance in Mathematics
+                        and Sciences. Board: Dhaka.
+                    </p>
+                    <button class="btn-toggle-details" data-target="ssc-details">
+                        <i class="fas fa-chevron-down"></i> View Subject Details
+                    </button>
+                    <div id="ssc-details" class="details-content">
+                        <div class="details-inner">
+                            <p class="details-note">
+                                <i class="fas fa-info-circle"></i>
+                                Subject-wise grade breakdown for Secondary School
+                                Certificate (SSC).
+                            </p>
+                            <div class="table-responsive">
+                                <table class="academic-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject Code</th>
+                                            <th>Subject Name</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>101</td><td>BANGLA</td><td>A</td></tr>
+                                        <tr><td>107</td><td>ENGLISH</td><td>A+</td></tr>
+                                        <tr><td>109</td><td>MATHEMATICS</td><td>A+</td></tr>
+                                        <tr><td>150</td><td>BANGLADESH AND GLOBAL STUDIES</td><td>B</td></tr>
+                                        <tr><td>111</td><td>ISLAM AND MORAL EDUCATION</td><td>A-</td></tr>
+                                        <tr><td>136</td><td>PHYSICS</td><td>A+</td></tr>
+                                        <tr><td>137</td><td>CHEMISTRY</td><td>A+</td></tr>
+                                        <tr><td>126</td><td>HIGHER MATHEMATICS</td><td>A+</td></tr>
+                                        <tr><td>154</td><td>INFORMATION AND COMMUNICATION TECHNOLOGY</td><td>A</td></tr>
+                                        <tr><td>138</td><td>BIOLOGY</td><td>A+</td></tr>
+                                        <tr><td>147</td><td>PHYSICAL EDUCATION, HEALTH AND SPORTS</td><td>A+</td></tr>
+                                        <tr><td>156</td><td>CAREER EDUCATION</td><td>A+</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="details-footer">
+                                <i class="fas fa-check-circle"></i>
+                                SSC result published by Dhaka Board, 2022.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        </main>
+    <!-- ============================================================
+         ACADEMIC ACHIEVEMENTS
+         ============================================================ -->
+    <section class="academic-achievements" aria-labelledby="achievements-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Honors</span>
+                <h2 class="section-title section-title-underline" id="achievements-title">
+                    Academic Achievements
+                </h2>
+                <p class="section-subtitle">
+                    Recognitions and milestones along the way.
+                </p>
+            </div>
 
-    </div>
+            <div class="achievements-grid">
+                <div class="achievement-card card fade-up">
+                    <div class="achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>HSC GPA 5.00</h3>
+                    <p>
+                        Achieved a perfect GPA of 5.00 in the Higher Secondary
+                        Certificate examination from Dhaka Board.
+                    </p>
+                    <span class="achievement-year">2024</span>
+                </div>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script src="config.js" defer></script>
+                <div class="achievement-card card fade-up">
+                    <div class="achievement-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>SSC GPA 4.72</h3>
+                    <p>
+                        Secured a GPA of 4.72 in the Secondary School Certificate
+                        examination from Dhaka Board.
+                    </p>
+                    <span class="achievement-year">2022</span>
+                </div>
+
+                <div class="achievement-card card fade-up">
+                    <div class="achievement-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>BNCC Cadet</h3>
+                    <p>
+                        Active member of the BNCC Green University Platoon,
+                        developing leadership, discipline, and teamwork skills.
+                    </p>
+                    <span class="achievement-year">2024 – Present</span>
+                </div>
+
+                <div class="achievement-card card fade-up">
+                    <div class="achievement-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>GUCC Cyber Security Society</h3>
+                    <p>
+                        Member of the Green University Cyber Security Society,
+                        participating in workshops, CTFs, and security discussions.
+                    </p>
+                    <span class="achievement-year">2025 – Present</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CALL TO ACTION
+         ============================================================ -->
+    <section class="cta-section" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2 id="cta-title">Ready to Learn More?</h2>
+                    <p>
+                        Explore my professional experience and the skills I've
+                        developed along the way.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="experience.html" class="btn btn-cta-primary">
+                            <i class="fas fa-briefcase"></i> View Experience
+                        </a>
+                        <a href="skills.html" class="btn btn-cta-secondary">
+                            <i class="fas fa-code-branch"></i> Explore Skills
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-decoration" aria-hidden="true">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-brand-link">
+                    <img src="logo.png" alt="IrtiJa" class="footer-logo" width="36" height="36" />
+                    <span class="footer-brand-name">Irti<span class="gold">Ja</span></span>
+                </a>
+                <p class="footer-tagline">
+                    Building secure digital futures.
+                </p>
+            </div>
+
+            <div class="footer-nav">
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/irtija-talha" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/7d6_nev" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.x.com/irtijaXtalha" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="discord-copy" aria-label="Copy Discord username">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span class="footer-copy">
+                    <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha
+                </span>
+                <span class="footer-credit">
+                    Helped by <strong>Ai</strong>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js" defer></script>
     <script src="data.js" defer></script>
     <script src="script.js" defer></script>
