@@ -4,52 +4,1058 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog · IrtiJa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="blogs.css" />
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Insights, explorations, and thoughts on cybersecurity, technology, and personal growth by Md. Irtija Azad Talha." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://irtizaa6x.github.io/blog.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog · IrtiJa" />
+    <meta property="og:description" content="Insights, explorations, and thoughts on cybersecurity, technology, and personal growth." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/blog.html" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="irtija.png" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Additional blog styles (inline for better performance) -->
+    <style>
+        /* ----- Blog-specific overrides and additions ----- */
+
+        /* Featured post */
+        .featured-post {
+            margin-bottom: var(--space-8);
+        }
+
+        .featured-post-card {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: var(--space-6);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .featured-post-card:hover {
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(212, 168, 83, 0.08);
+        }
+
+        .featured-post-image {
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-surface);
+        }
+
+        .featured-post-body {
+            padding: var(--space-6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-post-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+            background: rgba(212, 168, 83, 0.08);
+            padding: 0.15rem 0.7rem;
+            border-radius: var(--radius-full);
+            width: fit-content;
+            margin-bottom: var(--space-3);
+        }
+
+        .featured-post-title {
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+            line-height: 1.2;
+        }
+
+        .featured-post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .featured-post-title a:hover {
+            color: var(--gold);
+        }
+
+        .featured-post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+        }
+
+        .featured-post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .featured-post-meta span {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .featured-post-meta i {
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+
+        .featured-post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+        }
+
+        .featured-post-tags .tag {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: var(--bg-body);
+            padding: 0.1rem 0.6rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* Blog grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--space-5);
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-4px);
+            border-color: rgba(212, 168, 83, 0.08);
+        }
+
+        .blog-card-image-link {
+            display: block;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            background: var(--bg-surface);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .blog-card:hover .blog-card-image {
+            transform: scale(1.04);
+        }
+
+        .blog-card-body {
+            padding: var(--space-4);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-2);
+        }
+
+        .blog-card-meta i {
+            color: var(--gold);
+            font-size: 0.6rem;
+        }
+
+        .blog-card-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+
+        .blog-card-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .blog-card-title a:hover {
+            color: var(--gold);
+        }
+
+        .blog-card-excerpt {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-3);
+            flex: 1;
+        }
+
+        .blog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .blog-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-1);
+        }
+
+        .blog-card-tags .tag {
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: var(--bg-body);
+            padding: 0.1rem 0.5rem;
+            border-radius: var(--radius-full);
+        }
+
+        .blog-card-read-more {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all var(--transition-fast);
+        }
+
+        .blog-card-read-more:hover {
+            color: var(--gold);
+            gap: 8px;
+        }
+
+        /* Search & filter bar */
+        .blog-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .blog-search {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .blog-search i {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .blog-search input {
+            width: 100%;
+            padding: 0.6rem var(--space-3) 0.6rem 2.5rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-full);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+            outline: none;
+        }
+
+        .blog-search input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.08);
+        }
+
+        .blog-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .blog-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .filter-btn {
+            padding: 0.3rem 1rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-full);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .filter-btn.active:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+        }
+
+        .blog-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: var(--space-8) var(--space-4);
+            color: var(--text-muted);
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: var(--border-subtle);
+            margin-bottom: var(--space-3);
+            display: block;
+        }
+
+        .no-results h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-post-card {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-post-image {
+                aspect-ratio: 16 / 9;
+                max-height: 320px;
+            }
+
+            .featured-post-body {
+                padding: var(--space-5);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: var(--space-3);
+            }
+
+            .blog-search {
+                min-width: 0;
+            }
+
+            .blog-filters {
+                justify-content: center;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .featured-post-body {
+                padding: var(--space-4);
+            }
+
+            .featured-post-title {
+                font-size: 1.3rem;
+            }
+
+            .blog-count {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .blog-filters {
+                gap: var(--space-1);
+            }
+
+            .filter-btn {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.7rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="app-wrapper">
-        <!-- Mobile Header -->
-        <header class="mobile-header" id="mobileHeader">
-            <div class="header-inner">
-                <div class="header-title"><i class="fas fa-book-open"></i><span>Blogs</span></div>
-                <button class="hamburger-toggle" id="hamburgerToggle"><i class="fas fa-bars"></i></button>
-            </div>
-        </header>
 
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="brand">
-                <div class="nav-icon-display" id="activeNavIcon"><img src="logo.png" alt="Irtija Logo" class="sidebar-logo" /></div>
-                <div class="brand-name"><span>IrtiJa</span></div>
-                <div class="brand-sub">CSE Student<br><span>Cybersecurity Aspirant</span></div>
-            </div>
-            <nav class="nav-menu">
-                <a class="nav-item" href="index.html"><i class="fas fa-user-astronaut"></i> <span>Profile</span></a>
-                <a class="nav-item" href="education.html"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></a>
-                <a class="nav-item" href="experience.html"><i class="fas fa-briefcase"></i> <span>Activities</span></a>
-                <a class="nav-item" href="skills.html"><i class="fas fa-code-branch"></i> <span>Capabilities</span></a>
-                <a class="nav-item active" href="blog.html"><i class="fas fa-book-open"></i> <span>Blogs</span></a>
-                <a class="nav-item" href="contact.html"><i class="fas fa-paper-plane"></i> <span>Connect</span></a>
+    <!-- ============================================================
+         TOP NAVIGATION
+         ============================================================ -->
+    <header class="site-header" role="banner" aria-label="Main navigation">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-link" aria-label="IrtiJa home">
+                <img src="logo.png" alt="IrtiJa Logo" class="brand-logo" width="40" height="40" />
+                <span class="brand-name">Irti<span class="gold">Ja</span></span>
+            </a>
+
+            <nav class="nav-desktop" aria-label="Primary navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">About</a></li>
+                    <li><a href="education.html" class="nav-link">Education</a></li>
+                    <li><a href="experience.html" class="nav-link">Experience</a></li>
+                    <li><a href="skills.html" class="nav-link">Skills</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
             </nav>
-            <div class="sidebar-footer"><i class="fas fa-shield-alt"></i> <strong>ethical mindset</strong> · integrity first</div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2 class="section-title"><i class="fas fa-book-open"></i> My Journey &amp; Blogs</h2>
-            <div id="blogContainer" class="blog-grid"></div>
-            <footer><i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Helped by <strong>Ai</strong></footer>
-        </main>
-    </div>
+            <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    <script src="data.js"></script>
-    <script src="blogs.js"></script>
-    <script src="script.js"></script>
+        <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
+            <ul class="nav-mobile-list">
+                <li><a href="index.html" class="nav-mobile-link">About</a></li>
+                <li><a href="education.html" class="nav-mobile-link">Education</a></li>
+                <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
+                <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
+                <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
+                <li><a href="blog.html" class="nav-mobile-link active">Blog</a></li>
+                <li><a href="contact.html" class="nav-mobile-link nav-mobile-cta">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-mobile-overlay" aria-hidden="true"></div>
+    </header>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-labelledby="page-hero-title">
+        <div class="container">
+            <div class="page-hero-content">
+                <span class="section-tag">Blog</span>
+                <h1 class="page-hero-title" id="page-hero-title">
+                    Insights &amp; Explorations
+                </h1>
+                <p class="page-hero-subtitle">
+                    Documenting my journey into cybersecurity, technology, and
+                    personal growth — one post at a time.
+                </p>
+                <div class="page-hero-stats">
+                    <div class="hero-stat" id="postCount">
+                        <span class="hero-stat-number">0</span>
+                        <span class="hero-stat-label">Posts</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number"><i class="fas fa-tags" style="font-size:1.2rem;"></i></span>
+                        <span class="hero-stat-label">Topics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         BLOG TOOLBAR (Search & Filters)
+         ============================================================ -->
+    <section class="blog-toolbar" aria-label="Blog search and filters">
+        <div class="blog-search">
+            <i class="fas fa-search"></i>
+            <input
+            type="text"
+            id="blogSearch"
+            placeholder="Search posts..."
+            aria-label="Search blog posts"
+            />
+        </div>
+        <div class="blog-filters" id="blogFilters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="cybersecurity">Cybersecurity</button>
+            <button class="filter-btn" data-filter="web-dev">Web Dev</button>
+            <button class="filter-btn" data-filter="thoughts">Thoughts</button>
+            <button class="filter-btn" data-filter="projects">Projects</button>
+        </div>
+        <span class="blog-count" id="blogCount">0 posts</span>
+    </section>
+
+    <!-- ============================================================
+         FEATURED POST
+         ============================================================ -->
+    <section class="featured-post" id="featuredPost" aria-label="Featured blog post">
+        <!-- Dynamically populated -->
+    </section>
+
+    <!-- ============================================================
+         BLOG GRID
+         ============================================================ -->
+    <section class="blog-grid-section" aria-labelledby="blog-grid-title">
+        <div class="container">
+            <div class="section-header" style="display:none;">
+                <h2 class="visually-hidden" id="blog-grid-title">All Blog Posts</h2>
+            </div>
+            <div class="blog-grid" id="blogGrid">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="no-results" id="noResults" style="display:none;">
+                <i class="fas fa-book-open"></i>
+                <h3>No posts found</h3>
+                <p>Try adjusting your search or filter criteria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CALL TO ACTION
+         ============================================================ -->
+    <section class="cta-section" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2 id="cta-title">Let's Connect</h2>
+                    <p>
+                        Have a question about a post? Want to collaborate on a
+                        project? I'd love to hear from you.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="contact.html" class="btn btn-cta-primary">
+                            <i class="fas fa-paper-plane"></i> Get in Touch
+                        </a>
+                        <a href="projects.html" class="btn btn-cta-secondary">
+                            <i class="fas fa-code-branch"></i> Explore Projects
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-decoration" aria-hidden="true">
+                    <i class="fas fa-book-open"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-brand-link">
+                    <img src="logo.png" alt="IrtiJa" class="footer-logo" width="36" height="36" />
+                    <span class="footer-brand-name">Irti<span class="gold">Ja</span></span>
+                </a>
+                <p class="footer-tagline">
+                    Building secure digital futures.
+                </p>
+            </div>
+
+            <div class="footer-nav">
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/irtija-talha" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/7d6_nev" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.x.com/irtijaXtalha" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="discord-copy" aria-label="Copy Discord username">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span class="footer-copy">
+                    <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha
+                </span>
+                <span class="footer-credit">
+                    Helped by <strong>Ai</strong>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <!-- js-yaml for parsing frontmatter -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <!-- ============================================================
+         BLOG LISTING SCRIPT
+         ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            //  CONFIGURATION
+            // ============================================================
+
+            const CONFIG = {
+                GITHUB_USER: 'Irtizaa6x',
+                GITHUB_REPO: 'Irtizaa6x.github.io',
+                BRANCH: 'main',
+                POSTS_PATH: 'src/posts',
+                // Fallback posts in case the API fails
+                FALLBACK_POSTS: [
+                    {
+                        slug: 'my-cybersecurity-journey',
+                        title: 'My Cybersecurity Journey: Where It All Began',
+                        excerpt: 'A personal reflection on how I discovered my passion for cybersecurity and the path that led me to where I am today.',
+                        date: '2025-01-15',
+                        tags: ['cybersecurity', 'thoughts'],
+                        coverImage: '',
+                        featured: true
+                    },
+                    {
+                        slug: 'understanding-network-security',
+                        title: 'Understanding Network Security: A Beginner\'s Guide',
+                        excerpt: 'An introduction to network security concepts, common threats, and best practices for protecting digital infrastructure.',
+                        date: '2025-02-01',
+                        tags: ['cybersecurity', 'networking'],
+                        coverImage: '',
+                        featured: false
+                    },
+                    {
+                        slug: 'building-a-portfolio-with-html-css',
+                        title: 'Building a Professional Portfolio with HTML & CSS',
+                        excerpt: 'A step-by-step guide to creating a clean, responsive, and performant portfolio website from scratch.',
+                        date: '2025-02-20',
+                        tags: ['web-dev', 'projects'],
+                        coverImage: '',
+                        featured: false
+                    }
+                ]
+            };
+
+            // ============================================================
+            //  DOM REFS
+            // ============================================================
+
+            const featuredEl = document.getElementById('featuredPost');
+            const gridEl = document.getElementById('blogGrid');
+            const noResultsEl = document.getElementById('noResults');
+            const searchInput = document.getElementById('blogSearch');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const countEl = document.getElementById('blogCount');
+            const postCountEl = document.querySelector('#postCount .hero-stat-number');
+
+            let allPosts = [];
+            let filteredPosts = [];
+            let currentFilter = 'all';
+            let currentSearch = '';
+
+            // ============================================================
+            //  HELPERS
+            // ============================================================
+
+            function slugify(text) {
+                return text
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+
+            function formatDate(dateStr) {
+                try {
+                    const date = new Date(dateStr);
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                } catch (_) {
+                    return dateStr;
+                }
+            }
+
+            function getSlug(title) {
+                return slugify(title);
+            }
+
+            // ============================================================
+            //  FETCH POSTS FROM GITHUB
+            // ============================================================
+
+            async function fetchPostList() {
+                try {
+                    const url =
+                        `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/${CONFIG.POSTS_PATH}?ref=${CONFIG.BRANCH}`;
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        console.warn('GitHub API returned', response.status, '— using fallback posts');
+                        return CONFIG.FALLBACK_POSTS;
+                    }
+
+                    const files = await response.json();
+
+                    // Filter for .md files
+                    const mdFiles = files.filter(f => f.name.endsWith('.md'));
+
+                    // For each file, fetch content to extract frontmatter
+                    const posts = [];
+                    for (const file of mdFiles) {
+                        try {
+                            const contentRes = await fetch(file.download_url);
+                            const markdown = await contentRes.text();
+
+                            // Parse frontmatter
+                            const frontmatterMatch = markdown.match(/^---\s*([\s\S]*?)\s*---/);
+                            let data = {};
+                            if (frontmatterMatch) {
+                                try {
+                                    data = jsyaml.load(frontmatterMatch[1]) || {};
+                                } catch (_) {
+                                    // Fallback parsing
+                                    const lines = frontmatterMatch[1].split('\n');
+                                    lines.forEach(line => {
+                                        const colon = line.indexOf(':');
+                                        if (colon > 0) {
+                                            const key = line.slice(0, colon).trim();
+                                            let val = line.slice(colon + 1).trim();
+                                            if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+                                            if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
+                                            data[key] = val;
+                                        }
+                                    });
+                                }
+                            }
+
+                            const slug = file.name.replace('.md', '');
+                            posts.push({
+                                slug: slug,
+                                title: data.title || slug.replace(/-/g, ' '),
+                                excerpt: data.excerpt || data.description || '',
+                                date: data.date || '',
+                                tags: data.tags || [],
+                                coverImage: data.coverImage || '',
+                                featured: data.featured || false,
+                                // Store the full content for potential use
+                                content: markdown.replace(/^---\s*[\s\S]*?\s*---/, '').trim()
+                            });
+                        } catch (err) {
+                            console.warn('Failed to parse', file.name, err);
+                        }
+                    }
+
+                    // Sort by date (newest first)
+                    posts.sort((a, b) => {
+                        if (!a.date) return 1;
+                        if (!b.date) return -1;
+                        return new Date(b.date) - new Date(a.date);
+                    });
+
+                    return posts.length > 0 ? posts : CONFIG.FALLBACK_POSTS;
+
+                } catch (err) {
+                    console.warn('Failed to fetch posts:', err);
+                    return CONFIG.FALLBACK_POSTS;
+                }
+            }
+
+            // ============================================================
+            //  RENDER
+            // ============================================================
+
+            function renderPosts(posts) {
+                // Update count
+                const count = posts.length;
+                countEl.textContent = count + (count === 1 ? ' post' : ' posts');
+                if (postCountEl) postCountEl.textContent = count;
+
+                // Separate featured and regular posts
+                const featured = posts.find(p => p.featured === true);
+                const regular = posts.filter(p => p !== featured);
+
+                // Render featured
+                renderFeatured(featured);
+
+                // Render grid
+                renderGrid(regular);
+
+                // Show/hide no results
+                if (posts.length === 0) {
+                    noResultsEl.style.display = 'block';
+                    gridEl.style.display = 'none';
+                } else {
+                    noResultsEl.style.display = 'none';
+                    gridEl.style.display = 'grid';
+                }
+            }
+
+            function renderFeatured(post) {
+                if (!post || !featuredEl) {
+                    featuredEl.innerHTML = '';
+                    return;
+                }
+
+                const dateStr = post.date ? formatDate(post.date) : '';
+                const tagsHtml = post.tags && post.tags.length ?
+                    post.tags.map(t => `<span class="tag">#${t}</span>`).join('') :
+                    '';
+
+                featuredEl.innerHTML = `
+                    <div class="featured-post-card fade-up">
+                        ${post.coverImage ? `
+                            <img src="${post.coverImage}" alt="${post.title}" class="featured-post-image" loading="lazy" />
+                        ` : `
+                            <div class="featured-post-image" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.2); font-size:4rem;">
+                                <i class="fas fa-feather-alt"></i>
+                            </div>
+                        `}
+                        <div class="featured-post-body">
+                            <span class="featured-post-badge"><i class="fas fa-star"></i> Featured</span>
+                            <h2 class="featured-post-title">
+                                <a href="blog-detail.html?slug=${post.slug}">${post.title}</a>
+                            </h2>
+                            <p class="featured-post-excerpt">${post.excerpt || 'Read this featured post to learn more about my journey and insights.'}</p>
+                            <div class="featured-post-meta">
+                                ${dateStr ? `<span><i class="far fa-calendar-alt"></i> ${dateStr}</span>` : ''}
+                                ${post.tags && post.tags.length ? `<span><i class="fas fa-tags"></i> ${post.tags.join(', ')}</span>` : ''}
+                            </div>
+                            ${post.tags && post.tags.length ? `
+                                <div class="featured-post-tags">
+                                    ${post.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderGrid(posts) {
+                if (!gridEl) return;
+
+                if (posts.length === 0) {
+                    gridEl.innerHTML = '';
+                    return;
+                }
+
+                gridEl.innerHTML = posts.map(post => {
+                    const dateStr = post.date ? formatDate(post.date) : '';
+                    const tagsHtml = post.tags && post.tags.length ?
+                        post.tags.map(t => `<span class="tag">#${t}</span>`).join('') :
+                        '';
+
+                    return `
+                        <article class="blog-card fade-up">
+                            <a href="blog-detail.html?slug=${post.slug}" class="blog-card-image-link">
+                                ${post.coverImage ? `
+                                    <img src="${post.coverImage}" alt="${post.title}" class="blog-card-image" loading="lazy" />
+                                ` : `
+                                    <div class="blog-card-image" style="background: linear-gradient(135deg, var(--bg-surface), var(--border-subtle)); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:2.5rem;">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                `}
+                            </a>
+                            <div class="blog-card-body">
+                                <div class="blog-card-meta">
+                                    ${dateStr ? `<span><i class="far fa-calendar-alt"></i> ${dateStr}</span>` : ''}
+                                    ${post.tags && post.tags.length ? `<span><i class="fas fa-tags"></i> ${post.tags.slice(0, 2).join(', ')}${post.tags.length > 2 ? '...' : ''}</span>` : ''}
+                                </div>
+                                <h3 class="blog-card-title">
+                                    <a href="blog-detail.html?slug=${post.slug}">${post.title}</a>
+                                </h3>
+                                <p class="blog-card-excerpt">${post.excerpt || 'Read more about this topic on my blog.'}</p>
+                                <div class="blog-card-footer">
+                                    <div class="blog-card-tags">
+                                        ${post.tags && post.tags.length ? post.tags.slice(0, 3).map(t => `<span class="tag">#${t}</span>`).join('') : ''}
+                                    </div>
+                                    <a href="blog-detail.html?slug=${post.slug}" class="blog-card-read-more">
+                                        Read <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+            }
+
+            // ============================================================
+            //  FILTER & SEARCH
+            // ============================================================
+
+            function filterAndSearch() {
+                let result = allPosts;
+
+                // Filter by category
+                if (currentFilter !== 'all') {
+                    result = result.filter(p =>
+                        p.tags && p.tags.some(t => t.toLowerCase().includes(currentFilter))
+                    );
+                }
+
+                // Search by title, excerpt, or tags
+                if (currentSearch.trim()) {
+                    const query = currentSearch.trim().toLowerCase();
+                    result = result.filter(p =>
+                        p.title.toLowerCase().includes(query) ||
+                        (p.excerpt && p.excerpt.toLowerCase().includes(query)) ||
+                        (p.tags && p.tags.some(t => t.toLowerCase().includes(query)))
+                    );
+                }
+
+                filteredPosts = result;
+                renderPosts(result);
+
+                // Update filter button states
+                filterBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === currentFilter);
+                });
+            }
+
+            // ============================================================
+            //  INIT
+            // ============================================================
+
+            async function init() {
+                // Fetch posts
+                allPosts = await fetchPostList();
+
+                // Ensure each post has a slug
+                allPosts = allPosts.map(p => ({
+                    ...p,
+                    slug: p.slug || getSlug(p.title)
+                }));
+
+                // Initial render
+                filteredPosts = allPosts;
+                renderPosts(allPosts);
+
+                // Setup search
+                searchInput.addEventListener('input', (e) => {
+                    currentSearch = e.target.value;
+                    filterAndSearch();
+                });
+
+                // Setup filters
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        currentFilter = btn.dataset.filter;
+                        filterAndSearch();
+                    });
+                });
+
+                // Re-run after any dynamic content changes (e.g., from script.js)
+                // Watch for DOM changes that might affect the grid
+                const observer = new MutationObserver(() => {
+                    // Re-apply fade-up classes
+                    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+                        if (window.IrtiJa && window.IrtiJa.ScrollReveal) {
+                            window.IrtiJa.ScrollReveal.observe(el);
+                        }
+                    });
+                });
+                observer.observe(gridEl, { childList: true, subtree: true });
+
+                console.log(`%c📝 Blog loaded: ${allPosts.length} posts`, 'color:#D4A853;font-weight:600;');
+            }
+
+            // Run after DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
