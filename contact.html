@@ -53,10 +53,16 @@
                     <li><a href="skills.html" class="nav-link">Skills</a></li>
                     <li><a href="projects.html" class="nav-link">Projects</a></li>
                     <li><a href="blog.html" class="nav-link">Blog</a></li>
-                    <li><a href="contact.html" class="nav-link active nav-cta">Contact</a></li>
+                    <li><a href="contact.html" class="nav-link active nav-cta" aria-current="page">Contact</a></li>
                 </ul>
             </nav>
 
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Mobile Hamburger -->
             <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
@@ -70,7 +76,7 @@
                 <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
                 <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
                 <li><a href="blog.html" class="nav-mobile-link">Blog</a></li>
-                <li><a href="contact.html" class="nav-mobile-link active nav-mobile-cta">Contact</a></li>
+                <li><a href="contact.html" class="nav-mobile-link active nav-mobile-cta" aria-current="page">Contact</a></li>
             </ul>
         </nav>
         <div class="nav-mobile-overlay" aria-hidden="true"></div>
@@ -125,7 +131,7 @@
                 </p>
             </div>
 
-            <div class="contact-methods">
+            <div class="contact-methods contact-grid primary">
                 <!-- Email -->
                 <div class="contact-card fade-up">
                     <div class="card-icon">
