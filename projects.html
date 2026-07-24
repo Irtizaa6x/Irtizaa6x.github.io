@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects · IrtiJa</title>
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Explore the projects and technical work of Md. Irtija Azad Talha — cybersecurity tools, web applications, and portfolio pieces." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://irtizaa6x.github.io/projects.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Projects · IrtiJa" />
+    <meta property="og:description" content="Explore the projects and technical work of Md. Irtija Azad Talha." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/projects.html" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="irtija.png" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ============================================================
+         TOP NAVIGATION
+         ============================================================ -->
+    <header class="site-header" role="banner" aria-label="Main navigation">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-link" aria-label="IrtiJa home">
+                <img src="logo.png" alt="IrtiJa Logo" class="brand-logo" width="40" height="40" />
+                <span class="brand-name">Irti<span class="gold">Ja</span></span>
+            </a>
+
+            <nav class="nav-desktop" aria-label="Primary navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">About</a></li>
+                    <li><a href="education.html" class="nav-link">Education</a></li>
+                    <li><a href="experience.html" class="nav-link">Experience</a></li>
+                    <li><a href="skills.html" class="nav-link">Skills</a></li>
+                    <li><a href="projects.html" class="nav-link active">Projects</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
+            </nav>
+
+            <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
+            <ul class="nav-mobile-list">
+                <li><a href="index.html" class="nav-mobile-link">About</a></li>
+                <li><a href="education.html" class="nav-mobile-link">Education</a></li>
+                <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
+                <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
+                <li><a href="projects.html" class="nav-mobile-link active">Projects</a></li>
+                <li><a href="blog.html" class="nav-mobile-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-mobile-link nav-mobile-cta">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-mobile-overlay" aria-hidden="true"></div>
+    </header>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-labelledby="page-hero-title">
+        <div class="container">
+            <div class="page-hero-content">
+                <span class="section-tag">Portfolio</span>
+                <h1 class="page-hero-title" id="page-hero-title">
+                    Projects &amp; Work
+                </h1>
+                <p class="page-hero-subtitle">
+                    A showcase of my technical work — from cybersecurity tools
+                    to web applications and personal projects.
+                </p>
+                <div class="page-hero-stats">
+                    <div class="hero-stat" id="projectCount">
+                        <span class="hero-stat-number">0</span>
+                        <span class="hero-stat-label">Projects</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number"><i class="fas fa-code" style="font-size:1.2rem;"></i></span>
+                        <span class="hero-stat-label">Technologies</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number"><i class="fas fa-rocket" style="font-size:1.2rem;"></i></span>
+                        <span class="hero-stat-label">Live Demos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FILTER TOOLBAR
+         ============================================================ -->
+    <section class="project-toolbar" aria-label="Project filters">
+        <div class="container">
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="security">Cybersecurity</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="javascript">JavaScript</button>
+            </div>
+            <span class="project-count" id="projectCountLabel">0 projects</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         PROJECTS GRID
+         ============================================================ -->
+    <section class="projects-section" aria-labelledby="projects-grid-title">
+        <div class="container">
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="no-projects" id="noProjects" style="display:none;">
+                <i class="fas fa-folder-open"></i>
+                <h3>No projects found</h3>
+                <p>Try adjusting your filter criteria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         TECHNOLOGIES & TOOLS SHOWCASE
+         ============================================================ -->
+    <section class="tech-stack" aria-labelledby="tech-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Toolbox</span>
+                <h2 class="section-title section-title-underline" id="tech-title">
+                    Technologies I Work With
+                </h2>
+                <p class="section-subtitle">
+                    Tools, languages, and frameworks I use to build and create.
+                </p>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-html5"></i></div>
+                    <span class="tech-name">HTML5</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-css3-alt"></i></div>
+                    <span class="tech-name">CSS3</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-js"></i></div>
+                    <span class="tech-name">JavaScript</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-python"></i></div>
+                    <span class="tech-name">Python</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-git-alt"></i></div>
+                    <span class="tech-name">Git</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-github"></i></div>
+                    <span class="tech-name">GitHub</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fab fa-linux"></i></div>
+                    <span class="tech-name">Linux</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fas fa-shield-alt"></i></div>
+                    <span class="tech-name">Wireshark</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fas fa-terminal"></i></div>
+                    <span class="tech-name">Command Line</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fas fa-database"></i></div>
+                    <span class="tech-name">MySQL</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fas fa-cloud"></i></div>
+                    <span class="tech-name">AWS (Learning)</span>
+                </div>
+                <div class="tech-item fade-up">
+                    <div class="tech-icon"><i class="fas fa-code-branch"></i></div>
+                    <span class="tech-name">VS Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CALL TO ACTION
+         ============================================================ -->
+    <section class="cta-section" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2 id="cta-title">Have a Project in Mind?</h2>
+                    <p>
+                        I'm always open to collaborating on interesting projects,
+                        contributing to open source, or building something new.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="contact.html" class="btn btn-cta-primary">
+                            <i class="fas fa-paper-plane"></i> Let's Talk
+                        </a>
+                        <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" class="btn btn-cta-secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-decoration" aria-hidden="true">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-brand-link">
+                    <img src="logo.png" alt="IrtiJa" class="footer-logo" width="36" height="36" />
+                    <span class="footer-brand-name">Irti<span class="gold">Ja</span></span>
+                </a>
+                <p class="footer-tagline">
+                    Building secure digital futures.
+                </p>
+            </div>
+
+            <div class="footer-nav">
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/irtija-talha" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/7d6_nev" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.x.com/irtijaXtalha" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="discord-copy" aria-label="Copy Discord username">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span class="footer-copy">
+                    <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha
+                </span>
+                <span class="footer-credit">
+                    Helped by <strong>Ai</strong>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <!-- ============================================================
+         PROJECTS LISTING SCRIPT
+         ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            //  DOM REFS
+            // ============================================================
+
+            const grid = document.getElementById('projectsGrid');
+            const noProjects = document.getElementById('noProjects');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const countLabel = document.getElementById('projectCountLabel');
+            const countStat = document.querySelector('#projectCount .hero-stat-number');
+
+            let currentFilter = 'all';
+            let allProjects = [];
+
+            // ============================================================
+            //  DATA (fallback if data.js not loaded)
+            // ============================================================
+
+            function getProjects() {
+                if (window.projects && window.projects.length) {
+                    return window.projects;
+                }
+                // Fallback projects
+                return [{
+                    id: 'portfolio-website',
+                    title: 'Personal Portfolio Website',
+                    description: 'A fully responsive, accessible, and performant portfolio website built with HTML, CSS, and JavaScript.',
+                    tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
+                    image: '',
+                    links: {
+                        live: 'https://irtizaa6x.github.io',
+                        github: 'https://github.com/Irtizaa6x/Irtizaa6x.github.io',
+                    },
+                }, {
+                    id: 'network-scanner',
+                    title: 'Network Scanner Tool',
+                    description: 'A Python-based network scanning tool that discovers active hosts, open ports, and services on a local network.',
+                    tags: ['Python', 'Networking', 'Security'],
+                    image: '',
+                    links: {
+                        github: 'https://github.com/Irtizaa6x/network-scanner',
+                    },
+                }, {
+                    id: 'cybersecurity-ctf',
+                    title: 'CTF Write-ups & Security Research',
+                    description: 'Collection of Capture The Flag write-ups and security research notes documenting my journey into cybersecurity.',
+                    tags: ['Cybersecurity', 'CTF', 'Security'],
+                    image: '',
+                    links: {
+                        github: 'https://github.com/Irtizaa6x/ctf-writeups',
+                    },
+                }, {
+                    id: 'weather-app',
+                    title: 'Weather Dashboard',
+                    description: 'A clean weather dashboard built with JavaScript that fetches real-time data from a weather API.',
+                    tags: ['JavaScript', 'API', 'CSS'],
+                    image: '',
+                    links: {
+                        live: '#',
+                        github: 'https://github.com/Irtizaa6x/weather-dashboard',
+                    },
+                }, ];
+            }
+
+            // ============================================================
+            //  RENDER
+            // ============================================================
+
+            function renderProjects(projects) {
+                if (!grid) return;
+
+                const filtered = currentFilter === 'all' ?
+                    projects :
+                    projects.filter(p =>
+                        p.tags && p.tags.some(t => t.toLowerCase().includes(currentFilter))
+                    );
+
+                // Update counts
+                const count = filtered.length;
+                countLabel.textContent = count + (count === 1 ? ' project' : ' projects');
+                if (countStat) countStat.textContent = count;
+
+                if (count === 0) {
+                    grid.innerHTML = '';
+                    noProjects.style.display = 'block';
+                    return;
+                }
+                noProjects.style.display = 'none';
+
+                grid.innerHTML = filtered.map(project => {
+                    const tagsHtml = project.tags && project.tags.length ?
+                        project.tags.map(t => `<span class="project-tag">${t}</span>`).join('') :
+                        '';
+
+                    const linksHtml = [];
+                    if (project.links) {
+                        if (project.links.live) {
+                            linksHtml.push(`
+                                <a href="${project.links.live}" target="_blank" rel="noopener noreferrer" class="project-link live">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            `);
+                        }
+                        if (project.links.github) {
+                            linksHtml.push(`
+                                <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="project-link github">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            `);
+                        }
+                    }
+
+                    const imageHtml = project.image ?
+                        `<img src="${project.image}" alt="${project.title}" class="project-image" loading="lazy" />` :
+                        `<div class="project-image-placeholder">
+                            <i class="fas fa-code"></i>
+                        </div>`;
+
+                    return `
+                        <div class="project-card fade-up" data-tags="${(project.tags || []).join(',').toLowerCase()}">
+                            ${imageHtml}
+                            <div class="project-body">
+                                <div class="project-tags">${tagsHtml}</div>
+                                <h3 class="project-title">${project.title}</h3>
+                                <p class="project-description">${project.description}</p>
+                                <div class="project-links">${linksHtml.join('')}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Re-run scroll reveal
+                if (window.IrtiJa && window.IrtiJa.ScrollReveal) {
+                    setTimeout(() => {
+                        window.IrtiJa.ScrollReveal.init();
+                    }, 100);
+                }
+            }
+
+            // ============================================================
+            //  FILTER
+            // ============================================================
+
+            function setFilter(filter) {
+                currentFilter = filter;
+                filterBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === filter);
+                });
+                renderProjects(allProjects);
+            }
+
+            // ============================================================
+            //  INIT
+            // ============================================================
+
+            function init() {
+                allProjects = getProjects();
+
+                // Render initial
+                renderProjects(allProjects);
+
+                // Setup filters
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        setFilter(btn.dataset.filter);
+                    });
+                });
+
+                // Update stat count
+                if (countStat) countStat.textContent = allProjects.length;
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+
+</body>
+</html>
