@@ -1,7 +1,8 @@
 // ============================================================
 //   IRTIJA — MAIN APPLICATION
-//   Version 2.0 · Complete Rewrite
+//   Version 2.1 · Complete Rewrite + Enhancements
 //   Vanilla JavaScript · Modular Architecture
+//   Features: Smart Navbar · Dark Mode · Education Toggles
 // ============================================================
 
 (function () {
@@ -26,11 +27,17 @@
         // Scroll header threshold
         SCROLL_HEADER_OFFSET: 60,
 
+        // Navbar hide/show scroll threshold
+        NAVBAR_HIDE_THRESHOLD: 80,
+
         // Debounce delay (ms)
         DEBOUNCE_DELAY: 100,
 
         // Throttle delay (ms)
         THROTTLE_DELAY: 16,
+
+        // Dark mode storage key
+        DARK_MODE_KEY: 'irtija-theme',
 
         // CSS class names
         CLASSES: {
@@ -44,8 +51,11 @@
             NAV_MOBILE: 'nav-mobile',
             NAV_MOBILE_OVERLAY: 'nav-mobile-overlay',
             HAMBURGER: 'hamburger-toggle',
+            THEME_TOGGLE: 'theme-toggle',
             HERO: 'hero',
             STAT_NUMBER: 'stat-number',
+            DETAILS_CONTENT: 'details-content',
+            TOGGLE_BTN: 'btn-toggle-details',
         },
     };
 
@@ -71,6 +81,8 @@
         DOM.navLinks = document.querySelectorAll('.nav-link, .nav-mobile-link');
         DOM.body = document.body;
         DOM.document = document.documentElement;
+        DOM.themeToggle = document.querySelector('.theme-toggle');
+        DOM.toggleButtons = document.querySelectorAll('.btn-toggle-details');
     }
 
     // ============================================================
@@ -145,17 +157,123 @@
         return window.innerWidth <= 768;
     }
 
+    /**
+     * Get the preferred color scheme from system
+     */
+    function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    }
+
     // ============================================================
-    //   4.  NAVIGATION MODULE
+    //   4.  DARK MODE MODULE
+    // ============================================================
+
+    const DarkMode = {
+        currentTheme: 'light',
+
+        init() {
+            this.loadTheme();
+            this.setupToggle();
+            this.watchSystemPreference();
+        },
+
+        loadTheme() {
+            // Check localStorage first
+            const saved = localStorage.getItem(CONFIG.DARK_MODE_KEY);
+            if (saved === 'dark') {
+                this.setTheme('dark');
+                return;
+            }
+            if (saved === 'light') {
+                this.setTheme('light');
+                return;
+            }
+
+            // Fallback to system preference
+            const system = getSystemTheme();
+            this.setTheme(system);
+        },
+
+        setTheme(theme) {
+            this.currentTheme = theme;
+            if (theme === 'dark') {
+                DOM.document.setAttribute('data-theme', 'dark');
+                DOM.body.setAttribute('data-theme', 'dark');
+            } else {
+                DOM.document.removeAttribute('data-theme');
+                DOM.body.removeAttribute('data-theme');
+            }
+            this.updateToggleIcon();
+            localStorage.setItem(CONFIG.DARK_MODE_KEY, theme);
+        },
+
+        toggle() {
+            const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+            this.setTheme(newTheme);
+        },
+
+        setupToggle() {
+            if (!DOM.themeToggle) return;
+
+            DOM.themeToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggle();
+            });
+
+            // Also support keyboard
+            DOM.themeToggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggle();
+                }
+            });
+        },
+
+        watchSystemPreference() {
+            if (!window.matchMedia) return;
+            const media = window.matchMedia('(prefers-color-scheme: dark)');
+            media.addEventListener('change', (e) => {
+                // Only update if user hasn't explicitly set a preference
+                if (!localStorage.getItem(CONFIG.DARK_MODE_KEY)) {
+                    this.setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        },
+
+        updateToggleIcon() {
+            if (!DOM.themeToggle) return;
+            const icon = DOM.themeToggle.querySelector('i');
+            if (!icon) return;
+
+            if (this.currentTheme === 'dark') {
+                icon.className = 'fas fa-sun';
+                DOM.themeToggle.setAttribute('aria-label', 'Switch to light mode');
+            } else {
+                icon.className = 'fas fa-moon';
+                DOM.themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+            }
+        },
+    };
+
+    // ============================================================
+    //   5.  NAVIGATION MODULE (enhanced with smart hide/show)
     // ============================================================
 
     const Navigation = {
+        lastScrollY: 0,
+        ticking: false,
+        isNavHidden: false,
+
         init() {
             this.setupHamburger();
             this.setupNavOverlay();
             this.setupNavLinks();
             this.setupActiveNav();
             this.setupStickyHeader();
+            this.setupSmartNavbar();
         },
 
         setupHamburger() {
@@ -176,7 +294,6 @@
 
         setupNavOverlay() {
             if (!DOM.navOverlay) {
-                // Create overlay if it doesn't exist
                 const overlay = document.createElement('div');
                 overlay.className = 'nav-mobile-overlay';
                 overlay.setAttribute('aria-hidden', 'true');
@@ -188,7 +305,6 @@
                 this.closeMobileNav();
             });
 
-            // Also close when clicking on a mobile nav link
             const mobileLinks = getElements('.nav-mobile-link', DOM.navMobile);
             mobileLinks.forEach((link) => {
                 link.addEventListener('click', () => {
@@ -223,7 +339,6 @@
         },
 
         setupNavLinks() {
-            // Close mobile nav on any nav link click
             DOM.navLinks.forEach((link) => {
                 link.addEventListener('click', () => {
                     if (isMobile()) {
@@ -258,22 +373,70 @@
             }, CONFIG.THROTTLE_DELAY);
 
             window.addEventListener('scroll', handleScroll, { passive: true });
-            // Initial check
             handleScroll();
         },
 
-        // Public method to close nav from outside
+        /**
+         * Smart Navbar: hide on scroll down, show on scroll up
+         */
+        setupSmartNavbar() {
+            if (!DOM.header) return;
+
+            // Use requestAnimationFrame for smooth updates
+            const handleScroll = () => {
+                if (!this.ticking) {
+                    window.requestAnimationFrame(() => {
+                        const currentScrollY = window.scrollY;
+                        const scrollDelta = currentScrollY - this.lastScrollY;
+
+                        // Only hide if we've scrolled past the threshold
+                        if (currentScrollY > CONFIG.NAVBAR_HIDE_THRESHOLD) {
+                            // Scrolling down: hide navbar
+                            if (scrollDelta > 8 && !this.isNavHidden) {
+                                DOM.header.classList.add(CONFIG.CLASSES.HIDDEN);
+                                this.isNavHidden = true;
+                            }
+                            // Scrolling up: show navbar
+                            else if (scrollDelta < -8 && this.isNavHidden) {
+                                DOM.header.classList.remove(CONFIG.CLASSES.HIDDEN);
+                                this.isNavHidden = false;
+                            }
+                        } else {
+                            // At top of page, always show navbar
+                            if (this.isNavHidden) {
+                                DOM.header.classList.remove(CONFIG.CLASSES.HIDDEN);
+                                this.isNavHidden = false;
+                            }
+                        }
+
+                        // Always update lastScrollY
+                        this.lastScrollY = currentScrollY;
+                        this.ticking = false;
+                    });
+                    this.ticking = true;
+                }
+            };
+
+            // Use throttle to limit scroll events
+            const throttledScroll = throttle(handleScroll, 50);
+            window.addEventListener('scroll', throttledScroll, { passive: true });
+
+            // Initial state
+            this.lastScrollY = window.scrollY;
+        },
+
         close() {
             this.closeMobileNav();
         },
     };
 
     // ============================================================
-    //   5.  SCROLL REVEAL MODULE
+    //   6.  SCROLL REVEAL MODULE (enhanced)
     // ============================================================
 
     const ScrollReveal = {
         observer: null,
+        observedElements: new Set(),
 
         init() {
             if (!('IntersectionObserver' in window)) {
@@ -290,8 +453,9 @@
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add(CONFIG.CLASSES.VISIBLE);
-                            // Optionally unobserve after reveal
-                            // this.observer.unobserve(entry.target);
+                            // Unobserve after reveal for performance
+                            this.observer.unobserve(entry.target);
+                            this.observedElements.delete(entry.target);
                         }
                     });
                 },
@@ -301,24 +465,37 @@
                 }
             );
 
+            // Observe all elements
+            this.observeAll();
+        },
+
+        observeAll() {
             // Observe fade-up elements
             DOM.revealElements.forEach((el) => {
-                this.observer.observe(el);
+                if (!this.observedElements.has(el)) {
+                    this.observer.observe(el);
+                    this.observedElements.add(el);
+                }
             });
 
             // Observe stagger elements
             DOM.staggerElements.forEach((el) => {
-                this.observer.observe(el);
+                if (!this.observedElements.has(el)) {
+                    this.observer.observe(el);
+                    this.observedElements.add(el);
+                }
             });
 
-            // Also observe any elements with data-reveal attribute
+            // Observe data-reveal elements
             const dataReveal = getElements('[data-reveal]');
             dataReveal.forEach((el) => {
-                this.observer.observe(el);
+                if (!this.observedElements.has(el)) {
+                    this.observer.observe(el);
+                    this.observedElements.add(el);
+                }
             });
         },
 
-        // Fallback for browsers without IntersectionObserver
         fallbackReveal() {
             const revealAll = () => {
                 DOM.revealElements.forEach((el) => {
@@ -335,14 +512,13 @@
             revealAll();
         },
 
-        // Re-observe new elements (for dynamic content)
         observe(el) {
-            if (this.observer) {
+            if (this.observer && !this.observedElements.has(el)) {
                 this.observer.observe(el);
+                this.observedElements.add(el);
             }
         },
 
-        // Check and reveal elements immediately (for edge cases)
         checkNow() {
             DOM.revealElements.forEach((el) => {
                 if (isInViewport(el, CONFIG.REVEAL_THRESHOLD)) {
@@ -355,10 +531,15 @@
                 }
             });
         },
+
+        // Re-observe any new elements after dynamic content updates
+        refresh() {
+            this.observeAll();
+        },
     };
 
     // ============================================================
-    //   6.  COUNT-UP ANIMATION MODULE
+    //   7.  COUNT-UP ANIMATION MODULE
     // ============================================================
 
     const CountUp = {
@@ -377,6 +558,7 @@
                         if (entry.isIntersecting && !this.animated.has(entry.target)) {
                             this.animate(entry.target);
                             this.animated.add(entry.target);
+                            this.observer.unobserve(entry.target);
                         }
                     });
                 },
@@ -389,7 +571,6 @@
                 this.observer.observe(el);
             });
 
-            // Also check for any data-count elements
             const dataCount = getElements('[data-count]');
             dataCount.forEach((el) => {
                 if (!el.classList.contains('stat-number')) {
@@ -407,15 +588,12 @@
             const start = performance.now();
             const startValue = parseFloat(el.textContent) || 0;
 
-            // If it's a small number (like 3.14), animate it directly
-            // If it's a larger number (like 5, 4, 2), animate from 0
             const from = target < 10 ? startValue : 0;
 
             const animateStep = (timestamp) => {
                 const elapsed = timestamp - start;
                 const progress = Math.min(elapsed / duration, 1);
 
-                // Ease out cubic
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 const current = from + (target - from) * easeOut;
 
@@ -444,7 +622,6 @@
             });
         },
 
-        // Animate a specific element
         animateElement(el) {
             if (!this.animated.has(el)) {
                 this.animate(el);
@@ -454,7 +631,7 @@
     };
 
     // ============================================================
-    //   7.  SMOOTH SCROLL MODULE
+    //   8.  SMOOTH SCROLL MODULE
     // ============================================================
 
     const SmoothScroll = {
@@ -483,7 +660,6 @@
             });
         },
 
-        // Scroll to a specific element by selector
         scrollToSelector(selector) {
             const target = document.querySelector(selector);
             if (target) {
@@ -493,17 +669,15 @@
     };
 
     // ============================================================
-    //   8.  LOCAL TIME & SUN CALC MODULE
+    //   9.  LOCAL TIME & SUN CALC MODULE
     // ============================================================
 
     const ClockModule = {
         timer: null,
 
         init() {
-            // Only initialize if the clock elements exist
             if (!DOM.localTimeWrapper && !DOM.timeDigital) return;
 
-            // Check if SunCalc is loaded
             if (typeof SunCalc === 'undefined') {
                 console.warn('SunCalc library not loaded. Time display will be limited.');
                 this.updateClockOnly();
@@ -541,7 +715,6 @@
                 const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
                 DOM.timeDigital.textContent = timeStr;
             } catch (e) {
-                // Fallback
                 const hours = String(now.getHours()).padStart(2, '0');
                 const minutes = String(now.getMinutes()).padStart(2, '0');
                 const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -595,7 +768,6 @@
                     isDay = false;
                 }
 
-                // Update wrapper classes
                 const phaseClasses = ['dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep'];
                 DOM.localTimeWrapper.className = DOM.localTimeWrapper.className
                     .split(' ')
@@ -603,12 +775,10 @@
                     .concat(phase)
                     .join(' ');
 
-                // Update astro display
                 this.updateAstroDisplay(now, isDay);
 
             } catch (e) {
                 console.warn('SunCalc error:', e);
-                // Fallback: show a simple sun/moon based on hour
                 const hour = now.getHours();
                 const isDay = hour >= 6 && hour < 18;
                 this.updateAstroDisplayFallback(isDay);
@@ -650,7 +820,6 @@
             }
         },
 
-        // Clean up interval
         destroy() {
             if (this.timer) {
                 clearInterval(this.timer);
@@ -660,32 +829,33 @@
     };
 
     // ============================================================
-    //   9.  DISCORD COPY MODULE
+    //   10.  DISCORD COPY MODULE
     // ============================================================
 
     const DiscordCopy = {
         init() {
-            const discordBtn = document.querySelector('.discord-copy');
-            if (!discordBtn) return;
+            const discordBtns = document.querySelectorAll('.discord-copy');
+            if (!discordBtns.length) return;
 
-            const originalHTML = discordBtn.innerHTML;
-
-            discordBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-
+            discordBtns.forEach((btn) => {
+                const originalHTML = btn.innerHTML;
                 const username = 'naz.irt.k6';
 
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(username)
-                        .then(() => {
-                            this.showFeedback(discordBtn, originalHTML);
-                        })
-                        .catch(() => {
-                            this.fallbackCopy(discordBtn, originalHTML, username);
-                        });
-                } else {
-                    this.fallbackCopy(discordBtn, originalHTML, username);
-                }
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(username)
+                            .then(() => {
+                                this.showFeedback(btn, originalHTML);
+                            })
+                            .catch(() => {
+                                this.fallbackCopy(btn, originalHTML, username);
+                            });
+                    } else {
+                        this.fallbackCopy(btn, originalHTML, username);
+                    }
+                });
             });
         },
 
@@ -697,7 +867,6 @@
         },
 
         fallbackCopy(btn, originalHTML, text) {
-            // Fallback: select and copy using input
             const input = document.createElement('input');
             input.value = text;
             input.style.position = 'fixed';
@@ -715,15 +884,97 @@
     };
 
     // ============================================================
-    //   10.  THEME UTILITIES (if needed for future dark mode)
+    //   11.  EDUCATION TOGGLE DETAILS MODULE
+    // ============================================================
+
+    const ToggleDetails = {
+        init() {
+            if (!DOM.toggleButtons.length) return;
+
+            DOM.toggleButtons.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.toggle(btn);
+                });
+
+                // Support keyboard
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.toggle(btn);
+                    }
+                });
+            });
+        },
+
+        toggle(btn) {
+            const targetId = btn.getAttribute('data-target');
+            if (!targetId) return;
+
+            const target = document.getElementById(targetId);
+            if (!target) return;
+
+            const isOpen = target.classList.contains(CONFIG.CLASSES.OPEN);
+
+            // Toggle target
+            target.classList.toggle(CONFIG.CLASSES.OPEN);
+            btn.classList.toggle(CONFIG.CLASSES.OPEN);
+
+            // Toggle icon
+            const icon = btn.querySelector('i');
+            if (icon) {
+                if (isOpen) {
+                    icon.className = 'fas fa-chevron-down';
+                } else {
+                    icon.className = 'fas fa-chevron-up';
+                }
+            }
+
+            // Update aria-expanded
+            btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+
+            // Smooth scroll to the content if opening
+            if (!isOpen) {
+                setTimeout(() => {
+                    const headerHeight = DOM.header ? DOM.header.offsetHeight : 72;
+                    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }, 50);
+            }
+        },
+
+        // Open a specific toggle by ID
+        open(targetId) {
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            if (target.classList.contains(CONFIG.CLASSES.OPEN)) return;
+
+            const btn = document.querySelector(`.btn-toggle-details[data-target="${targetId}"]`);
+            if (btn) {
+                this.toggle(btn);
+            }
+        },
+
+        // Close a specific toggle by ID
+        close(targetId) {
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            if (!target.classList.contains(CONFIG.CLASSES.OPEN)) return;
+
+            const btn = document.querySelector(`.btn-toggle-details[data-target="${targetId}"]`);
+            if (btn) {
+                this.toggle(btn);
+            }
+        },
+    };
+
+    // ============================================================
+    //   12.  THEME UTILITIES (legacy, kept for compatibility)
     // ============================================================
 
     const ThemeUtils = {
         getPreferredTheme() {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-            return 'light';
+            return getSystemTheme();
         },
 
         watchTheme(callback) {
@@ -736,7 +987,7 @@
     };
 
     // ============================================================
-    //   11.  PERFORMANCE OPTIMIZATIONS
+    //   13.  PERFORMANCE OPTIMIZATIONS
     // ============================================================
 
     const Performance = {
@@ -744,6 +995,7 @@
             this.setupLazyLoading();
             this.setupPassiveListeners();
             this.setupResizeHandler();
+            this.setupMemoryOptimization();
         },
 
         setupLazyLoading() {
@@ -752,7 +1004,6 @@
                 const images = document.querySelectorAll('img[loading="lazy"]');
                 // Already using native lazy-loading
             } else {
-                // Fallback: use IntersectionObserver for lazy loading
                 if ('IntersectionObserver' in window) {
                     const lazyImages = document.querySelectorAll('img[data-src]');
                     const observer = new IntersectionObserver((entries) => {
@@ -774,7 +1025,7 @@
         },
 
         setupPassiveListeners() {
-            // All scroll listeners should use { passive: true }
+            // All scroll listeners use { passive: true }
             // This is handled in individual modules
         },
 
@@ -793,20 +1044,30 @@
 
             window.addEventListener('resize', handleResize, { passive: true });
         },
+
+        setupMemoryOptimization() {
+            // Clean up IntersectionObservers when page is hidden
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // Page is hidden, but we keep observers running
+                    // No action needed - just a placeholder for future optimizations
+                }
+            });
+        },
     };
 
     // ============================================================
-    //   12.  ACCESSIBILITY UTILITIES
+    //   14.  ACCESSIBILITY UTILITIES
     // ============================================================
 
     const Accessibility = {
         init() {
             this.setupSkipLink();
             this.setupFocusTrap();
+            this.setupAriaCurrent();
         },
 
         setupSkipLink() {
-            // Skip link already in HTML
             const skipLink = document.querySelector('.skip-link');
             if (skipLink) {
                 skipLink.addEventListener('click', (e) => {
@@ -821,7 +1082,6 @@
         },
 
         setupFocusTrap() {
-            // Trap focus in mobile nav when open
             document.addEventListener('keydown', (e) => {
                 if (e.key !== 'Tab') return;
                 if (!DOM.navMobile || !DOM.navMobile.classList.contains(CONFIG.CLASSES.OPEN)) return;
@@ -843,13 +1103,29 @@
                 }
             });
         },
+
+        setupAriaCurrent() {
+            // Add aria-current="page" to active nav links
+            DOM.navLinks.forEach((link) => {
+                if (link.classList.contains(CONFIG.CLASSES.ACTIVE)) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        },
     };
 
     // ============================================================
-    //   13.  MAIN INITIALIZATION
+    //   15.  MAIN INITIALIZATION
     // ============================================================
 
+    let isInitialized = false;
+
     function init() {
+        if (isInitialized) return;
+        isInitialized = true;
+
         // Cache DOM elements
         cacheDom();
 
@@ -860,11 +1136,12 @@
         SmoothScroll.init();
         ClockModule.init();
         DiscordCopy.init();
+        DarkMode.init();
+        ToggleDetails.init();
         Performance.init();
         Accessibility.init();
 
-        // Additional: handle dynamic content loading
-        // If there's a blog or dynamic content container, observe new elements
+        // Handle dynamic content loading
         const observer = new MutationObserver(() => {
             // Re-check for new fade-up elements
             const newReveal = document.querySelectorAll('.fade-up:not(.visible)');
@@ -884,6 +1161,16 @@
                 el.setAttribute('data-observed', 'true');
                 CountUp.animateElement(el);
             });
+
+            // Re-check for new toggle buttons
+            const newToggles = document.querySelectorAll('.btn-toggle-details:not([data-initialized])');
+            newToggles.forEach((btn) => {
+                btn.setAttribute('data-initialized', 'true');
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    ToggleDetails.toggle(btn);
+                });
+            });
         });
 
         observer.observe(document.body, {
@@ -893,26 +1180,25 @@
 
         // Log success
         console.log(
-            '%c✦ IrtiJa · Executive Portfolio %cv2.0',
+            '%c✦ IrtiJa · Executive Portfolio %cv2.1',
             'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
             'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
         );
-        console.log('%c🌿 Modular architecture · Vanilla JS · Production ready', 'color:#1A7A74;font-weight:500;');
+        console.log('%c🌿 Smart Navbar · Dark Mode · Enhanced Interactions', 'color:#1A7A74;font-weight:500;');
     }
 
     // ============================================================
-    //   14.  BOOTSTRAP
+    //   16.  BOOTSTRAP
     // ============================================================
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
-        // DOM is already ready
         init();
     }
 
     // ============================================================
-    //   15.  EXPOSE PUBLIC API (for debugging / external use)
+    //   17.  EXPOSE PUBLIC API (for debugging / external use)
     // ============================================================
 
     window.IrtiJa = {
@@ -923,6 +1209,8 @@
         SmoothScroll,
         ClockModule,
         DiscordCopy,
+        DarkMode,
+        ToggleDetails,
         ThemeUtils,
         Performance,
         Accessibility,
@@ -937,14 +1225,28 @@
         // Re-init (for dynamic content)
         reinit() {
             cacheDom();
-            ScrollReveal.init();
+            ScrollReveal.refresh();
             CountUp.init();
-            // Re-check for new elements
+            ToggleDetails.init();
+
             const newStats = document.querySelectorAll('.stat-number:not([data-observed])');
             newStats.forEach((el) => {
                 el.setAttribute('data-observed', 'true');
                 CountUp.animateElement(el);
             });
+        },
+
+        // Dark mode convenience
+        toggleDarkMode() {
+            DarkMode.toggle();
+        },
+
+        setDarkMode(theme) {
+            DarkMode.setTheme(theme);
+        },
+
+        getCurrentTheme() {
+            return DarkMode.currentTheme;
         },
     };
 
