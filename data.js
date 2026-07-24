@@ -1,151 +1,368 @@
-// ==========================================
-//  DATA.JS – All dynamic content for portfolio
-//  Edit this file to update experiences & skills
-// ==========================================
+// ============================================================
+//   IRTIJA — DATA FILE
+//   Version 2.0 · Complete Rewrite
+//   All content data for the portfolio
+//   Maintained separately for easy editing
+// ============================================================
 
-// ==========================================
-//  EXPERIENCES
-//  Add new experiences here or update endDate
-//  to mark them as completed.
-// ==========================================
+// ============================================================
+//   SKILLS DATA
+// ============================================================
+
+const skills = {
+    // Cybersecurity
+    cyber: [
+        { name: 'Threat Analysis', icon: 'fas fa-shield-alt' },
+        { name: 'Vulnerability Assessment', icon: 'fas fa-search' },
+        { name: 'Defensive Strategies', icon: 'fas fa-lock' },
+        { name: 'Penetration Testing', icon: 'fas fa-user-secret' },
+        { name: 'Incident Response', icon: 'fas fa-bolt' },
+        { name: 'Network Security', icon: 'fas fa-network-wired' },
+        { name: 'Cryptography', icon: 'fas fa-key' },
+        { name: 'Security Auditing', icon: 'fas fa-clipboard-check' },
+        { name: 'Risk Management', icon: 'fas fa-chart-line' },
+        { name: 'Firewalls', icon: 'fas fa-firewall' },
+        { name: 'IDS/IPS', icon: 'fas fa-bell' },
+        { name: 'Malware Analysis', icon: 'fas fa-skull' },
+        { name: 'Social Engineering', icon: 'fas fa-user-friends' },
+    ],
+    // Web Dev & Programming
+    web: [
+        { name: 'HTML5 & CSS3', icon: 'fab fa-html5' },
+        { name: 'JavaScript', icon: 'fab fa-js' },
+        { name: 'Python', icon: 'fab fa-python' },
+        { name: 'C Programming', icon: 'fas fa-code' },
+        { name: 'Responsive Design', icon: 'fas fa-mobile-alt' },
+        { name: 'React (Learning)', icon: 'fab fa-react' },
+        { name: 'Node.js', icon: 'fab fa-node' },
+        { name: 'Git', icon: 'fab fa-git-alt' },
+        { name: 'SQL', icon: 'fas fa-database' },
+        { name: 'APIs', icon: 'fas fa-plug' },
+        { name: 'UI/UX Principles', icon: 'fas fa-paint-brush' },
+        { name: 'Mobile-First', icon: 'fas fa-mobile' },
+        { name: 'Accessibility (WCAG)', icon: 'fas fa-universal-access' },
+    ],
+    // Networking & Web Tech
+    networking: [
+        { name: 'TCP/IP Protocol Suite', icon: 'fas fa-network-wired' },
+        { name: 'DNS & DHCP', icon: 'fas fa-server' },
+        { name: 'Firewall Configuration', icon: 'fas fa-firewall' },
+        { name: 'Cloud Computing', icon: 'fas fa-cloud' },
+        { name: 'Linux Administration', icon: 'fab fa-linux' },
+        { name: 'AWS (Learning)', icon: 'fab fa-aws' },
+        { name: 'Ubuntu', icon: 'fab fa-ubuntu' },
+        { name: 'Apache', icon: 'fas fa-server' },
+        { name: 'Nginx', icon: 'fas fa-server' },
+        { name: 'VLANs', icon: 'fas fa-network-wired' },
+        { name: 'Subnetting', icon: 'fas fa-sitemap' },
+        { name: 'VPN', icon: 'fas fa-lock' },
+        { name: 'SSL/TLS', icon: 'fas fa-certificate' },
+    ],
+    // Professional Skills & Tools
+    professional: [
+        { name: 'Leadership & Team Management', icon: 'fas fa-users' },
+        { name: 'Discipline & Integrity', icon: 'fas fa-shield-alt' },
+        { name: 'Time Management', icon: 'fas fa-clock' },
+        { name: 'Teamwork & Collaboration', icon: 'fas fa-handshake' },
+        { name: 'Communication', icon: 'fas fa-comment' },
+        { name: 'Critical Thinking', icon: 'fas fa-brain' },
+        { name: 'Problem Solving', icon: 'fas fa-lightbulb' },
+        { name: 'Adaptability', icon: 'fas fa-people-arrows' },
+        { name: 'Decision Making', icon: 'fas fa-flag' },
+        { name: 'Professionalism', icon: 'fas fa-briefcase' },
+        { name: 'Continuous Learning', icon: 'fas fa-graduation-cap' },
+        { name: 'Documentation', icon: 'fas fa-file-alt' },
+    ],
+};
+
+// ============================================================
+//   EXPERIENCE DATA (Activities & Leadership)
+// ============================================================
+
 const experiences = [
     {
         id: 'gucc',
-        title: 'GUCC Cyber Security Society',
-        role: 'Member',
-        startDate: '2025-10-01',   // YYYY-MM-DD format
-        endDate: null,            // null = ongoing, set date to end
+        title: 'Member · GUCC Cyber Security Society',
+        startDate: '2025-01-01',
+        endDate: null, // ongoing
         icon: 'fa-user-secret',
-        description: 'Active member of Green University Cyber Security Society — participating in workshops, CTF culture, threat modeling, and security awareness.',
-        parentClub: 'Green University Computer Club (GUCC) of Green University of Bangladesh.'
+        role: 'Active Member',
+        description:
+            'Actively participating in cybersecurity workshops, CTF competitions, and network security discussions. Learning the fundamentals of threat analysis, vulnerability assessment, and defensive strategies. Collaborating with peers on security research and practical challenges.',
+        parentClub: 'Green University Cyber Security Society',
+        certButtons: [
+            {
+                label: 'View Society',
+                url: '#',
+                icon: 'fas fa-external-link-alt',
+            },
+        ],
     },
     {
         id: 'bncc',
-        title: 'Bangladesh National Cadet Corps (BNCC)',
-        role: 'Cadet',
-        startDate: '2025-08-21',
+        title: 'Cadet · BNCC Green University Platoon',
+        startDate: '2024-01-01',
         endDate: null,
         icon: 'fa-shield-alt',
-        description: 'Cadet under BNCC 51 Naval Flotilla — rigorous training in discipline, leadership, and crisis management.',
-        parentClub: null
+        role: 'Cadet',
+        description:
+            'Developed leadership, discipline, and teamwork through rigorous military-style training. Performed under pressure and learned the value of responsibility, integrity, and commitment. Participated in drills, parades, and leadership exercises.',
+        parentClub: 'Bangladesh National Cadet Corps (BNCC)',
+        certButtons: [],
     },
     {
-        id: 'certifications',
-        title: 'Skills Validation',
-        role: 'Learner',
-        startDate: '2023-10-06',
+        id: 'bsc',
+        title: 'B.Sc. in Computer Science & Engineering',
+        startDate: '2025-01-01',
         endDate: null,
-        icon: 'fa-certificate',
-        description: 'Continuous learning on cybersecurity platforms.',
+        icon: 'fa-graduation-cap',
+        role: 'Student',
+        description:
+            'Currently pursuing a B.Sc. in CSE with a focus on cybersecurity and network security. Coursework includes Data Structures, Discrete Mathematics, Linear Algebra, and Network Security. Maintaining a CGPA of 3.14.',
+        parentClub: 'Green University of Bangladesh',
+        certButtons: [],
+    },
+    {
+        id: 'webdev',
+        title: 'Web Development & Projects',
+        startDate: '2025-01-01',
+        endDate: null,
+        icon: 'fa-code',
+        role: 'Developer',
+        description:
+            'Building personal projects and portfolios to strengthen frontend development skills. Working with HTML, CSS, JavaScript, and modern UI frameworks to create responsive, accessible, and performant web experiences.',
+        parentClub: 'Self-Initiated',
         certButtons: [
             {
-                label: 'Codecademy',
-                url: 'https://www.codecademy.com/users/Irtija.Talha/achievements',
-                img: 'https://www.codecademy.com/favicon.ico'
+                label: 'View GitHub',
+                url: 'https://github.com/Irtizaa6x',
+                icon: 'fab fa-github',
             },
             {
-                label: 'Cybrary',
-                url: 'https://app.cybrary.it/browse/Irtija_talha',
-                icon: 'fa-shield-alt'
+                label: 'View Projects',
+                url: 'projects.html',
+                icon: 'fas fa-code-branch',
             },
-            {
-                label: 'TryHackMe',
-                url: 'https://tryhackme.com/p/irtija.talha',
-                img: 'https://tryhackme.com/favicon.ico'
-            },
-            {
-                label: 'Cisco Networking Academy',
-                url: 'https://www.netacad.com/',
-                img: 'https://www.netacad.com/favicon.ico'
-            }   
-        ]
-    }
-    // Add more experiences like:
-    // {
-    //     id: 'internship',
-    //     title: 'Cybersecurity Intern',
-    //     role: 'Intern',
-    //     startDate: '2026-07-01',
-    //     endDate: '2026-09-30',   // ended
-    //     icon: 'fa-briefcase',
-    //     description: 'Worked on vulnerability assessments...',
-    //     parentClub: 'Some Company'
-    // }
+        ],
+    },
 ];
 
-// ==========================================
-//  SKILLS
-//  Four categories – add/remove skills freely.
-//  Each skill can have a custom icon (FontAwesome)
-// ==========================================
-const skills = {
-    cyber: [
-        { name: 'Penetration Testing Fundamentals', icon: 'fa-crosshairs' },
-        { name: 'Offensive Security Intro', icon: 'fa-bullhorn' },
-        { name: 'Defensive Security Intro', icon: 'fa-shield' },
-        { name: 'Linux Basics (Ubuntu, BlackArch)', icon: 'fa-linux' },
-        { name: 'Ethical Hacking Fundamentals', icon: 'fa-user-secret' },
-        { name: 'Cybersecurity Ethics & Legal', icon: 'fa-balance-scale' },
-        { name: 'Cybrary: Orientation & Careers in Cyber', icon: 'fa-chalkboard-user' },
-        { name: 'TryHackMe: How Websites Work', icon: 'fa-flag-checkered' },
-        { name: 'DNS in Detail (THM)', icon: 'fa-dns' },
-        { name: 'HTTP in Detail', icon: 'fa-plug' },
-        { name: 'What is Networking? (THM)', icon: 'fa-network-wired' },
-        { name: 'Pentesting Fundamentals', icon: 'fa-user-ninja' },
-        { name: 'Defensive Security Intro (THM)', icon: 'fa-shield-virus' },
-        { name: 'Careers in Cyber (THM)', icon: 'fa-briefcase' },
-        { name: 'Offensive Security Intro (THM)', icon: 'fa-arrow-trend-up' },
-        { name: 'Security Tools Awareness', icon: 'fa-tools' },
-        { name: 'Putting It All Together (THM)', icon: 'fa-layer-group' },
-        { name: 'Networking Fundamentals', icon: 'fa-shield-alt' },
-        { name: 'DNS & HTTP Fundamentals', icon: 'fa-dns' },
-        { name: 'Website Architecture & Web Communication', icon: 'fa-code' }
-    ],
-    web: [
-        { name: 'HTML5 (Semantic, Forms, Tables)', icon: 'fa-html5' },
-        { name: 'CSS3 (Flex/Grid, Box Model)', icon: 'fa-css3-alt' },
-        { name: 'JavaScript (Variables, Conditionals)', icon: 'fa-js' },
-        { name: 'Learn HTML: Elements & Structure', icon: 'fa-code' },
-        { name: 'HTML Tables & Document Standards', icon: 'fa-table' },
-        { name: 'HTML Forms & Form Validation', icon: 'fa-check-circle' },
-        { name: 'CSS Typography, Colors & Visual Rules', icon: 'fa-palette' },
-        { name: 'CSS Box Model & Positioning', icon: 'fa-square' },
-        { name: 'Front-End Development Intro', icon: 'fa-laptop' },
-        { name: 'Overview of the Internet & Web Development', icon: 'fa-globe' },
-        { name: 'Languages for Web Development', icon: 'fa-language' },
-        { name: 'JavaScript Variables & Conditionals', icon: 'fa-js' },
-        { name: 'Dog Years Project', icon: 'fa-dog' },
-        { name: 'Kelvin Weather Project', icon: 'fa-temperature-high' },
-        { name: 'Structured Programming (C)', icon: 'fa-code' },
-        { name: 'Data Structures & Lab', icon: 'fa-database' },
-        { name: 'Computational Thinking', icon: 'fa-brain' },
-        { name: 'Problem Solving', icon: 'fa-puzzle-piece' }
-    ],
-    networking: [
-        { name: 'DNS Fundamentals', icon: 'fa-dns' },
-        { name: 'HTTP/HTTPS Protocol', icon: 'fa-lock' },
-        { name: 'Client-Server Architecture', icon: 'fa-server' },
-        { name: 'Basic Computer Networking', icon: 'fa-network-wired' },
-        { name: 'Internet Protocol Fundamentals', icon: 'fa-globe' },
-        { name: 'How Websites Work', icon: 'fa-question-circle' },
-        { name: 'Security Principles & Best Practices', icon: 'fa-shield-alt' },
-        { name: 'Client-Server Communication', icon: 'fa-sync-alt' },
-        { name: 'Internet & Web Fundamentals', icon: 'fa-wifi' }
-    ],
-    professional: [
-        { name: 'Analytical Thinking', icon: 'fa-chart-line' },
-        { name: 'Complex Problem Solving', icon: 'fa-cogs' },
-        { name: 'Self-Learning & Research', icon: 'fa-book' },
-        { name: 'Continuous Learning Mindset', icon: 'fa-sync-alt' },
-        { name: 'Technical Documentation', icon: 'fa-file-alt' },
-        { name: 'Team Collaboration', icon: 'fa-users' },
-        { name: 'Time Management (BNCC)', icon: 'fa-clock' },
-        { name: 'Adaptability & Leadership', icon: 'fa-hand-sparkles' },
-        { name: 'Technical Research', icon: 'fa-flask' },
-        { name: 'Microsoft Office (Word, Excel, Sheets)', icon: 'fa-file-excel' },
-        { name: 'Google Docs / Sheets', icon: 'fa-google' },
-        { name: 'Logo Design (Canva)', icon: 'fa-paintbrush' },
-        { name: 'Video Editing (Wondershare Filmora)', icon: 'fa-video' },
-        { name: 'Git/GitHub Fundamentals', icon: 'fa-git-alt' }
-    ]
+// ============================================================
+//   EDUCATION DATA (Degrees & Academic Background)
+// ============================================================
+
+const education = [
+    {
+        id: 'bsc',
+        degree: 'B.Sc. in Computer Science & Engineering',
+        institution: 'Green University of Bangladesh',
+        major: 'Computer Science & Engineering (CSE)',
+        gpa: '3.14',
+        startYear: '2025',
+        endYear: null, // ongoing
+        board: null,
+        note: '4th semester (Trimester) • Ongoing',
+        semesters: [
+            {
+                name: 'Semester 250',
+                courses: [
+                    { code: 'CSE 100', title: 'Computational Thinking and Problem Solving', credits: 1.5, grade: 'A+',
+                        gradePoint: 4.0 },
+                    { code: 'CSE 101-CSE(181)', title: 'Discrete Mathematics', credits: 3, grade: 'A-', gradePoint: 3.5 },
+                    { code: 'ESP 009', title: 'Academic English', credits: 0, grade: 'A', gradePoint: 3.75 },
+                ],
+            },
+            {
+                name: 'Semester 252',
+                courses: [
+                    { code: 'CSE 103-CSE(181)', title: 'Structured Programming', credits: 3, grade: 'C+',
+                        gradePoint: 2.5 },
+                    { code: 'CHE 101-CSE(181)', title: 'Chemistry', credits: 3, grade: 'B', gradePoint: 3.0 },
+                    { code: 'CSE 104-CSE(181)', title: 'Structured Programming Lab', credits: 1.5, grade: 'A-',
+                        gradePoint: 3.5 },
+                    { code: 'ESP 101', title: 'Academic English I', credits: 3, grade: 'B-', gradePoint: 2.75 },
+                    { code: 'MAT 101(V1)', title: 'Calculus for Computing', credits: 3, grade: 'C+', gradePoint: 2.5 },
+                    { code: 'CHE 102-CSE(181)', title: 'Chemistry Lab', credits: 1, grade: 'A+', gradePoint: 4.0 },
+                ],
+            },
+            {
+                name: 'Semester 261',
+                courses: [
+                    { code: 'CSE 205 (V1)', title: 'Data Structures', credits: 3, grade: 'A-', gradePoint: 3.5 },
+                    { code: 'EEE 101', title: 'Introduction to Electrical Engineering', credits: 3, grade: 'B',
+                        gradePoint: 3.0 },
+                    { code: 'MAT 103(V1)', title: 'Linear Algebra and Vector Analysis', credits: 3, grade: 'B',
+                        gradePoint: 3.0 },
+                    { code: 'CSE 206 (V1)', title: 'Data Structures Lab', credits: 1.5, grade: 'B+', gradePoint: 3.25 },
+                    { code: 'PHY 101-CSE(181)', title: 'Physics I', credits: 3, grade: 'B+', gradePoint: 3.25 },
+                    { code: 'EEE 102 (V1)', title: 'Introduction to Electrical Engineering Lab', credits: 1, grade: 'A+',
+                        gradePoint: 4.0 },
+                ],
+            },
+        ],
+    },
+    {
+        id: 'hsc',
+        degree: 'Higher Secondary Certificate (HSC)',
+        institution: 'Giasuddin Islamic Model College',
+        major: 'Science',
+        gpa: '5.00',
+        startYear: '2022',
+        endYear: '2024',
+        board: 'Dhaka',
+        note: null,
+        subjects: [
+            { code: '101', name: 'BANGLA', grade: 'A' },
+            { code: '107', name: 'ENGLISH', grade: 'A' },
+            { code: '275', name: 'INFORMATION & COMMUNICATION TECHNOLOGY', grade: 'A+' },
+            { code: '174', name: 'PHYSICS', grade: 'A+' },
+            { code: '176', name: 'CHEMISTRY', grade: 'A+' },
+            { code: '178', name: 'BIOLOGY', grade: 'A+' },
+            { code: '265', name: 'HIGHER MATHEMATICS', grade: 'A+' },
+        ],
+    },
+    {
+        id: 'ssc',
+        degree: 'Secondary School Certificate (SSC)',
+        institution: 'Rafiqul Islam School & College',
+        major: 'Science',
+        gpa: '4.72',
+        startYear: '2020',
+        endYear: '2022',
+        board: 'Dhaka',
+        note: null,
+        subjects: [
+            { code: '101', name: 'BANGLA', grade: 'A' },
+            { code: '107', name: 'ENGLISH', grade: 'A+' },
+            { code: '109', name: 'MATHEMATICS', grade: 'A+' },
+            { code: '150', name: 'BANGLADESH AND GLOBAL STUDIES', grade: 'B' },
+            { code: '111', name: 'ISLAM AND MORAL EDUCATION', grade: 'A-' },
+            { code: '136', name: 'PHYSICS', grade: 'A+' },
+            { code: '137', name: 'CHEMISTRY', grade: 'A+' },
+            { code: '126', name: 'HIGHER MATHEMATICS', grade: 'A+' },
+            { code: '154', name: 'INFORMATION AND COMMUNICATION TECHNOLOGY', grade: 'A' },
+            { code: '138', name: 'BIOLOGY', grade: 'A+' },
+            { code: '147', name: 'PHYSICAL EDUCATION, HEALTH AND SPORTS', grade: 'A+' },
+            { code: '156', name: 'CAREER EDUCATION', grade: 'A+' },
+        ],
+    },
+];
+
+// ============================================================
+//   PROJECTS DATA
+// ============================================================
+
+const projects = [
+    {
+        id: 'portfolio-website',
+        title: 'Personal Portfolio Website',
+        description:
+            'A fully responsive, accessible, and performant portfolio website built with HTML, CSS, and JavaScript. Features a modular architecture, dark mode, and real-time local time display.',
+        tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
+        image: '', // optional
+        links: {
+            live: 'https://irtizaa6x.github.io',
+            github: 'https://github.com/Irtizaa6x/Irtizaa6x.github.io',
+        },
+    },
+    {
+        id: 'network-scanner',
+        title: 'Network Scanner Tool',
+        description:
+            'A Python-based network scanning tool that discovers active hosts, open ports, and services on a local network. Built for learning network security fundamentals.',
+        tags: ['Python', 'Networking', 'Security'],
+        image: '',
+        links: {
+            github: 'https://github.com/Irtizaa6x/network-scanner',
+        },
+    },
+    // Add more projects as they are developed
+];
+
+// ============================================================
+//   CERTIFICATIONS DATA
+// ============================================================
+
+const certifications = [
+    {
+        title: 'Cybersecurity Fundamentals',
+        issuer: 'Green University Cyber Security Society',
+        description:
+            'Exploring core cybersecurity concepts including threat analysis, vulnerability assessment, and defensive strategies. Active participation in workshops and hands-on exercises.',
+        date: '2025',
+        link: '#',
+        ongoing: true,
+    },
+    {
+        title: 'BNCC Leadership Training',
+        issuer: 'Bangladesh National Cadet Corps',
+        description:
+            'Leadership development through military-style training. Focus on discipline, teamwork, integrity, and performing under pressure.',
+        date: '2024',
+        link: '#',
+        ongoing: true,
+    },
+    {
+        title: 'HSC GPA 5.00',
+        issuer: 'Dhaka Board, Bangladesh',
+        description:
+            'Achieved a perfect GPA of 5.00 in the Higher Secondary Certificate examination. Recognized for outstanding academic performance.',
+        date: '2024',
+        link: 'education.html#hsc-details',
+        ongoing: false,
+    },
+    {
+        title: 'SSC GPA 4.72',
+        issuer: 'Dhaka Board, Bangladesh',
+        description:
+            'Secured a GPA of 4.72 in the Secondary School Certificate examination. Demonstrated excellence in Science and Mathematics.',
+        date: '2022',
+        link: 'education.html#ssc-details',
+        ongoing: false,
+    },
+];
+
+// ============================================================
+//   CONTACT INFORMATION
+// ============================================================
+
+const contact = {
+    email: 'irtija.x.k6@hotmail.com',
+    phonePrimary: '+8801518940566',
+    phoneSecondary: '+8801886940566',
+    github: 'https://github.com/Irtizaa6x',
+    linkedin: 'https://linkedin.com/in/irtija-talha',
+    discordUsername: 'naz.irt.k6',
+    whatsapp: 'https://wa.me/qr/H3R2HPTW66G3P1',
 };
+
+// ============================================================
+//   SOCIAL LINKS
+// ============================================================
+
+const socialLinks = [
+    { platform: 'Facebook', url: 'https://www.facebook.com/Irtija.Talha96', icon: 'fab fa-facebook-f' },
+    { platform: 'Instagram', url: 'https://www.instagram.com/7d6_nev', icon: 'fab fa-instagram' },
+    { platform: 'X (Twitter)', url: 'https://www.x.com/irtijaXtalha', icon: 'fab fa-x-twitter' },
+    { platform: 'Threads', url: 'https://www.threads.com/7d6_nev', icon: 'fab fa-threads' },
+    { platform: 'GitHub', url: 'https://github.com/Irtizaa6x', icon: 'fab fa-github' },
+    { platform: 'LinkedIn', url: 'https://linkedin.com/in/irtija-talha', icon: 'fab fa-linkedin-in' },
+    { platform: 'WhatsApp', url: 'https://wa.me/qr/H3R2HPTW66G3P1', icon: 'fab fa-whatsapp' },
+    { platform: 'Discord', url: '#', icon: 'fab fa-discord' }, // handled by copy script
+];
+
+// ============================================================
+//   EXPOSE GLOBALLY (for use in other scripts)
+// ============================================================
+
+// Using `var` or `const` at top-level in a script makes them global.
+// We'll ensure they are available via `window` as well (for safety).
+if (typeof window !== 'undefined') {
+    window.skills = skills;
+    window.experiences = experiences;
+    window.education = education;
+    window.projects = projects;
+    window.certifications = certifications;
+    window.contact = contact;
+    window.socialLinks = socialLinks;
+}
