@@ -48,7 +48,7 @@
             <nav class="nav-desktop" aria-label="Primary navigation">
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">About</a></li>
-                    <li><a href="education.html" class="nav-link active">Education</a></li>
+                    <li><a href="education.html" class="nav-link active" aria-current="page">Education</a></li>
                     <li><a href="experience.html" class="nav-link">Experience</a></li>
                     <li><a href="skills.html" class="nav-link">Skills</a></li>
                     <li><a href="projects.html" class="nav-link">Projects</a></li>
@@ -57,6 +57,12 @@
                 </ul>
             </nav>
 
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Mobile Hamburger -->
             <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
@@ -65,7 +71,7 @@
         <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
             <ul class="nav-mobile-list">
                 <li><a href="index.html" class="nav-mobile-link">About</a></li>
-                <li><a href="education.html" class="nav-mobile-link active">Education</a></li>
+                <li><a href="education.html" class="nav-mobile-link active" aria-current="page">Education</a></li>
                 <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
                 <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
                 <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
@@ -219,10 +225,15 @@
                         includes Data Structures, Discrete Mathematics, Linear Algebra,
                         and Network Security.
                     </p>
-                    <button class="btn-toggle-details" data-target="bsc-details">
+                    <button
+                        class="btn-toggle-details"
+                        data-target="bsc-details"
+                        aria-controls="bsc-details"
+                        aria-expanded="false"
+                    >
                         <i class="fas fa-chevron-down"></i> View Semester Details
                     </button>
-                    <div id="bsc-details" class="details-content">
+                    <div id="bsc-details" class="details-content" role="region" aria-label="B.Sc. semester details">
                         <div class="details-inner">
                             <p class="details-note">
                                 <i class="fas fa-info-circle"></i>
@@ -422,10 +433,15 @@
                         Physics, Chemistry, Biology, and Higher Mathematics.
                         Board: Dhaka.
                     </p>
-                    <button class="btn-toggle-details" data-target="hsc-details">
+                    <button
+                        class="btn-toggle-details"
+                        data-target="hsc-details"
+                        aria-controls="hsc-details"
+                        aria-expanded="false"
+                    >
                         <i class="fas fa-chevron-down"></i> View Subject Details
                     </button>
-                    <div id="hsc-details" class="details-content">
+                    <div id="hsc-details" class="details-content" role="region" aria-label="HSC subject details">
                         <div class="details-inner">
                             <p class="details-note">
                                 <i class="fas fa-info-circle"></i>
@@ -478,10 +494,15 @@
                         Science background with strong performance in Mathematics
                         and Sciences. Board: Dhaka.
                     </p>
-                    <button class="btn-toggle-details" data-target="ssc-details">
+                    <button
+                        class="btn-toggle-details"
+                        data-target="ssc-details"
+                        aria-controls="ssc-details"
+                        aria-expanded="false"
+                    >
                         <i class="fas fa-chevron-down"></i> View Subject Details
                     </button>
-                    <div id="ssc-details" class="details-content">
+                    <div id="ssc-details" class="details-content" role="region" aria-label="SSC subject details">
                         <div class="details-inner">
                             <p class="details-note">
                                 <i class="fas fa-info-circle"></i>
