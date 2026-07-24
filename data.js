@@ -1,6 +1,6 @@
 // ============================================================
 //   IRTIJA — DATA FILE
-//   Version 2.0 · Complete Rewrite
+//   Version 2.1 · Complete Rewrite
 //   All content data for the portfolio
 //   Maintained separately for easy editing
 // ============================================================
@@ -108,18 +108,6 @@ const experiences = [
         description:
             'Developed leadership, discipline, and teamwork through rigorous military-style training. Performed under pressure and learned the value of responsibility, integrity, and commitment. Participated in drills, parades, and leadership exercises.',
         parentClub: 'Bangladesh National Cadet Corps (BNCC)',
-        certButtons: [],
-    },
-    {
-        id: 'bsc',
-        title: 'B.Sc. in Computer Science & Engineering',
-        startDate: '2025-01-01',
-        endDate: null,
-        icon: 'fa-graduation-cap',
-        role: 'Student',
-        description:
-            'Currently pursuing a B.Sc. in CSE with a focus on cybersecurity and network security. Coursework includes Data Structures, Discrete Mathematics, Linear Algebra, and Network Security. Maintaining a CGPA of 3.14.',
-        parentClub: 'Green University of Bangladesh',
         certButtons: [],
     },
     {
@@ -259,7 +247,7 @@ const projects = [
         description:
             'A fully responsive, accessible, and performant portfolio website built with HTML, CSS, and JavaScript. Features a modular architecture, dark mode, and real-time local time display.',
         tags: ['HTML', 'CSS', 'JavaScript', 'Responsive'],
-        image: '', // optional
+        image: '',
         links: {
             live: 'https://irtizaa6x.github.io',
             github: 'https://github.com/Irtizaa6x/Irtizaa6x.github.io',
@@ -280,29 +268,32 @@ const projects = [
 ];
 
 // ============================================================
-//   CERTIFICATIONS DATA
+//   CERTIFICATIONS DATA — Restored with proper links
 // ============================================================
 
 const certifications = [
     {
+        id: 'cybersecurity-fundamentals',
         title: 'Cybersecurity Fundamentals',
         issuer: 'Green University Cyber Security Society',
         description:
             'Exploring core cybersecurity concepts including threat analysis, vulnerability assessment, and defensive strategies. Active participation in workshops and hands-on exercises.',
         date: '2025',
-        link: '#',
+        link: 'skills.html#cyber',
         ongoing: true,
     },
     {
+        id: 'bncc-leadership',
         title: 'BNCC Leadership Training',
         issuer: 'Bangladesh National Cadet Corps',
         description:
             'Leadership development through military-style training. Focus on discipline, teamwork, integrity, and performing under pressure.',
         date: '2024',
-        link: '#',
+        link: 'experience.html#timeline-title',
         ongoing: true,
     },
     {
+        id: 'hsc-gpa-500',
         title: 'HSC GPA 5.00',
         issuer: 'Dhaka Board, Bangladesh',
         description:
@@ -312,6 +303,7 @@ const certifications = [
         ongoing: false,
     },
     {
+        id: 'ssc-gpa-472',
         title: 'SSC GPA 4.72',
         issuer: 'Dhaka Board, Bangladesh',
         description:
