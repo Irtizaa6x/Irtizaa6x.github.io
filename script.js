@@ -1,639 +1,951 @@
 // ============================================================
-//  SCRIPT.JS — EXECUTIVE PORTFOLIO UTILITIES
-//  Earthy Forest Edition · No Router (separate HTML pages)
-//  Handles: Clock, Data Rendering, Interactions, Animations
+//   IRTIJA — MAIN APPLICATION
+//   Version 2.0 · Complete Rewrite
+//   Vanilla JavaScript · Modular Architecture
 // ============================================================
 
 (function () {
     'use strict';
 
     // ============================================================
-    //  1.  CONFIGURATION (centralised – can be overridden by config.js)
+    //   1.  CONSTANTS & CONFIGURATION
     // ============================================================
 
-    const CONFIG = window.CONFIG || {
-        GITHUB_USER: 'Irtizaa6x',
-        GITHUB_REPO: 'Irtizaa6x.github.io',
-        BRANCH: 'main',
-        POSTS_PATH: 'src/posts',
-        BLOG_DETAIL_PATH: '/blog-detail',
-        BLOG_CONTAINER_ID: 'blogContainer',
-        BLOG_LOAD_RETRIES: 3,
-        BLOG_LOAD_DELAY: 1000,
+    const CONFIG = {
+        // Dhaka, Bangladesh coordinates for SunCalc
+        DHAKA_LAT: 23.8103,
+        DHAKA_LON: 90.4125,
+
+        // Animation thresholds
+        REVEAL_THRESHOLD: 0.12,
+        REVEAL_THRESHOLD_MOBILE: 0.08,
+
+        // Count-up duration
+        COUNT_DURATION: 2000,
+
+        // Scroll header threshold
+        SCROLL_HEADER_OFFSET: 60,
+
+        // Debounce delay (ms)
+        DEBOUNCE_DELAY: 100,
+
+        // Throttle delay (ms)
+        THROTTLE_DELAY: 16,
+
+        // CSS class names
+        CLASSES: {
+            ACTIVE: 'active',
+            OPEN: 'open',
+            VISIBLE: 'visible',
+            SCROLLED: 'scrolled',
+            HIDDEN: 'hidden',
+            FADE_UP: 'fade-up',
+            STAGGER: 'stagger-children',
+            NAV_MOBILE: 'nav-mobile',
+            NAV_MOBILE_OVERLAY: 'nav-mobile-overlay',
+            HAMBURGER: 'hamburger-toggle',
+            HERO: 'hero',
+            STAT_NUMBER: 'stat-number',
+        },
     };
 
     // ============================================================
-    //  2.  DOM HELPERS
+    //   2.  DOM CACHE (lazy initialization)
     // ============================================================
 
-    const $ = (sel, ctx = document) => ctx.querySelector(sel);
-    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+    const DOM = {};
 
-    // ============================================================
-    //  3.  REAL‑TIME CLOCK (Dhaka) + SUN/MOON (SunCalc)
-    // ============================================================
-
-    const DHAKA_LAT = 23.8103;
-    const DHAKA_LON = 90.4125;
-
-    function updateTimeOfDay() {
-        // Guard against missing SunCalc
-        if (typeof SunCalc === 'undefined') {
-            console.warn('SunCalc not loaded — skipping time-of-day update');
-            return;
-        }
-
-        const wrapper = document.getElementById('localTimeWrapper');
-        const astroDisplay = document.getElementById('astroDisplay');
-        if (!wrapper || !astroDisplay) return;
-
-        const now = new Date();
-        const sunTimes = SunCalc.getTimes(now, DHAKA_LAT, DHAKA_LON);
-        const sunrise = sunTimes.sunrise;
-        const sunset = sunTimes.sunset;
-        const nowTime = now.getTime();
-
-        const dawnStart = new Date(sunrise.getTime() - 30 * 60 * 1000);
-        const morningEnd = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
-        const noonStart = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
-        const noonEnd = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
-        const afternoonStart = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
-        const duskEnd = new Date(sunset.getTime() + 30 * 60 * 1000);
-        const lightNightEnd = new Date(sunset.getTime() + 3 * 60 * 60 * 1000);
-
-        let phase = '';
-        let isDay = false;
-
-        if (nowTime >= dawnStart.getTime() && nowTime < sunrise.getTime()) {
-            phase = 'dawn';
-            isDay = true;
-        } else if (nowTime >= sunrise.getTime() && nowTime < morningEnd.getTime()) {
-            phase = 'morning';
-            isDay = true;
-        } else if (nowTime >= noonStart.getTime() && nowTime < noonEnd.getTime()) {
-            phase = 'noon';
-            isDay = true;
-        } else if (nowTime >= afternoonStart.getTime() && nowTime < sunset.getTime()) {
-            phase = 'afternoon';
-            isDay = true;
-        } else if (nowTime >= sunset.getTime() && nowTime < duskEnd.getTime()) {
-            phase = 'dusk';
-            isDay = true;
-        } else if (nowTime >= duskEnd.getTime() && nowTime < lightNightEnd.getTime()) {
-            phase = 'night-light';
-            isDay = false;
-        } else {
-            phase = 'night-deep';
-            isDay = false;
-        }
-
-        wrapper.className = wrapper.className
-            .split(' ')
-            .filter(c => !['dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep'].includes(c))
-            .concat(phase)
-            .join(' ');
-
-        // Astro display
-        if (isDay) {
-            astroDisplay.innerHTML = `<div class="sun"></div>`;
-        } else {
-            const moonIllum = SunCalc.getMoonIllumination(now);
-            const phaseAngle = moonIllum.angle;
-            const fraction = moonIllum.fraction;
-
-            let sizeClass = 'size-medium';
-            if (fraction < 0.3) sizeClass = 'size-small';
-            else if (fraction > 0.7) sizeClass = 'size-large';
-
-            const rotationDeg = ((phaseAngle * 180) / Math.PI) % 360;
-            astroDisplay.innerHTML = `
-                <div class="moon ${sizeClass}" style="--rotation: ${rotationDeg}deg;"></div>
-            `;
-        }
-    }
-
-    function updateDhakaTime() {
-        const now = new Date();
-        const options = {
-            timeZone: 'Asia/Dhaka',
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        };
-        const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
-        document.querySelectorAll('.dhaka-time').forEach((el) => {
-            el.textContent = timeStr;
-        });
-        updateTimeOfDay();
+    function cacheDom() {
+        DOM.header = document.querySelector('.site-header');
+        DOM.hamburger = document.getElementById('hamburgerToggle');
+        DOM.navMobile = document.getElementById('mobileNav');
+        DOM.navOverlay = document.querySelector('.nav-mobile-overlay');
+        DOM.hero = document.getElementById('hero');
+        DOM.stats = document.querySelectorAll('.stat-number');
+        DOM.revealElements = document.querySelectorAll('.fade-up');
+        DOM.staggerElements = document.querySelectorAll('.stagger-children');
+        DOM.smoothLinks = document.querySelectorAll('a[href^="#"]');
+        DOM.localTimeWrapper = document.getElementById('localTimeWrapper');
+        DOM.astroDisplay = document.getElementById('astroDisplay');
+        DOM.timeDigital = document.querySelector('.dhaka-time');
+        DOM.navLinks = document.querySelectorAll('.nav-link, .nav-mobile-link');
+        DOM.body = document.body;
+        DOM.document = document.documentElement;
     }
 
     // ============================================================
-    //  4.  DURATION CALCULATOR (from data.js)
-    // ============================================================
-
-    function calculateDuration(startDate, endDate) {
-        const start = new Date(startDate);
-        const end = endDate ? new Date(endDate) : new Date();
-        if (isNaN(start.getTime())) return 'Invalid date';
-
-        let years = end.getFullYear() - start.getFullYear();
-        let months = end.getMonth() - start.getMonth();
-        let days = end.getDate() - start.getDate();
-
-        if (days < 0) {
-            months--;
-            const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
-            days += prevMonth.getDate();
-        }
-        if (months < 0) {
-            years--;
-            months += 12;
-        }
-
-        const parts = [];
-        if (years > 0) parts.push(`${years} year${years > 1 ? 's' : ''}`);
-        if (months > 0) parts.push(`${months} month${months > 1 ? 's' : ''}`);
-        if (days > 0 && years === 0 && months === 0) {
-            parts.push(`${days} day${days > 1 ? 's' : ''}`);
-        }
-
-        if (parts.length === 0) return 'Less than a day';
-        return parts.join(' ') + (endDate ? '' : '+');
-    }
-
-    // ============================================================
-    //  5.  RENDER EXPERIENCES + CERTIFICATIONS (from data.js)
-    // ============================================================
-
-    function renderExperiences() {
-        const expContainer = document.getElementById('experienceContainer');
-        const certContainer = document.getElementById('certificationsContainer');
-        if (!expContainer || typeof experiences === 'undefined') return;
-
-        const mainExperiences = experiences.filter((exp) => exp.id !== 'certifications');
-        const certExperience = experiences.find((exp) => exp.id === 'certifications');
-
-        // Timeline
-        const sorted = [...mainExperiences].sort(
-            (a, b) => new Date(b.startDate) - new Date(a.startDate)
-        );
-
-        let expHtml = '';
-        sorted.forEach((exp) => {
-            const duration = calculateDuration(exp.startDate, exp.endDate);
-            const isOngoing = !exp.endDate;
-            const dateLabel = isOngoing ?
-                `${exp.startDate} – Present` :
-                `${exp.startDate} – ${exp.endDate}`;
-
-            expHtml += `
-                <div class="timeline-entry">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">${dateLabel}</div>
-                        <h4><i class="${exp.icon || 'fas fa-briefcase'}"></i> ${exp.title}</h4>
-                        <div class="meta-inline">
-                            <span><i class="fas fa-user-check"></i> ${exp.role || 'Member'}</span>
-                            <span><i class="fas fa-hourglass-half"></i> ${duration}</span>
-                        </div>
-                        <p class="key-points-single">${exp.description || ''}</p>
-                        ${exp.parentClub ? `<div class="parent-club"><i class="fas fa-users"></i> Parent Club: <strong>${exp.parentClub}</strong></div>` : ''}
-                        ${exp.certButtons ? `
-                            <div class="cert-buttons">
-                                ${exp.certButtons.map((btn) => `
-                                    <a href="${btn.url}" target="_blank" class="btn-outline">
-                                        ${btn.icon ? `<i class="${btn.icon}"></i>` : ''}
-                                        ${btn.img ? `<img src="${btn.img}" class="official-icon" alt="${btn.label}" />` : ''}
-                                        ${btn.label}
-                                    </a>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        });
-        expContainer.innerHTML = expHtml || '<p class="text-muted">No experience entries found.</p>';
-
-        // Certifications card
-        if (certContainer) {
-            if (certExperience) {
-                const cert = certExperience;
-                let buttonsHtml = '';
-                if (cert.certButtons && cert.certButtons.length) {
-                    buttonsHtml = `
-                        <div class="cert-buttons">
-                            ${cert.certButtons.map((btn) => `
-                                <a href="${btn.url}" target="_blank" class="btn-outline">
-                                    ${btn.icon ? `<i class="${btn.icon}"></i>` : ''}
-                                    ${btn.img ? `<img src="${btn.img}" class="official-icon" alt="${btn.label}" />` : ''}
-                                    ${btn.label}
-                                </a>
-                            `).join('')}
-                        </div>
-                    `;
-                }
-
-                certContainer.innerHTML = `
-                    <div class="cert-card">
-                        <div class="cert-header">
-                            <h4><i class="fas fa-certificate"></i> ${cert.title}</h4>
-                            <span class="ongoing-badge">Ongoing</span>
-                        </div>
-                        <div class="cert-body">
-                            <p>${cert.description || ''}</p>
-                            ${cert.parentClub ? `<div class="parent-club"><i class="fas fa-users"></i> ${cert.parentClub}</div>` : ''}
-                            ${buttonsHtml}
-                        </div>
-                    </div>
-                `;
-            } else {
-                certContainer.innerHTML = '<p class="text-muted">No certifications yet.</p>';
-            }
-        }
-    }
-
-    // ============================================================
-    //  6.  RENDER SKILLS (from data.js)
-    // ============================================================
-
-    function renderSkills() {
-        const container = document.getElementById('skillsContainer');
-        if (!container || typeof skills === 'undefined') return;
-
-        const categoryMap = {
-            cyber: { icon: 'fa-user-secret', title: 'Cybersecurity' },
-            web: { icon: 'fa-html5', title: 'Web Dev & Programming' },
-            networking: { icon: 'fa-cloud-arrow-up', title: 'Networking & Web Tech' },
-            professional: { icon: 'fa-briefcase', title: 'Professional Skills & Tools' },
-        };
-
-        let html = '';
-        for (const [key, cat] of Object.entries(categoryMap)) {
-            const skillList = skills[key] || [];
-            if (skillList.length === 0) continue;
-
-            html += `
-                <div class="skill-category" data-collapsible>
-                    <h3><i class="fas ${cat.icon}"></i> ${cat.title}</h3>
-                    <div class="skills-list-wrapper">
-                        <div class="skills-list fade-gradient">
-                            ${skillList.map((skill) => `
-                                <span class="skill-tag"><i class="${skill.icon || 'fas fa-circle'}"></i> ${skill.name}</span>
-                            `).join('')}
-                        </div>
-                        <div class="fade-overlay"></div>
-                    </div>
-                </div>
-            `;
-        }
-
-        container.innerHTML = html;
-    }
-
-    // ============================================================
-    //  7.  COLLAPSIBLE SKILLS (Show All / Show Less)
-    // ============================================================
-
-    function initCollapsibleSkills() {
-        document.querySelectorAll('.skill-category[data-collapsible]').forEach((category) => {
-            const skillsList = category.querySelector('.skills-list');
-            const overlay = category.querySelector('.fade-overlay');
-            const wrapper = category.querySelector('.skills-list-wrapper');
-            if (!skillsList || !overlay || !wrapper) return;
-
-            // Remove old show-less button if any
-            const oldBtn = wrapper.querySelector('.show-less-btn-inline');
-            if (oldBtn) oldBtn.remove();
-
-            const showLess = document.createElement('div');
-            showLess.className = 'show-less-btn-inline';
-            showLess.innerHTML = '<i class="fas fa-chevron-up"></i> Show less';
-            Object.assign(showLess.style, {
-                display: 'none',
-                textAlign: 'center',
-                marginTop: '0.7rem',
-                cursor: 'pointer',
-                fontSize: '0.7rem',
-                fontWeight: '600',
-                color: '#344e41',
-                background: 'rgba(163,177,138,0.08)',
-                width: 'fit-content',
-                padding: '0.2rem 0.9rem',
-                borderRadius: '20px',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-            });
-            wrapper.appendChild(showLess);
-
-            // Replace overlay with fresh clone to remove old listeners
-            const newOverlay = overlay.cloneNode(true);
-            overlay.parentNode.replaceChild(newOverlay, overlay);
-
-            newOverlay.addEventListener('click', (e) => {
-                e.stopPropagation();
-                skillsList.classList.remove('fade-gradient');
-                category.classList.add('expanded');
-                showLess.style.display = 'block';
-            });
-
-            showLess.addEventListener('click', (e) => {
-                e.stopPropagation();
-                skillsList.classList.add('fade-gradient');
-                category.classList.remove('expanded');
-                showLess.style.display = 'none';
-            });
-        });
-    }
-
-    // ============================================================
-    //  8.  ACADEMIC DETAILS TOGGLE
-    // ============================================================
-
-    function initAcademicDetails() {
-        document.querySelectorAll('.btn-toggle-details').forEach((btn) => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('data-target');
-                if (!targetId) return;
-                const detailsContainer = document.getElementById(targetId);
-                if (!detailsContainer) return;
-                this.classList.toggle('open');
-                detailsContainer.classList.toggle('open');
-            });
-        });
-    }
-
-    // ============================================================
-    //  9.  SCROLL TO CERTIFICATIONS (clickable hint)
-    // ============================================================
-
-    function initScrollToCert() {
-        const trigger = document.getElementById('scrollToCertTrigger');
-        const target = document.getElementById('certificationsSection');
-        if (!trigger || !target) return;
-
-        trigger.addEventListener('click', function (e) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    }
-
-    // ============================================================
-    //  10. DISCORD COPY TO CLIPBOARD (improved)
-    // ============================================================
-
-    function initDiscordCopy() {
-        const discordBtn = document.querySelector('.discord-copy');
-        if (!discordBtn) return;
-        const originalHTML = discordBtn.innerHTML;
-        discordBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigator.clipboard.writeText('naz.irt.k6').catch(() => {
-                // Fallback for non-secure contexts
-                const textArea = document.createElement('textarea');
-                textArea.value = 'naz.irt.k6';
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            });
-            discordBtn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
-            setTimeout(() => {
-                discordBtn.innerHTML = originalHTML;
-            }, 1800);
-        });
-    }
-
-    // ============================================================
-    //  11. HAMBURGER MENU TOGGLE
-    // ============================================================
-
-    function initHamburger() {
-        const toggleBtn = document.getElementById('hamburgerToggle');
-        const sidebar = document.getElementById('sidebar');
-        if (!toggleBtn || !sidebar) return;
-
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            toggleBtn.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (event) => {
-            if (
-                window.innerWidth <= 768 &&
-                sidebar.classList.contains('open') &&
-                !sidebar.contains(event.target) &&
-                !toggleBtn.contains(event.target)
-            ) {
-                sidebar.classList.remove('open');
-                toggleBtn.classList.remove('open');
-            }
-        });
-    }
-
-    // ============================================================
-    //  12. MOBILE HEADER SCROLL HIDE/SHOW
-    // ============================================================
-
-    function initScrollHeader() {
-        const header = document.getElementById('mobileHeader');
-        if (!header) return;
-        let lastScrollY = window.scrollY;
-        let ticking = false;
-
-        function handleScroll() {
-            if (window.innerWidth > 768) {
-                header.classList.remove('hidden');
-                return;
-            }
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 60) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
-            lastScrollY = currentScrollY;
-            ticking = false;
-        }
-
-        window.addEventListener(
-            'scroll',
-            () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        handleScroll();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            },
-            { passive: true }
-        );
-    }
-
-    // ============================================================
-    //  13. ACTIVE NAV ITEM (based on current page)
-    // ============================================================
-
-    function setActiveNav() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.nav-item').forEach((item) => {
-            const href = item.getAttribute('href');
-            if (href === currentPage) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    }
-
-    // ============================================================
-    //  14. LOGO LOGIC — show image on profile, placeholder on others
-    // ============================================================
-
-    function initLogo() {
-        const navIconDisplay = document.getElementById('activeNavIcon');
-        if (!navIconDisplay) return;
-
-        const isProfilePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-        if (isProfilePage) {
-            // Show actual logo image
-            navIconDisplay.innerHTML = `<img src="logo.png" alt="Irtija Logo" class="sidebar-logo" />`;
-        } else {
-            // Show animated placeholder
-            navIconDisplay.innerHTML = `<div class="sidebar-logo-placeholder">I</div>`;
-        }
-    }
-
-    // ============================================================
-    //  15. BLOG LOADER (single source of truth)
+    //   3.  UTILITY FUNCTIONS
     // ============================================================
 
     /**
-     * Load blogs only once, with retry logic.
-     * Exposed globally via window.loadBlogs for external calls.
+     * Debounce a function call
      */
-    let blogLoadAttempted = false;
-
-    async function loadBlogs() {
-        // Prevent duplicate loads
-        if (blogLoadAttempted) {
-            console.log('Blogs already loaded or loading — skipping duplicate call.');
-            return;
-        }
-        const container = document.getElementById(CONFIG.BLOG_CONTAINER_ID);
-        if (!container) return;
-
-        blogLoadAttempted = true;
-
-        // Show loading state
-        container.innerHTML = `
-            <div class="blog-loading">
-                <i class="fas fa-spinner"></i>
-                <p>Loading blog posts...</p>
-            </div>
-        `;
-
-        // Check if the blog loader function is available
-        if (typeof window.loadBlogPosts === 'function') {
-            // Use the dedicated blog loader from blogs.js
-            try {
-                await window.loadBlogPosts();
-            } catch (err) {
-                console.error('Blog loader failed:', err);
-                container.innerHTML = `
-                    <div class="blog-empty">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Could not load blog posts. Please refresh or try again later.</p>
-                    </div>
-                `;
-            }
-        } else {
-            // Fallback: try to load the blogs.js script dynamically
-            console.warn('Blog loader not found — attempting to load blogs.js');
-            try {
-                const script = document.createElement('script');
-                script.src = 'blogs.js';
-                script.async = false;
-                document.head.appendChild(script);
-                // Wait for it to load
-                await new Promise((resolve, reject) => {
-                    script.onload = resolve;
-                    script.onerror = reject;
-                });
-                // Now call again after a short delay
-                setTimeout(() => {
-                    if (typeof window.loadBlogPosts === 'function') {
-                        window.loadBlogPosts().catch(console.error);
-                    } else {
-                        container.innerHTML = `
-                            <div class="blog-empty">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <p>Blog loader not available. Please check your internet connection and refresh.</p>
-                            </div>
-                        `;
-                    }
-                }, 300);
-            } catch (err) {
-                container.innerHTML = `
-                    <div class="blog-empty">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Failed to load blog module. Please try again later.</p>
-                    </div>
-                `;
-            }
-        }
+    function debounce(fn, delay) {
+        let timeoutId;
+        return function (...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => fn.apply(this, args), delay);
+        };
     }
 
-    // Expose loadBlogs globally so other scripts can call it
-    window.loadBlogs = loadBlogs;
+    /**
+     * Throttle a function call
+     */
+    function throttle(fn, limit) {
+        let inThrottle = false;
+        return function (...args) {
+            if (!inThrottle) {
+                fn.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => (inThrottle = false), limit);
+            }
+        };
+    }
+
+    /**
+     * Check if element is in viewport
+     */
+    function isInViewport(el, threshold) {
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const offset = threshold || CONFIG.REVEAL_THRESHOLD;
+        return rect.top < vh * (1 - offset) && rect.bottom > vh * offset;
+    }
+
+    /**
+     * Get the current page filename
+     */
+    function getCurrentPage() {
+        const path = window.location.pathname;
+        const filename = path.split('/').pop() || 'index.html';
+        return filename;
+    }
+
+    /**
+     * Safely get an element by selector
+     */
+    function getElement(selector, context) {
+        const ctx = context || document;
+        return ctx.querySelector(selector);
+    }
+
+    /**
+     * Safely get multiple elements by selector
+     */
+    function getElements(selector, context) {
+        const ctx = context || document;
+        return [...ctx.querySelectorAll(selector)];
+    }
+
+    /**
+     * Check if running on mobile
+     */
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
 
     // ============================================================
-    //  16. BOOTSTRAP (DOM ready)
+    //   4.  NAVIGATION MODULE
+    // ============================================================
+
+    const Navigation = {
+        init() {
+            this.setupHamburger();
+            this.setupNavOverlay();
+            this.setupNavLinks();
+            this.setupActiveNav();
+            this.setupStickyHeader();
+        },
+
+        setupHamburger() {
+            if (!DOM.hamburger || !DOM.navMobile) return;
+
+            DOM.hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMobileNav();
+            });
+
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && DOM.navMobile.classList.contains(CONFIG.CLASSES.OPEN)) {
+                    this.closeMobileNav();
+                }
+            });
+        },
+
+        setupNavOverlay() {
+            if (!DOM.navOverlay) {
+                // Create overlay if it doesn't exist
+                const overlay = document.createElement('div');
+                overlay.className = 'nav-mobile-overlay';
+                overlay.setAttribute('aria-hidden', 'true');
+                DOM.body.appendChild(overlay);
+                DOM.navOverlay = overlay;
+            }
+
+            DOM.navOverlay.addEventListener('click', () => {
+                this.closeMobileNav();
+            });
+
+            // Also close when clicking on a mobile nav link
+            const mobileLinks = getElements('.nav-mobile-link', DOM.navMobile);
+            mobileLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    this.closeMobileNav();
+                });
+            });
+        },
+
+        toggleMobileNav() {
+            const isOpen = DOM.navMobile.classList.contains(CONFIG.CLASSES.OPEN);
+            if (isOpen) {
+                this.closeMobileNav();
+            } else {
+                this.openMobileNav();
+            }
+        },
+
+        openMobileNav() {
+            DOM.navMobile.classList.add(CONFIG.CLASSES.OPEN);
+            if (DOM.hamburger) DOM.hamburger.classList.add(CONFIG.CLASSES.OPEN);
+            if (DOM.navOverlay) DOM.navOverlay.classList.add(CONFIG.CLASSES.OPEN);
+            DOM.body.style.overflow = 'hidden';
+            DOM.hamburger?.setAttribute('aria-expanded', 'true');
+        },
+
+        closeMobileNav() {
+            DOM.navMobile.classList.remove(CONFIG.CLASSES.OPEN);
+            if (DOM.hamburger) DOM.hamburger.classList.remove(CONFIG.CLASSES.OPEN);
+            if (DOM.navOverlay) DOM.navOverlay.classList.remove(CONFIG.CLASSES.OPEN);
+            DOM.body.style.overflow = '';
+            DOM.hamburger?.setAttribute('aria-expanded', 'false');
+        },
+
+        setupNavLinks() {
+            // Close mobile nav on any nav link click
+            DOM.navLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (isMobile()) {
+                        this.closeMobileNav();
+                    }
+                });
+            });
+        },
+
+        setupActiveNav() {
+            const currentPage = getCurrentPage();
+            DOM.navLinks.forEach((link) => {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add(CONFIG.CLASSES.ACTIVE);
+                } else {
+                    link.classList.remove(CONFIG.CLASSES.ACTIVE);
+                }
+            });
+        },
+
+        setupStickyHeader() {
+            if (!DOM.header) return;
+
+            const handleScroll = throttle(() => {
+                const scrollY = window.scrollY;
+                if (scrollY > CONFIG.SCROLL_HEADER_OFFSET) {
+                    DOM.header.classList.add(CONFIG.CLASSES.SCROLLED);
+                } else {
+                    DOM.header.classList.remove(CONFIG.CLASSES.SCROLLED);
+                }
+            }, CONFIG.THROTTLE_DELAY);
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            // Initial check
+            handleScroll();
+        },
+
+        // Public method to close nav from outside
+        close() {
+            this.closeMobileNav();
+        },
+    };
+
+    // ============================================================
+    //   5.  SCROLL REVEAL MODULE
+    // ============================================================
+
+    const ScrollReveal = {
+        observer: null,
+
+        init() {
+            if (!('IntersectionObserver' in window)) {
+                this.fallbackReveal();
+                return;
+            }
+
+            const threshold = isMobile()
+                ? CONFIG.REVEAL_THRESHOLD_MOBILE
+                : CONFIG.REVEAL_THRESHOLD;
+
+            this.observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(CONFIG.CLASSES.VISIBLE);
+                            // Optionally unobserve after reveal
+                            // this.observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: threshold,
+                    rootMargin: '0px 0px -40px 0px',
+                }
+            );
+
+            // Observe fade-up elements
+            DOM.revealElements.forEach((el) => {
+                this.observer.observe(el);
+            });
+
+            // Observe stagger elements
+            DOM.staggerElements.forEach((el) => {
+                this.observer.observe(el);
+            });
+
+            // Also observe any elements with data-reveal attribute
+            const dataReveal = getElements('[data-reveal]');
+            dataReveal.forEach((el) => {
+                this.observer.observe(el);
+            });
+        },
+
+        // Fallback for browsers without IntersectionObserver
+        fallbackReveal() {
+            const revealAll = () => {
+                DOM.revealElements.forEach((el) => {
+                    el.classList.add(CONFIG.CLASSES.VISIBLE);
+                });
+                DOM.staggerElements.forEach((el) => {
+                    el.classList.add(CONFIG.CLASSES.VISIBLE);
+                });
+                const dataReveal = getElements('[data-reveal]');
+                dataReveal.forEach((el) => {
+                    el.classList.add(CONFIG.CLASSES.VISIBLE);
+                });
+            };
+            revealAll();
+        },
+
+        // Re-observe new elements (for dynamic content)
+        observe(el) {
+            if (this.observer) {
+                this.observer.observe(el);
+            }
+        },
+
+        // Check and reveal elements immediately (for edge cases)
+        checkNow() {
+            DOM.revealElements.forEach((el) => {
+                if (isInViewport(el, CONFIG.REVEAL_THRESHOLD)) {
+                    el.classList.add(CONFIG.CLASSES.VISIBLE);
+                }
+            });
+            DOM.staggerElements.forEach((el) => {
+                if (isInViewport(el, CONFIG.REVEAL_THRESHOLD)) {
+                    el.classList.add(CONFIG.CLASSES.VISIBLE);
+                }
+            });
+        },
+    };
+
+    // ============================================================
+    //   6.  COUNT-UP ANIMATION MODULE
+    // ============================================================
+
+    const CountUp = {
+        observer: null,
+        animated: new Set(),
+
+        init() {
+            if (!('IntersectionObserver' in window)) {
+                this.animateAll();
+                return;
+            }
+
+            this.observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting && !this.animated.has(entry.target)) {
+                            this.animate(entry.target);
+                            this.animated.add(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.5,
+                }
+            );
+
+            DOM.stats.forEach((el) => {
+                this.observer.observe(el);
+            });
+
+            // Also check for any data-count elements
+            const dataCount = getElements('[data-count]');
+            dataCount.forEach((el) => {
+                if (!el.classList.contains('stat-number')) {
+                    this.observer.observe(el);
+                }
+            });
+        },
+
+        animate(el) {
+            const target = parseFloat(el.getAttribute('data-count'));
+            if (isNaN(target)) return;
+
+            const isFloat = target % 1 !== 0;
+            const duration = CONFIG.COUNT_DURATION;
+            const start = performance.now();
+            const startValue = parseFloat(el.textContent) || 0;
+
+            // If it's a small number (like 3.14), animate it directly
+            // If it's a larger number (like 5, 4, 2), animate from 0
+            const from = target < 10 ? startValue : 0;
+
+            const animateStep = (timestamp) => {
+                const elapsed = timestamp - start;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = from + (target - from) * easeOut;
+
+                if (isFloat) {
+                    el.textContent = current.toFixed(2);
+                } else {
+                    el.textContent = Math.round(current);
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateStep);
+                } else {
+                    el.textContent = isFloat ? target.toFixed(2) : Math.round(target);
+                }
+            };
+
+            requestAnimationFrame(animateStep);
+        },
+
+        animateAll() {
+            DOM.stats.forEach((el) => {
+                if (!this.animated.has(el)) {
+                    this.animate(el);
+                    this.animated.add(el);
+                }
+            });
+        },
+
+        // Animate a specific element
+        animateElement(el) {
+            if (!this.animated.has(el)) {
+                this.animate(el);
+                this.animated.add(el);
+            }
+        },
+    };
+
+    // ============================================================
+    //   7.  SMOOTH SCROLL MODULE
+    // ============================================================
+
+    const SmoothScroll = {
+        init() {
+            DOM.smoothLinks.forEach((link) => {
+                link.addEventListener('click', (e) => {
+                    const targetId = link.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        this.scrollTo(targetElement);
+                    }
+                });
+            });
+        },
+
+        scrollTo(target) {
+            const headerHeight = DOM.header ? DOM.header.offsetHeight : 72;
+            const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth',
+            });
+        },
+
+        // Scroll to a specific element by selector
+        scrollToSelector(selector) {
+            const target = document.querySelector(selector);
+            if (target) {
+                this.scrollTo(target);
+            }
+        },
+    };
+
+    // ============================================================
+    //   8.  LOCAL TIME & SUN CALC MODULE
+    // ============================================================
+
+    const ClockModule = {
+        timer: null,
+
+        init() {
+            // Only initialize if the clock elements exist
+            if (!DOM.localTimeWrapper && !DOM.timeDigital) return;
+
+            // Check if SunCalc is loaded
+            if (typeof SunCalc === 'undefined') {
+                console.warn('SunCalc library not loaded. Time display will be limited.');
+                this.updateClockOnly();
+                this.timer = setInterval(() => this.updateClockOnly(), 1000);
+                return;
+            }
+
+            this.update();
+            this.timer = setInterval(() => this.update(), 1000);
+        },
+
+        update() {
+            const now = new Date();
+            this.updateTimeDisplay(now);
+            this.updateTimeOfDay(now);
+        },
+
+        updateClockOnly() {
+            const now = new Date();
+            this.updateTimeDisplay(now);
+        },
+
+        updateTimeDisplay(now) {
+            if (!DOM.timeDigital) return;
+
+            const options = {
+                timeZone: 'Asia/Dhaka',
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            };
+
+            try {
+                const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
+                DOM.timeDigital.textContent = timeStr;
+            } catch (e) {
+                // Fallback
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                DOM.timeDigital.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+        },
+
+        updateTimeOfDay(now) {
+            if (!DOM.localTimeWrapper || !DOM.astroDisplay) return;
+            if (typeof SunCalc === 'undefined') return;
+
+            const { DHAKA_LAT, DHAKA_LON } = CONFIG;
+
+            try {
+                const sunTimes = SunCalc.getTimes(now, DHAKA_LAT, DHAKA_LON);
+                const sunrise = sunTimes.sunrise;
+                const sunset = sunTimes.sunset;
+                const nowTime = now.getTime();
+
+                const dawnStart = new Date(sunrise.getTime() - 30 * 60 * 1000);
+                const morningEnd = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
+                const noonStart = new Date(sunrise.getTime() + 2 * 60 * 60 * 1000);
+                const noonEnd = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
+                const afternoonStart = new Date(sunset.getTime() - 2 * 60 * 60 * 1000);
+                const duskEnd = new Date(sunset.getTime() + 30 * 60 * 1000);
+                const lightNightEnd = new Date(sunset.getTime() + 3 * 60 * 60 * 1000);
+
+                let phase = '';
+                let isDay = false;
+
+                if (nowTime >= dawnStart.getTime() && nowTime < sunrise.getTime()) {
+                    phase = 'dawn';
+                    isDay = true;
+                } else if (nowTime >= sunrise.getTime() && nowTime < morningEnd.getTime()) {
+                    phase = 'morning';
+                    isDay = true;
+                } else if (nowTime >= noonStart.getTime() && nowTime < noonEnd.getTime()) {
+                    phase = 'noon';
+                    isDay = true;
+                } else if (nowTime >= afternoonStart.getTime() && nowTime < sunset.getTime()) {
+                    phase = 'afternoon';
+                    isDay = true;
+                } else if (nowTime >= sunset.getTime() && nowTime < duskEnd.getTime()) {
+                    phase = 'dusk';
+                    isDay = true;
+                } else if (nowTime >= duskEnd.getTime() && nowTime < lightNightEnd.getTime()) {
+                    phase = 'night-light';
+                    isDay = false;
+                } else {
+                    phase = 'night-deep';
+                    isDay = false;
+                }
+
+                // Update wrapper classes
+                const phaseClasses = ['dawn', 'morning', 'noon', 'afternoon', 'dusk', 'night-light', 'night-deep'];
+                DOM.localTimeWrapper.className = DOM.localTimeWrapper.className
+                    .split(' ')
+                    .filter((c) => !phaseClasses.includes(c))
+                    .concat(phase)
+                    .join(' ');
+
+                // Update astro display
+                this.updateAstroDisplay(now, isDay);
+
+            } catch (e) {
+                console.warn('SunCalc error:', e);
+                // Fallback: show a simple sun/moon based on hour
+                const hour = now.getHours();
+                const isDay = hour >= 6 && hour < 18;
+                this.updateAstroDisplayFallback(isDay);
+            }
+        },
+
+        updateAstroDisplay(now, isDay) {
+            if (!DOM.astroDisplay) return;
+
+            if (isDay) {
+                DOM.astroDisplay.innerHTML = `<div class="sun"></div>`;
+            } else {
+                try {
+                    const moonIllum = SunCalc.getMoonIllumination(now);
+                    const phaseAngle = moonIllum.angle;
+                    const fraction = moonIllum.fraction;
+
+                    let sizeClass = 'size-medium';
+                    if (fraction < 0.3) sizeClass = 'size-small';
+                    else if (fraction > 0.7) sizeClass = 'size-large';
+
+                    const rotationDeg = ((phaseAngle * 180) / Math.PI) % 360;
+
+                    DOM.astroDisplay.innerHTML = `
+                        <div class="moon ${sizeClass}" style="--rotation: ${rotationDeg}deg;"></div>
+                    `;
+                } catch (e) {
+                    this.updateAstroDisplayFallback(false);
+                }
+            }
+        },
+
+        updateAstroDisplayFallback(isDay) {
+            if (!DOM.astroDisplay) return;
+            if (isDay) {
+                DOM.astroDisplay.innerHTML = `<div class="sun"></div>`;
+            } else {
+                DOM.astroDisplay.innerHTML = `<div class="moon size-medium" style="--rotation: 180deg;"></div>`;
+            }
+        },
+
+        // Clean up interval
+        destroy() {
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
+        },
+    };
+
+    // ============================================================
+    //   9.  DISCORD COPY MODULE
+    // ============================================================
+
+    const DiscordCopy = {
+        init() {
+            const discordBtn = document.querySelector('.discord-copy');
+            if (!discordBtn) return;
+
+            const originalHTML = discordBtn.innerHTML;
+
+            discordBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const username = 'naz.irt.k6';
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(username)
+                        .then(() => {
+                            this.showFeedback(discordBtn, originalHTML);
+                        })
+                        .catch(() => {
+                            this.fallbackCopy(discordBtn, originalHTML, username);
+                        });
+                } else {
+                    this.fallbackCopy(discordBtn, originalHTML, username);
+                }
+            });
+        },
+
+        showFeedback(btn, originalHTML) {
+            btn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 1800);
+        },
+
+        fallbackCopy(btn, originalHTML, text) {
+            // Fallback: select and copy using input
+            const input = document.createElement('input');
+            input.value = text;
+            input.style.position = 'fixed';
+            input.style.opacity = '0';
+            document.body.appendChild(input);
+            input.select();
+            try {
+                document.execCommand('copy');
+                this.showFeedback(btn, originalHTML);
+            } catch (e) {
+                alert('Copy failed. Please copy manually: ' + text);
+            }
+            document.body.removeChild(input);
+        },
+    };
+
+    // ============================================================
+    //   10.  THEME UTILITIES (if needed for future dark mode)
+    // ============================================================
+
+    const ThemeUtils = {
+        getPreferredTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        },
+
+        watchTheme(callback) {
+            if (!window.matchMedia) return;
+            const media = window.matchMedia('(prefers-color-scheme: dark)');
+            media.addEventListener('change', (e) => {
+                callback(e.matches ? 'dark' : 'light');
+            });
+        },
+    };
+
+    // ============================================================
+    //   11.  PERFORMANCE OPTIMIZATIONS
+    // ============================================================
+
+    const Performance = {
+        init() {
+            this.setupLazyLoading();
+            this.setupPassiveListeners();
+            this.setupResizeHandler();
+        },
+
+        setupLazyLoading() {
+            if ('loading' in HTMLImageElement.prototype) {
+                // Native lazy loading is supported
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                // Already using native lazy-loading
+            } else {
+                // Fallback: use IntersectionObserver for lazy loading
+                if ('IntersectionObserver' in window) {
+                    const lazyImages = document.querySelectorAll('img[data-src]');
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                const src = img.getAttribute('data-src');
+                                if (src) {
+                                    img.src = src;
+                                    img.removeAttribute('data-src');
+                                }
+                                observer.unobserve(img);
+                            }
+                        });
+                    });
+                    lazyImages.forEach((img) => observer.observe(img));
+                }
+            }
+        },
+
+        setupPassiveListeners() {
+            // All scroll listeners should use { passive: true }
+            // This is handled in individual modules
+        },
+
+        setupResizeHandler() {
+            const handleResize = debounce(() => {
+                // Re-check scroll reveal on resize
+                ScrollReveal.checkNow();
+
+                // Close mobile nav on resize to desktop
+                if (!isMobile() && DOM.navMobile) {
+                    if (DOM.navMobile.classList.contains(CONFIG.CLASSES.OPEN)) {
+                        Navigation.close();
+                    }
+                }
+            }, CONFIG.DEBOUNCE_DELAY);
+
+            window.addEventListener('resize', handleResize, { passive: true });
+        },
+    };
+
+    // ============================================================
+    //   12.  ACCESSIBILITY UTILITIES
+    // ============================================================
+
+    const Accessibility = {
+        init() {
+            this.setupSkipLink();
+            this.setupFocusTrap();
+        },
+
+        setupSkipLink() {
+            // Skip link already in HTML
+            const skipLink = document.querySelector('.skip-link');
+            if (skipLink) {
+                skipLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const mainContent = document.querySelector('main');
+                    if (mainContent) {
+                        mainContent.setAttribute('tabindex', '-1');
+                        mainContent.focus();
+                    }
+                });
+            }
+        },
+
+        setupFocusTrap() {
+            // Trap focus in mobile nav when open
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'Tab') return;
+                if (!DOM.navMobile || !DOM.navMobile.classList.contains(CONFIG.CLASSES.OPEN)) return;
+
+                const focusable = DOM.navMobile.querySelectorAll(
+                    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                if (focusable.length === 0) return;
+
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+        },
+    };
+
+    // ============================================================
+    //   13.  MAIN INITIALIZATION
     // ============================================================
 
     function init() {
-        // Render dynamic content from data.js
-        if (typeof renderExperiences === 'function') renderExperiences();
-        if (typeof renderSkills === 'function') renderSkills();
+        // Cache DOM elements
+        cacheDom();
 
-        // Initialise UI behaviours
-        initCollapsibleSkills();
-        initAcademicDetails();
-        initScrollToCert();
-        initDiscordCopy();
-        initHamburger();
-        initScrollHeader();
-        setActiveNav();
-        initLogo();
+        // Initialize modules
+        Navigation.init();
+        ScrollReveal.init();
+        CountUp.init();
+        SmoothScroll.init();
+        ClockModule.init();
+        DiscordCopy.init();
+        Performance.init();
+        Accessibility.init();
 
-        // Start clock (if element exists)
-        if (document.querySelector('.dhaka-time')) {
-            updateDhakaTime();
-            setInterval(updateDhakaTime, 1000);
-        }
+        // Additional: handle dynamic content loading
+        // If there's a blog or dynamic content container, observe new elements
+        const observer = new MutationObserver(() => {
+            // Re-check for new fade-up elements
+            const newReveal = document.querySelectorAll('.fade-up:not(.visible)');
+            newReveal.forEach((el) => {
+                ScrollReveal.observe(el);
+            });
 
-        // Load blogs only if on blog page and not already loaded
-        if (document.getElementById(CONFIG.BLOG_CONTAINER_ID)) {
-            // Use a small delay to ensure everything else is ready
-            setTimeout(loadBlogs, 300);
-        }
+            // Re-check for new stagger elements
+            const newStagger = document.querySelectorAll('.stagger-children:not(.visible)');
+            newStagger.forEach((el) => {
+                ScrollReveal.observe(el);
+            });
 
+            // Re-check for new stat numbers
+            const newStats = document.querySelectorAll('.stat-number:not([data-observed])');
+            newStats.forEach((el) => {
+                el.setAttribute('data-observed', 'true');
+                CountUp.animateElement(el);
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
+
+        // Log success
         console.log(
-            '%c✦ Md. Irtija Azad Talha · Earthy Forest %cExecutive Portfolio',
-            'background:#3a5a40;color:#dad7cd;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
-            'background:#dad7cd;color:#1e2b1e;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
+            '%c✦ IrtiJa · Executive Portfolio %cv2.0',
+            'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
+            'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
         );
-        console.log('%c🌿 Separate HTML pages · Utility mode active', 'color:#588157;font-weight:500;');
+        console.log('%c🌿 Modular architecture · Vanilla JS · Production ready', 'color:#1A7A74;font-weight:500;');
     }
 
-    // --- Run when DOM is ready ---
+    // ============================================================
+    //   14.  BOOTSTRAP
+    // ============================================================
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
+        // DOM is already ready
         init();
     }
+
+    // ============================================================
+    //   15.  EXPOSE PUBLIC API (for debugging / external use)
+    // ============================================================
+
+    window.IrtiJa = {
+        // Modules
+        Navigation,
+        ScrollReveal,
+        CountUp,
+        SmoothScroll,
+        ClockModule,
+        DiscordCopy,
+        ThemeUtils,
+        Performance,
+        Accessibility,
+
+        // Utilities
+        isMobile,
+        getCurrentPage,
+        debounce,
+        throttle,
+        isInViewport,
+
+        // Re-init (for dynamic content)
+        reinit() {
+            cacheDom();
+            ScrollReveal.init();
+            CountUp.init();
+            // Re-check for new elements
+            const newStats = document.querySelectorAll('.stat-number:not([data-observed])');
+            newStats.forEach((el) => {
+                el.setAttribute('data-observed', 'true');
+                CountUp.animateElement(el);
+            });
+        },
+    };
 
 })();
