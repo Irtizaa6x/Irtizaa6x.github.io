@@ -49,7 +49,7 @@
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">About</a></li>
                     <li><a href="education.html" class="nav-link">Education</a></li>
-                    <li><a href="experience.html" class="nav-link active">Experience</a></li>
+                    <li><a href="experience.html" class="nav-link active" aria-current="page">Experience</a></li>
                     <li><a href="skills.html" class="nav-link">Skills</a></li>
                     <li><a href="projects.html" class="nav-link">Projects</a></li>
                     <li><a href="blog.html" class="nav-link">Blog</a></li>
@@ -57,6 +57,12 @@
                 </ul>
             </nav>
 
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Mobile Hamburger -->
             <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
@@ -66,7 +72,7 @@
             <ul class="nav-mobile-list">
                 <li><a href="index.html" class="nav-mobile-link">About</a></li>
                 <li><a href="education.html" class="nav-mobile-link">Education</a></li>
-                <li><a href="experience.html" class="nav-mobile-link active">Experience</a></li>
+                <li><a href="experience.html" class="nav-mobile-link active" aria-current="page">Experience</a></li>
                 <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
                 <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
                 <li><a href="blog.html" class="nav-mobile-link">Blog</a></li>
@@ -208,34 +214,7 @@
                     </div>
                 </div>
 
-                <!-- Entry 3: B.Sc. in CSE -->
-                <div class="timeline-entry fade-up">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2025 – Present</div>
-                        <h4>
-                            <i class="fas fa-graduation-cap"></i>
-                            B.Sc. in Computer Science &amp; Engineering
-                        </h4>
-                        <div class="meta-inline">
-                            <span><i class="fas fa-user-check"></i> Student</span>
-                            <span><i class="fas fa-hourglass-half"></i> 2nd Year</span>
-                            <span><i class="fas fa-tag"></i> Green University</span>
-                        </div>
-                        <p class="key-points-single">
-                            Currently pursuing a B.Sc. in CSE with a focus on
-                            cybersecurity and network security. Coursework includes
-                            Data Structures, Discrete Mathematics, Linear Algebra,
-                            and Network Security. Maintaining a CGPA of 3.14.
-                        </p>
-                        <div class="parent-club">
-                            <i class="fas fa-university"></i>
-                            Green University of Bangladesh
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Entry 4: Web Development Projects (placeholder for future) -->
+                <!-- Entry 3: Web Development Projects -->
                 <div class="timeline-entry fade-up">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
@@ -256,7 +235,7 @@
                             accessible, and performant web experiences.
                         </p>
                         <div class="cert-buttons">
-                            <a href="https://github.com/Irtizaa6x" target="_blank" class="btn-outline">
+                            <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" class="btn-outline">
                                 <i class="fab fa-github"></i> View GitHub
                             </a>
                             <a href="projects.html" class="btn-outline">
@@ -286,7 +265,7 @@
             </div>
 
             <div class="cert-grid">
-                <!-- Certification 1 -->
+                <!-- Certification 1: Cybersecurity Fundamentals -->
                 <div class="cert-card fade-up">
                     <div class="cert-card-header">
                         <div class="cert-icon">
@@ -302,13 +281,13 @@
                         Active participation in workshops and hands-on exercises.
                     </p>
                     <div class="cert-actions">
-                        <a href="#" class="btn-outline">
-                            <i class="fas fa-external-link-alt"></i> View Details
+                        <a href="skills.html" class="btn-outline">
+                            <i class="fas fa-external-link-alt"></i> View Skills
                         </a>
                     </div>
                 </div>
 
-                <!-- Certification 2 -->
+                <!-- Certification 2: BNCC Leadership Training -->
                 <div class="cert-card fade-up">
                     <div class="cert-card-header">
                         <div class="cert-icon">
@@ -324,13 +303,13 @@
                         under pressure.
                     </p>
                     <div class="cert-actions">
-                        <a href="#" class="btn-outline">
-                            <i class="fas fa-external-link-alt"></i> View Details
+                        <a href="#timeline-title" class="btn-outline">
+                            <i class="fas fa-external-link-alt"></i> View Experience
                         </a>
                     </div>
                 </div>
 
-                <!-- Certification 3 -->
+                <!-- Certification 3: HSC GPA 5.00 -->
                 <div class="cert-card fade-up">
                     <div class="cert-card-header">
                         <div class="cert-icon">
@@ -352,7 +331,7 @@
                     </div>
                 </div>
 
-                <!-- Certification 4 -->
+                <!-- Certification 4: SSC GPA 4.72 -->
                 <div class="cert-card fade-up">
                     <div class="cert-card-header">
                         <div class="cert-icon">
@@ -378,7 +357,7 @@
     </section>
 
     <!-- ============================================================
-         SKILLS HIGHLIGHT (Optional preview)
+         SKILLS HIGHLIGHT
          ============================================================ -->
     <section class="skills-highlight" aria-labelledby="skills-highlight-title">
         <div class="container">
