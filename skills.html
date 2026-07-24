@@ -3,51 +3,687 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Capabilities · IrtiJa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="blogs.css" />
+    <title>Skills · IrtiJa</title>
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Technical and professional capabilities of Md. Irtija Azad Talha — cybersecurity, web development, networking, and leadership skills." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://irtizaa6x.github.io/skills.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Skills · IrtiJa" />
+    <meta property="og:description" content="Technical and professional capabilities of Md. Irtija Azad Talha." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://irtizaa6x.github.io/skills.html" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="irtija.png" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="app-wrapper">
-        <!-- Mobile Header -->
-        <header class="mobile-header" id="mobileHeader">
-            <div class="header-inner">
-                <div class="header-title"><i class="fas fa-code-branch"></i><span>Capabilities</span></div>
-                <button class="hamburger-toggle" id="hamburgerToggle"><i class="fas fa-bars"></i></button>
-            </div>
-        </header>
 
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="brand">
-                <div class="nav-icon-display" id="activeNavIcon"><img src="logo.png" alt="Irtija Logo" class="sidebar-logo" /></div>
-                <div class="brand-name"><span>IrtiJa</span></div>
-                <div class="brand-sub">CSE Student<br><span>Cybersecurity Aspirant</span></div>
-            </div>
-            <nav class="nav-menu">
-                <a class="nav-item" href="index.html"><i class="fas fa-user-astronaut"></i> <span>Profile</span></a>
-                <a class="nav-item" href="education.html"><i class="fas fa-graduation-cap"></i> <span>Qualifications</span></a>
-                <a class="nav-item" href="experience.html"><i class="fas fa-briefcase"></i> <span>Activities</span></a>
-                <a class="nav-item active" href="skills.html"><i class="fas fa-code-branch"></i> <span>Capabilities</span></a>
-                <a class="nav-item" href="blog.html"><i class="fas fa-book-open"></i> <span>Blogs</span></a>
-                <a class="nav-item" href="contact.html"><i class="fas fa-paper-plane"></i> <span>Connect</span></a>
+    <!-- ============================================================
+         TOP NAVIGATION
+         ============================================================ -->
+    <header class="site-header" role="banner" aria-label="Main navigation">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-link" aria-label="IrtiJa home">
+                <img src="logo.png" alt="IrtiJa Logo" class="brand-logo" width="40" height="40" />
+                <span class="brand-name">Irti<span class="gold">Ja</span></span>
+            </a>
+
+            <nav class="nav-desktop" aria-label="Primary navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">About</a></li>
+                    <li><a href="education.html" class="nav-link">Education</a></li>
+                    <li><a href="experience.html" class="nav-link">Experience</a></li>
+                    <li><a href="skills.html" class="nav-link active">Skills</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
             </nav>
-            <div class="sidebar-footer"><i class="fas fa-shield-alt"></i> <strong>ethical mindset</strong> · integrity first</div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2 class="section-title"><i class="fas fa-code-branch"></i> Capabilities</h2>
-            <div class="grid-2col" id="skillsContainer"></div>
-            <footer><i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha — Helped by <strong>Ai</strong></footer>
-        </main>
-    </div>
+            <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+        <nav class="nav-mobile" id="mobileNav" aria-label="Mobile navigation">
+            <ul class="nav-mobile-list">
+                <li><a href="index.html" class="nav-mobile-link">About</a></li>
+                <li><a href="education.html" class="nav-mobile-link">Education</a></li>
+                <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
+                <li><a href="skills.html" class="nav-mobile-link active">Skills</a></li>
+                <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
+                <li><a href="blog.html" class="nav-mobile-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-mobile-link nav-mobile-cta">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-mobile-overlay" aria-hidden="true"></div>
+    </header>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-labelledby="page-hero-title">
+        <div class="container">
+            <div class="page-hero-content">
+                <span class="section-tag">Capabilities</span>
+                <h1 class="page-hero-title" id="page-hero-title">
+                    Technical &amp; Professional Skills
+                </h1>
+                <p class="page-hero-subtitle">
+                    A comprehensive overview of the technologies, tools, and
+                    competencies I bring to every project.
+                </p>
+                <div class="page-hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">4</span>
+                        <span class="hero-stat-label">Skill Domains</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">24+</span>
+                        <span class="hero-stat-label">Individual Skills</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">8</span>
+                        <span class="hero-stat-label">Tools &amp; Technologies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SKILLS GRID
+         ============================================================ -->
+    <section class="skills-main" aria-labelledby="skills-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Expertise</span>
+                <h2 class="section-title section-title-underline" id="skills-title">
+                    My Capabilities
+                </h2>
+                <p class="section-subtitle">
+                    Categorized skills with proficiency indicators to show my
+                    level of experience and comfort.
+                </p>
+            </div>
+
+            <!-- Category 1: Cybersecurity -->
+            <div class="skill-category-group fade-up">
+                <div class="skill-category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div>
+                        <h3 class="category-title">Cybersecurity</h3>
+                        <p class="category-description">
+                            Building foundational knowledge in threat analysis,
+                            vulnerability assessment, and defensive strategies.
+                            Currently exploring penetration testing and incident
+                            response.
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-items" data-category="cyber">
+                    <!-- Skill 1 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Threat Analysis</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 2 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Vulnerability Assessment</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 3 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Defensive Strategies</span>
+                            <span class="skill-level beginner">Beginner</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 4 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Penetration Testing</span>
+                            <span class="skill-level beginner">Beginner</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 5 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Incident Response</span>
+                            <span class="skill-level beginner">Beginner</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 35%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="skill-tags-container">
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Network Security</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Cryptography</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Security Auditing</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Risk Management</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Firewalls</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> IDS/IPS</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Malware Analysis</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Social Engineering</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 2: Web Dev & Programming -->
+            <div class="skill-category-group fade-up">
+                <div class="skill-category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="category-title">Web Dev &amp; Programming</h3>
+                        <p class="category-description">
+                            Writing clean, maintainable code in multiple languages.
+                            Building web interfaces with modern frameworks and
+                            following best practices for performance and
+                            accessibility.
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-items" data-category="web">
+                    <!-- Skill 1 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">HTML5 &amp; CSS3</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 2 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">JavaScript</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 3 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Python</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 4 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">C Programming</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 5 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Responsive Design</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="skill-tags-container">
+                        <span class="skill-tag"><i class="fab fa-react"></i> React (Learning)</span>
+                        <span class="skill-tag"><i class="fab fa-node"></i> Node.js</span>
+                        <span class="skill-tag"><i class="fab fa-git-alt"></i> Git</span>
+                        <span class="skill-tag"><i class="fas fa-database"></i> SQL</span>
+                        <span class="skill-tag"><i class="fas fa-code"></i> APIs</span>
+                        <span class="skill-tag"><i class="fas fa-paint-brush"></i> UI/UX Principles</span>
+                        <span class="skill-tag"><i class="fas fa-mobile-alt"></i> Mobile-First</span>
+                        <span class="skill-tag"><i class="fas fa-universal-access"></i> Accessibility (WCAG)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3: Networking & Web Tech -->
+            <div class="skill-category-group fade-up">
+                <div class="skill-category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div>
+                        <h3 class="category-title">Networking &amp; Web Technologies</h3>
+                        <p class="category-description">
+                            Understanding the infrastructure that powers the
+                            internet — from protocols to cloud architecture.
+                            Building knowledge in network security and systems
+                            administration.
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-items" data-category="networking">
+                    <!-- Skill 1 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">TCP/IP Protocol Suite</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 2 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">DNS &amp; DHCP</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 3 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Firewall Configuration</span>
+                            <span class="skill-level beginner">Beginner</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 4 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Cloud Computing</span>
+                            <span class="skill-level beginner">Beginner</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 5 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Linux Administration</span>
+                            <span class="skill-level intermediate">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 60%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="skill-tags-container">
+                        <span class="skill-tag"><i class="fas fa-cloud"></i> AWS (Learning)</span>
+                        <span class="skill-tag"><i class="fab fa-linux"></i> Ubuntu</span>
+                        <span class="skill-tag"><i class="fas fa-server"></i> Apache</span>
+                        <span class="skill-tag"><i class="fas fa-server"></i> Nginx</span>
+                        <span class="skill-tag"><i class="fas fa-network-wired"></i> VLANs</span>
+                        <span class="skill-tag"><i class="fas fa-network-wired"></i> Subnetting</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> VPN</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> SSL/TLS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 4: Professional Skills & Tools -->
+            <div class="skill-category-group fade-up">
+                <div class="skill-category-header">
+                    <div class="category-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h3 class="category-title">Professional Skills &amp; Tools</h3>
+                        <p class="category-description">
+                            Soft skills and tools that enable effective collaboration,
+                            leadership, and project management in professional
+                            environments.
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-items" data-category="professional">
+                    <!-- Skill 1 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Leadership &amp; Team Management</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 2 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Discipline &amp; Integrity</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 3 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Time Management</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 4 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Teamwork &amp; Collaboration</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <!-- Skill 5 -->
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">Communication</span>
+                            <span class="skill-level advanced">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="skill-tags-container">
+                        <span class="skill-tag"><i class="fas fa-users"></i> Collaboration</span>
+                        <span class="skill-tag"><i class="fas fa-brain"></i> Critical Thinking</span>
+                        <span class="skill-tag"><i class="fas fa-lightbulb"></i> Problem Solving</span>
+                        <span class="skill-tag"><i class="fas fa-people-arrows"></i> Adaptability</span>
+                        <span class="skill-tag"><i class="fas fa-flag"></i> Decision Making</span>
+                        <span class="skill-tag"><i class="fas fa-handshake"></i> Professionalism</span>
+                        <span class="skill-tag"><i class="fas fa-chart-line"></i> Continuous Learning</span>
+                        <span class="skill-tag"><i class="fas fa-file-alt"></i> Documentation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         TOOL STACK (Visual showcase)
+         ============================================================ -->
+    <section class="tool-stack" aria-labelledby="tools-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Toolbox</span>
+                <h2 class="section-title section-title-underline" id="tools-title">
+                    Tools &amp; Technologies
+                </h2>
+                <p class="section-subtitle">
+                    The tools and platforms I use daily to build, secure, and
+                    deploy.
+                </p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-html5"></i></div>
+                    <span class="tool-name">HTML5</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-css3-alt"></i></div>
+                    <span class="tool-name">CSS3</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-js"></i></div>
+                    <span class="tool-name">JavaScript</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-python"></i></div>
+                    <span class="tool-name">Python</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-git-alt"></i></div>
+                    <span class="tool-name">Git</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-github"></i></div>
+                    <span class="tool-name">GitHub</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fab fa-linux"></i></div>
+                    <span class="tool-name">Linux</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fas fa-shield-alt"></i></div>
+                    <span class="tool-name">Wireshark</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fas fa-terminal"></i></div>
+                    <span class="tool-name">Command Line</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fas fa-database"></i></div>
+                    <span class="tool-name">MySQL</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fas fa-cloud"></i></div>
+                    <span class="tool-name">AWS (Learning)</span>
+                </div>
+                <div class="tool-item fade-up">
+                    <div class="tool-icon"><i class="fas fa-code-branch"></i></div>
+                    <span class="tool-name">VS Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SOFT SKILLS (Complementary section)
+         ============================================================ -->
+    <section class="soft-skills" aria-labelledby="soft-title">
+        <div class="container">
+            <div class="soft-skills-card fade-up">
+                <div class="soft-skills-content">
+                    <span class="section-tag">Beyond Technical</span>
+                    <h2 id="soft-title">Professional Qualities</h2>
+                    <p>
+                        What sets me apart isn't just what I know — it's how I work.
+                        These qualities define my professional approach.
+                    </p>
+                    <div class="soft-skills-grid">
+                        <div class="soft-skill">
+                            <i class="fas fa-flag"></i>
+                            <div>
+                                <h4>Leadership</h4>
+                                <p>Leading teams with integrity and purpose</p>
+                            </div>
+                        </div>
+                        <div class="soft-skill">
+                            <i class="fas fa-handshake"></i>
+                            <div>
+                                <h4>Integrity</h4>
+                                <p>Ethical decision-making in every situation</p>
+                            </div>
+                        </div>
+                        <div class="soft-skill">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Discipline</h4>
+                                <p>Consistent, reliable, and committed</p>
+                            </div>
+                        </div>
+                        <div class="soft-skill">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Collaboration</h4>
+                                <p>Working effectively in diverse teams</p>
+                            </div>
+                        </div>
+                        <div class="soft-skill">
+                            <i class="fas fa-bullseye"></i>
+                            <div>
+                                <h4>Focus</h4>
+                                <p>Driven by clear goals and purpose</p>
+                            </div>
+                        </div>
+                        <div class="soft-skill">
+                            <i class="fas fa-gem"></i>
+                            <div>
+                                <h4>Excellence</h4>
+                                <p>Always striving for the highest quality</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CALL TO ACTION
+         ============================================================ -->
+    <section class="cta-section" aria-labelledby="cta-title">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2 id="cta-title">Ready to Build Something Great?</h2>
+                    <p>
+                        With a strong foundation in cybersecurity, web development,
+                        and leadership — I'm ready to contribute to your team.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="contact.html" class="btn btn-cta-primary">
+                            <i class="fas fa-paper-plane"></i> Get in Touch
+                        </a>
+                        <a href="experience.html" class="btn btn-cta-secondary">
+                            <i class="fas fa-briefcase"></i> View Experience
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-decoration" aria-hidden="true">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-brand-link">
+                    <img src="logo.png" alt="IrtiJa" class="footer-logo" width="36" height="36" />
+                    <span class="footer-brand-name">Irti<span class="gold">Ja</span></span>
+                </a>
+                <p class="footer-tagline">
+                    Building secure digital futures.
+                </p>
+            </div>
+
+            <div class="footer-nav">
+                <h4 class="footer-heading">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="experience.html">Experience</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/Irtizaa6x" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/irtija-talha" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/Irtija.Talha96" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/7d6_nev" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.x.com/irtijaXtalha" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="discord-copy" aria-label="Copy Discord username">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <span class="footer-copy">
+                    <i class="far fa-copyright"></i> 2026 Md. Irtija Azad Talha
+                </span>
+                <span class="footer-credit">
+                    Helped by <strong>Ai</strong>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
+
 </body>
 </html>
