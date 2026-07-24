@@ -38,7 +38,7 @@
     <style>
         /* ----- Page layout ----- */
         .blog-detail-page {
-            padding: 120px 0 var(--space-9);
+            padding: var(--page-hero-padding-top) 0 var(--space-9);
             background: var(--bg-body);
             min-height: 100vh;
         }
@@ -760,7 +760,7 @@
         /* ----- Responsive ----- */
         @media (max-width: 768px) {
             .blog-detail-page {
-                padding: 100px 0 var(--space-6);
+                padding: calc(var(--page-hero-padding-top) + 0px) 0 var(--space-6);
             }
 
             .blog-detail-container {
@@ -873,11 +873,17 @@
                     <li><a href="experience.html" class="nav-link">Experience</a></li>
                     <li><a href="skills.html" class="nav-link">Skills</a></li>
                     <li><a href="projects.html" class="nav-link">Projects</a></li>
-                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="blog.html" class="nav-link active" aria-current="page">Blog</a></li>
                     <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
                 </ul>
             </nav>
 
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Mobile Hamburger -->
             <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
@@ -890,7 +896,7 @@
                 <li><a href="experience.html" class="nav-mobile-link">Experience</a></li>
                 <li><a href="skills.html" class="nav-mobile-link">Skills</a></li>
                 <li><a href="projects.html" class="nav-mobile-link">Projects</a></li>
-                <li><a href="blog.html" class="nav-mobile-link active">Blog</a></li>
+                <li><a href="blog.html" class="nav-mobile-link active" aria-current="page">Blog</a></li>
                 <li><a href="contact.html" class="nav-mobile-link nav-mobile-cta">Contact</a></li>
             </ul>
         </nav>
@@ -1340,7 +1346,6 @@
             // ============================================================
 
             function enhanceCodeBlocks(html) {
-                // Wrap code blocks with a container and add copy button
                 const div = document.createElement('div');
                 div.innerHTML = html;
 
@@ -1349,21 +1354,17 @@
                     const code = pre.querySelector('code');
                     if (!code) return;
 
-                    // Check if it already has a header
                     if (pre.parentElement && pre.parentElement.classList.contains('code-wrapper')) return;
 
-                    // Get language from class
                     let lang = '';
                     if (code.className) {
                         const match = code.className.match(/language-([a-zA-Z0-9_-]+)/);
                         if (match) lang = match[1];
                     }
 
-                    // Create wrapper
                     const wrapper = document.createElement('div');
                     wrapper.className = 'code-wrapper';
 
-                    // Create header
                     const header = document.createElement('div');
                     header.className = 'code-header';
                     header.innerHTML = `
@@ -1373,13 +1374,11 @@
                         </button>
                     `;
 
-                    // Replace pre with wrapper containing header + pre
                     const parent = pre.parentNode;
                     wrapper.appendChild(header);
                     wrapper.appendChild(pre.cloneNode(true));
                     parent.replaceChild(wrapper, pre);
 
-                    // Add copy functionality
                     const copyBtn = wrapper.querySelector('.copy-btn');
                     copyBtn.addEventListener('click', function() {
                         const text = this.dataset.code;
@@ -1446,7 +1445,6 @@
                     const text = heading.textContent;
                     const id = heading.id || getHeadingId(text);
 
-                    // Ensure heading has an ID for scrolling
                     if (!heading.id) {
                         heading.id = id;
                     }
@@ -1491,7 +1489,6 @@
                     `<img src="${img}" alt="Gallery image" loading="lazy" data-lightbox />`
                 ).join('');
 
-                // Lightbox functionality
                 const galleryImages = galleryGrid.querySelectorAll('img[data-lightbox]');
                 galleryImages.forEach((img) => {
                     img.addEventListener('click', () => {
@@ -1499,7 +1496,6 @@
                     });
                 });
 
-                // Toggle
                 galleryToggle.innerHTML = '<i class="fas fa-times"></i> Hide Gallery';
                 galleryToggle.onclick = function() {
                     isVisible = !isVisible;
@@ -1681,7 +1677,6 @@
                     return;
                 }
 
-                // Fetch all posts
                 allPosts = await fetchPostList();
 
                 if (allPosts.length === 0) {
@@ -1693,7 +1688,6 @@
                     return;
                 }
 
-                // Find the post
                 const post = allPosts.find(p => p.slug === currentSlug);
 
                 if (!post) {
@@ -1703,23 +1697,14 @@
                     return;
                 }
 
-                // Render the post
                 renderPost(post, allPosts);
 
-                // Setup reading progress
                 window.addEventListener('scroll', updateReadingProgress, { passive: true });
                 updateReadingProgress();
 
-                // Handle resize for TOC
-                const handleResize = () => {
-                    // TOC is already responsive
-                };
+                const handleResize = () => {};
                 window.addEventListener('resize', handleResize, { passive: true });
             }
-
-            // ============================================================
-            //  BOOTSTRAP
-            // ============================================================
 
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
