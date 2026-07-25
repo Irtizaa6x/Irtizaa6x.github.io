@@ -333,7 +333,7 @@ const contact = {
 // ============================================================
 
 const socialLinks = [
-    { platform: 'Facebook', url: 'https://www.facebook.com/Irtija.Talha96', icon: 'fab fa-facebook-f' },
+    { platform: 'Facebook', url: 'https://www.facebook.com/irtija.webhop.me', icon: 'fab fa-facebook-f' },
     { platform: 'Instagram', url: 'https://www.instagram.com/7d6_nev', icon: 'fab fa-instagram' },
     { platform: 'X (Twitter)', url: 'https://www.x.com/irtijaXtalha', icon: 'fab fa-x-twitter' },
     { platform: 'Threads', url: 'https://www.threads.com/7d6_nev', icon: 'fab fa-threads' },
