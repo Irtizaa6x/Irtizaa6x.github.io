@@ -59,45 +59,51 @@
         {
             id: 'webdev',
             title: 'Cybersecurity & Technical Development',
-                startDate: '2025-01-01',
-    endDate: null,
-    icon: 'fa-shield-alt',
-    role: 'Cybersecurity Aspirant',
-    description:
-        'Developing practical cybersecurity skills through hands-on learning, ' +
+            startDate: '2025-01-01',
+            endDate: null,
+            icon: 'fa-code',
+            role: 'Developer',
+            description:'Developing practical cybersecurity skills through hands-on learning, ' +
         'security labs, and technical projects. Building a strong foundation in ' +
         'Linux, networking, web technologies, cybersecurity fundamentals, and ' +
         'offensive and defensive security practices.',
-    parentClub: 'Self-Initiated',
-    certButtons: [
-        {
-            label: 'View Cybrary Profile',
-            url: 'https://app.cybrary.it/profile/irtija_talha',
-            icon: 'fas fa-shield-alt',
+            parentClub: 'Self-Initiated',
+            certButtons: [
+                {
+                    label: 'View Codecademy Profile',
+                    url: 'https://www.codecademy.com/users/Irtija.Talha/achievements',
+                    icon: 'fab fa-Codecademy',
+                },
+                // {
+                //     label: 'View Projects',
+                //     url: 'pr                {
+                //     label: 'View Projects',
+                //     url: 'projects.html',
+                //     icon: 'fas fa-code-branch',
+                // },ojects.html',
+                //     icon: 'fas fa-code-branch',
+                // },
+                {
+                    label: 'View Cybrary Certificate',
+                    url: 'https://app.cybrary.it/profile/irtija_talha',
+                    icon: 'fas fa-icon-Cybrary',
+                },
+                {
+                    label: 'View TryhackMe Profile',
+                    url: 'https://tryhackme.com/p/irtija.talha',
+                    icon: 'fas fa-tryhackme',
+                },
+                {
+                    label: 'View Cisco Profile',
+                    url: 'https://drive.google.com/file/d/1N_PM211klCLd7hNWSZ0vsXEJIdQJB2EB/view?usp=sharing',
+                    icon: 'fas fa-Cisco',
+                },                 
+            ],
         },
-        {
-            label: 'View TryHackMe Profile',
-            url: 'https://tryhackme.com/p/irtija.talha',
-            icon: 'fas fa-terminal',
-        },
-        {
-            label: 'View Codecademy Profile',
-            url: 'https://www.codecademy.com/users/Irtija.Talha/achievements',
-            icon: 'fas fa-code',
-        },
-        {
-            label: 'View Cisco Certificate',
-            url: 'https://drive.google.com/file/d/1N_PM211klCLd7hNWSZ0vsXEJIdQJB2EB/view?usp=sharing',
-            icon: 'fas fa-certificate',
-        },
-        {
-            label: 'View Projects',
-            url: 'projects.html',
-            icon: 'fas fa-code-branch',
-        },
-    ],
-},
+    ];
 
+
+so I add my skills now tell me what need to change
     // ============================================================
     //   EXPOSE GLOBALLY
     // ============================================================
