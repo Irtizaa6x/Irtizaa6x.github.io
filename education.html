@@ -31,6 +31,23 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css" />
+    <style>
+    /* Achievements grid - 2 columns with spacing */
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5);      /* same gap as contact cards */
+        margin-top: var(--space-4);
+    }
+
+    /* Make it single column on smaller screens */
+    @media (max-width: 768px) {
+        .achievements-grid {
+            grid-template-columns: 1fr;
+            gap: var(--space-4);
+        }
+    }
+</style>
 </head>
 
 <body>
