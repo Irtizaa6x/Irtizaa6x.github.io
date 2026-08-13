@@ -37,7 +37,7 @@
             certButtons: [
                 {
                     label: 'View Society',
-                    url: '#',
+                    url: 'https://www.facebook.com/gucccss.gub',
                     icon: 'fas fa-external-link-alt',
                 },
             ],
@@ -58,30 +58,45 @@
         },
         {
             id: 'webdev',
-            title: 'Web Development & Projects',
-            startDate: '2025-01-01',
-            endDate: null,
-            icon: 'fa-code',
-            role: 'Developer',
-            description:
-                'Building personal projects and portfolios to strengthen frontend development skills. ' +
-                'Working with HTML, CSS, JavaScript, and modern UI frameworks to create responsive, ' +
-                'accessible, and performant web experiences.',
-            parentClub: 'Self-Initiated',
-            certButtons: [
-                {
-                    label: 'View GitHub',
-                    url: 'https://github.com/Irtizaa6x',
-                    icon: 'fab fa-github',
-                },
-                {
-                    label: 'View Projects',
-                    url: 'projects.html',
-                    icon: 'fas fa-code-branch',
-                },
-            ],
+            title: 'Cybersecurity & Technical Development',
+                startDate: '2025-01-01',
+    endDate: null,
+    icon: 'fa-shield-alt',
+    role: 'Cybersecurity Aspirant',
+    description:
+        'Developing practical cybersecurity skills through hands-on learning, ' +
+        'security labs, and technical projects. Building a strong foundation in ' +
+        'Linux, networking, web technologies, cybersecurity fundamentals, and ' +
+        'offensive and defensive security practices.',
+    parentClub: 'Self-Initiated',
+    certButtons: [
+        {
+            label: 'View Cybrary Profile',
+            url: 'https://app.cybrary.it/profile/irtija_talha',
+            icon: 'fas fa-shield-alt',
         },
-    ];
+        {
+            label: 'View TryHackMe Profile',
+            url: 'https://tryhackme.com/p/irtija.talha',
+            icon: 'fas fa-terminal',
+        },
+        {
+            label: 'View Codecademy Profile',
+            url: 'https://www.codecademy.com/users/Irtija.Talha/achievements',
+            icon: 'fas fa-code',
+        },
+        {
+            label: 'View Cisco Certificate',
+            url: 'https://drive.google.com/file/d/1N_PM211klCLd7hNWSZ0vsXEJIdQJB2EB/view?usp=sharing',
+            icon: 'fas fa-certificate',
+        },
+        {
+            label: 'View Projects',
+            url: 'projects.html',
+            icon: 'fas fa-code-branch',
+        },
+    ],
+},
 
     // ============================================================
     //   EXPOSE GLOBALLY
