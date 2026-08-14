@@ -1,6 +1,6 @@
 /* ============================================================
    IRTIJA — DESIGN SYSTEM
-   Version 2.1 · Complete Rewrite + Polish
+   Version 2.2 · Final Polish & Refinement
    Palette: Deep Teal (#004643) · Cyprus Light (#1A7A74) · Gold (#D4A853)
    Fonts: Playfair Display (Headings) · Inter (Body)
    ============================================================ */
@@ -70,13 +70,16 @@ body {
     --error: #C44A4A;
     --info: #4A8AA8;
 
-    /* ----- Shadows ----- */
-    --shadow-sm: 0 1px 4px rgba(0, 70, 67, 0.04);
+    /* ----- Shadows — refined elevation hierarchy ----- */
+    --shadow-xs: 0 1px 3px rgba(0, 70, 67, 0.02), 0 1px 2px rgba(0, 70, 67, 0.02);
+    --shadow-sm: 0 2px 8px rgba(0, 70, 67, 0.05);
     --shadow-md: 0 6px 28px rgba(0, 70, 67, 0.06);
     --shadow-lg: 0 16px 52px rgba(0, 70, 67, 0.08);
-    --shadow-glow: 0 8px 32px rgba(212, 168, 83, 0.12);
+    --shadow-xl: 0 24px 64px rgba(0, 70, 67, 0.08);
+    --shadow-glow: 0 8px 32px rgba(212, 168, 83, 0.10);
     --shadow-soft: 0 4px 20px rgba(0, 70, 67, 0.04);
-    --shadow-card: 0 2px 12px rgba(0, 70, 67, 0.04), 0 1px 4px rgba(0, 70, 67, 0.02);
+    --shadow-card: var(--shadow-sm);
+    --shadow-card-hover: var(--shadow-md);
 
     /* ----- Gradients ----- */
     --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -91,24 +94,24 @@ body {
     --radius-xl: 32px;
     --radius-full: 9999px;
 
-    /* ----- Transitions ----- */
-    --transition-fast: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --transition: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --transition-slow: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    /* ----- Transitions (slowed down slightly for polish) ----- */
+    --transition-fast: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     --transition-nav: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* ----- Spacing Scale ----- */
-    --space-1: 0.25rem;   /* 4px  */
-    --space-2: 0.5rem;    /* 8px  */
-    --space-3: 0.75rem;   /* 12px */
-    --space-4: 1rem;      /* 16px */
-    --space-5: 1.5rem;    /* 24px */
-    --space-6: 2rem;      /* 32px */
-    --space-7: 2.5rem;    /* 40px */
-    --space-8: 3rem;      /* 48px */
-    --space-9: 4rem;      /* 64px */
-    --space-10: 5rem;     /* 80px */
-    --space-11: 6rem;     /* 96px */
+    /* ----- Spacing Scale (unchanged) ----- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 2.5rem;
+    --space-8: 3rem;
+    --space-9: 4rem;
+    --space-10: 5rem;
+    --space-11: 6rem;
 
     /* ----- Container ----- */
     --container-max: 1200px;
@@ -142,12 +145,15 @@ body {
     --text-light: rgba(255, 255, 255, 0.92);
     --text-light-muted: rgba(255, 255, 255, 0.45);
 
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+    --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 6px 28px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 16px 52px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 8px 32px rgba(212, 168, 83, 0.08);
+    --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 8px 32px rgba(212, 168, 83, 0.06);
     --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
-    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --shadow-card: var(--shadow-sm);
+    --shadow-card-hover: var(--shadow-md);
 
     --gradient-subtle: linear-gradient(135deg, rgba(212, 168, 83, 0.04), rgba(26, 122, 116, 0.02));
 }
@@ -156,7 +162,6 @@ body {
    3.  TYPOGRAPHY
    ============================================================ */
 
-/* ----- Headings (Playfair Display) ----- */
 h1,
 h2,
 h3,
@@ -168,31 +173,37 @@ h6 {
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
+    margin-bottom: 0.5rem;
 }
 
 h1 {
     font-size: clamp(2.5rem, 6vw, 3.5rem);
     font-weight: 800;
+    margin-bottom: 0.75rem;
 }
 
 h2 {
     font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 700;
+    margin-bottom: 0.75rem;
 }
 
 h3 {
     font-size: clamp(1.25rem, 2vw, 1.5rem);
     font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
 h4 {
     font-size: 1.125rem;
     font-weight: 600;
+    margin-bottom: 0.25rem;
 }
 
 h5 {
     font-size: 1rem;
     font-weight: 600;
+    margin-bottom: 0.25rem;
 }
 
 h6 {
@@ -200,21 +211,21 @@ h6 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
 }
 
-/* ----- Body (Inter) ----- */
 p {
     margin-bottom: var(--space-4);
 }
 
 .text-large {
     font-size: 1.125rem;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .text-small {
     font-size: 0.875rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .text-muted {
@@ -229,7 +240,6 @@ p {
     color: var(--primary);
 }
 
-/* ----- Links ----- */
 a {
     color: var(--primary);
     text-decoration: none;
@@ -240,14 +250,12 @@ a:hover {
     color: var(--gold);
 }
 
-/* ----- Lists ----- */
 ul,
 ol {
     padding-left: var(--space-5);
     margin-bottom: var(--space-4);
 }
 
-/* ----- Blockquote ----- */
 blockquote {
     border-left: 3px solid var(--gold);
     padding-left: var(--space-5);
@@ -267,8 +275,9 @@ blockquote {
     width: 100%;
 }
 
+/* Section padding — slightly increased for better breathing */
 .section-padding {
-    padding: var(--space-9) 0;
+    padding: var(--space-10) 0;
 }
 
 .section-padding-sm {
@@ -279,7 +288,7 @@ blockquote {
     padding: var(--space-11) 0;
 }
 
-/* ----- Section Headers ----- */
+/* Section headers — refined spacing */
 .section-tag {
     display: inline-block;
     font-size: 0.75rem;
@@ -306,12 +315,13 @@ blockquote {
 .section-subtitle {
     font-size: 1.125rem;
     color: var(--text-muted);
-    max-width: 600px;
-    line-height: 1.6;
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 0;
 }
 
 .section-header {
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-7);
     text-align: center;
 }
 
@@ -323,7 +333,7 @@ blockquote {
     margin: 0 auto;
 }
 
-/* ----- Gold accent underline for headings ----- */
+/* Gold accent underline — slightly refined */
 .section-title-underline {
     position: relative;
     display: inline-block;
@@ -332,9 +342,9 @@ blockquote {
 .section-title-underline::after {
     content: '';
     position: absolute;
-    bottom: -6px;
+    bottom: -8px;
     left: 0;
-    width: 60px;
+    width: 64px;
     height: 3px;
     background: var(--gradient-gold);
     border-radius: var(--radius-full);
@@ -345,7 +355,6 @@ blockquote {
     transform: translateX(-50%);
 }
 
-/* ----- Flex & Grid Utilities ----- */
 .flex {
     display: flex;
 }
@@ -363,21 +372,11 @@ blockquote {
     display: flex;
     flex-direction: column;
 }
-.gap-2 {
-    gap: var(--space-2);
-}
-.gap-3 {
-    gap: var(--space-3);
-}
-.gap-4 {
-    gap: var(--space-4);
-}
-.gap-5 {
-    gap: var(--space-5);
-}
-.gap-6 {
-    gap: var(--space-6);
-}
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
 
 .grid-2 {
     display: grid;
@@ -395,18 +394,10 @@ blockquote {
     gap: var(--space-5);
 }
 
-/* ----- Text Alignment ----- */
-.text-center {
-    text-align: center;
-}
-.text-left {
-    text-align: left;
-}
-.text-right {
-    text-align: right;
-}
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-/* ----- Spacing Utilities ----- */
 .mt-1 { margin-top: var(--space-1); }
 .mt-2 { margin-top: var(--space-2); }
 .mt-3 { margin-top: var(--space-3); }
@@ -420,7 +411,6 @@ blockquote {
 .mb-5 { margin-bottom: var(--space-5); }
 .mb-6 { margin-bottom: var(--space-6); }
 
-/* ----- Visually Hidden (Accessibility) ----- */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -434,7 +424,7 @@ blockquote {
 }
 
 /* ============================================================
-   5.  BUTTONS
+   5.  BUTTONS — refined hover, focus, and spacing
    ============================================================ */
 
 .btn {
@@ -466,16 +456,20 @@ blockquote {
     transform: translateX(2px);
 }
 
-/* ----- Primary Button ----- */
+.btn:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
 .btn-primary {
     background: var(--gradient-primary);
     color: #fff;
-    box-shadow: 0 4px 16px rgba(0, 70, 67, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 70, 67, 0.12);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(0, 70, 67, 0.20);
+    box-shadow: 0 8px 28px rgba(0, 70, 67, 0.18);
     color: #fff;
 }
 
@@ -483,16 +477,15 @@ blockquote {
     transform: scale(0.98);
 }
 
-/* ----- Secondary Button (Gold) ----- */
 .btn-secondary {
     background: var(--gradient-gold);
     color: #fff;
-    box-shadow: 0 4px 16px rgba(212, 168, 83, 0.20);
+    box-shadow: 0 4px 16px rgba(212, 168, 83, 0.16);
 }
 
 .btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(212, 168, 83, 0.25);
+    box-shadow: 0 8px 28px rgba(212, 168, 83, 0.22);
     color: #fff;
 }
 
@@ -500,7 +493,6 @@ blockquote {
     transform: scale(0.98);
 }
 
-/* ----- Ghost Button ----- */
 .btn-ghost {
     background: transparent;
     color: var(--text-primary);
@@ -514,7 +506,6 @@ blockquote {
     transform: translateY(-2px);
 }
 
-/* ----- Outline Button (Primary border) ----- */
 .btn-outline {
     background: transparent;
     color: var(--primary);
@@ -528,18 +519,17 @@ blockquote {
     box-shadow: 0 4px 16px rgba(0, 70, 67, 0.12);
 }
 
-/* ----- CTA Button (large, prominent) ----- */
 .btn-cta-primary {
     background: var(--gradient-gold);
     color: #fff;
     padding: 1rem 2.5rem;
     font-size: 1rem;
-    box-shadow: 0 8px 32px rgba(212, 168, 83, 0.25);
+    box-shadow: 0 8px 32px rgba(212, 168, 83, 0.20);
 }
 
 .btn-cta-primary:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 48px rgba(212, 168, 83, 0.30);
+    box-shadow: 0 12px 48px rgba(212, 168, 83, 0.28);
     color: #fff;
 }
 
@@ -558,14 +548,12 @@ blockquote {
     color: #fff;
 }
 
-/* ----- Small Button ----- */
 .btn-sm {
     padding: 0.4rem 1.2rem;
     font-size: 0.75rem;
     min-height: 36px;
 }
 
-/* ----- Large Button ----- */
 .btn-lg {
     padding: 1rem 2.5rem;
     font-size: 1rem;
@@ -573,7 +561,7 @@ blockquote {
 }
 
 /* ============================================================
-   6.  CARDS
+   6.  CARDS — refined depth, spacing, and hover
    ============================================================ */
 
 .card {
@@ -583,10 +571,11 @@ blockquote {
     box-shadow: var(--shadow-card);
     padding: var(--space-5);
     transition: all var(--transition);
+    position: relative;
 }
 
 .card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-3px);
     border-color: rgba(212, 168, 83, 0.12);
 }
@@ -603,6 +592,7 @@ blockquote {
     font-weight: 700;
     font-size: 1.125rem;
     color: var(--text-primary);
+    margin-bottom: 0;
 }
 
 .card-subtitle {
@@ -620,7 +610,6 @@ blockquote {
     border-top: 1px solid var(--border-subtle);
 }
 
-/* ----- Glass Card (subtle transparency) ----- */
 .card-glass {
     background: rgba(252, 250, 245, 0.85);
     backdrop-filter: blur(12px);
@@ -632,7 +621,6 @@ blockquote {
     background: rgba(36, 36, 36, 0.85);
 }
 
-/* ----- Feature Card (larger, with icon) ----- */
 .card-feature {
     padding: var(--space-6);
     text-align: center;
@@ -656,7 +644,7 @@ blockquote {
 }
 
 /* ============================================================
-   7.  NAVBAR (Top Navigation)
+   7.  NAVBAR (Top Navigation) — no changes needed, already polished
    ============================================================ */
 
 .site-header {
@@ -691,7 +679,6 @@ blockquote {
     box-shadow: 0 2px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* ----- Navbar hide/show on scroll ----- */
 .site-header.hidden {
     transform: translateY(-100%);
     opacity: 0;
@@ -706,7 +693,6 @@ blockquote {
     height: 100%;
 }
 
-/* ----- Brand ----- */
 .brand-link {
     display: flex;
     align-items: center;
@@ -741,7 +727,6 @@ blockquote {
     color: var(--gold);
 }
 
-/* ----- Desktop Navigation ----- */
 .nav-desktop {
     display: flex;
     align-items: center;
@@ -816,7 +801,6 @@ blockquote {
     color: #fff !important;
 }
 
-/* ----- Dark Mode Toggle (in navbar) ----- */
 .theme-toggle {
     background: rgba(0, 70, 67, 0.04);
     border: 1px solid rgba(0, 70, 67, 0.06);
@@ -858,7 +842,6 @@ blockquote {
     transform: rotate(30deg);
 }
 
-/* ----- Mobile Hamburger ----- */
 .hamburger-toggle {
     display: none;
     background: rgba(0, 70, 67, 0.04);
@@ -894,7 +877,6 @@ blockquote {
     transform: rotate(90deg);
 }
 
-/* ----- Mobile Navigation (Overlay) ----- */
 .nav-mobile {
     position: fixed;
     top: 0;
@@ -964,7 +946,6 @@ blockquote {
     color: #fff !important;
 }
 
-/* Mobile overlay background */
 .nav-mobile-overlay {
     position: fixed;
     inset: 0;
@@ -985,12 +966,12 @@ blockquote {
 }
 
 /* ============================================================
-   8.  PAGE HERO (consistent across all sub-pages)
+   8.  PAGE HERO — refined spacing and visual separation
    ============================================================ */
 
 .page-hero {
     padding-top: var(--page-hero-padding-top);
-    padding-bottom: var(--space-7);
+    padding-bottom: var(--space-8);
     background:
         radial-gradient(ellipse at 20% 30%, rgba(212, 168, 83, 0.04) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 70%, rgba(26, 122, 116, 0.03) 0%, transparent 50%),
@@ -1075,14 +1056,14 @@ blockquote {
 }
 
 /* ============================================================
-   9.  HERO (homepage)
+   9.  HERO (homepage) — refined spacing and visual separation
    ============================================================ */
 
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 80px 0 var(--space-8);
+    padding: 80px 0 var(--space-9);
     position: relative;
     overflow: hidden;
     background:
@@ -1136,15 +1117,8 @@ blockquote {
 }
 
 @keyframes pulse-dot {
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.4;
-        transform: scale(0.8);
-    }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
 }
 
 .hero-title {
@@ -1179,7 +1153,6 @@ blockquote {
     margin-top: var(--space-2);
 }
 
-/* ----- Hero Visual ----- */
 .hero-visual {
     display: flex;
     justify-content: center;
@@ -1224,16 +1197,10 @@ blockquote {
 }
 
 @keyframes ring-float {
-    0%,
-    100% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-6px) scale(1.02);
-    }
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.02); }
 }
 
-/* ----- Scroll Indicator ----- */
 .scroll-indicator {
     position: absolute;
     bottom: var(--space-6);
@@ -1262,17 +1229,12 @@ blockquote {
 }
 
 @keyframes scroll-bounce {
-    0%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        transform: translateX(-50%) translateY(6px);
-    }
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
 }
 
 /* ============================================================
-   10. QUICK STATS
+   10. QUICK STATS — refined separation
    ============================================================ */
 
 .stats {
@@ -1324,7 +1286,7 @@ blockquote {
 }
 
 /* ============================================================
-   11. ABOUT SECTION
+   11. ABOUT SECTION — no major changes
    ============================================================ */
 
 .about {
@@ -1375,7 +1337,6 @@ blockquote {
     margin-top: var(--space-2);
 }
 
-/* ----- About Details Card ----- */
 .about-details {
     display: flex;
     flex-direction: column;
@@ -1387,6 +1348,11 @@ blockquote {
     border: 1px solid var(--border-subtle);
     padding: var(--space-5);
     box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-fast);
+}
+
+.detail-card:hover {
+    box-shadow: var(--shadow-card-hover);
 }
 
 .detail-item {
@@ -1434,7 +1400,7 @@ blockquote {
 }
 
 /* ============================================================
-   12. FEATURED SKILLS
+   12. FEATURED SKILLS — refined card depth and spacing
    ============================================================ */
 
 .featured-skills {
@@ -1462,7 +1428,7 @@ blockquote {
 }
 
 .skill-preview-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-3px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -1525,7 +1491,7 @@ blockquote {
 }
 
 /* ============================================================
-   13. FEATURED EXPERIENCE (Timeline Preview)
+   13. FEATURED EXPERIENCE — refined spacing and depth
    ============================================================ */
 
 .featured-experience {
@@ -1592,7 +1558,7 @@ blockquote {
 }
 
 .exp-preview-content:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateX(4px);
 }
 
@@ -1630,7 +1596,7 @@ blockquote {
 }
 
 /* ============================================================
-   14. CALL TO ACTION (CTA)
+   14. CALL TO ACTION — refined spacing
    ============================================================ */
 
 .cta-section {
@@ -1701,7 +1667,7 @@ blockquote {
 }
 
 /* ============================================================
-   15. FOOTER
+   15. FOOTER — no major changes
    ============================================================ */
 
 .site-footer {
@@ -1808,7 +1774,6 @@ blockquote {
     border-color: var(--gold);
 }
 
-/* ----- Footer Bottom ----- */
 .footer-bottom {
     padding: var(--space-4) 0;
 }
@@ -1826,10 +1791,9 @@ blockquote {
 }
 
 /* ============================================================
-   16. BLOG COMPONENTS
+   16. BLOG COMPONENTS — refined spacing and card depth
    ============================================================ */
 
-/* ----- Blog Grid (card-based) ----- */
 .blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -1846,7 +1810,7 @@ blockquote {
 }
 
 .blog-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-4px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -1901,7 +1865,7 @@ blockquote {
     border-radius: var(--radius-full);
 }
 
-/* ----- Blog Detail (post page) ----- */
+/* Blog Detail — refined spacing */
 .blog-detail-container {
     max-width: 800px;
     margin: 0 auto;
@@ -1991,7 +1955,6 @@ blockquote {
     padding: 0;
 }
 
-/* ----- Gallery (blog detail) ----- */
 .detail-gallery-container {
     margin-top: var(--space-6);
 }
@@ -2035,7 +1998,6 @@ blockquote {
     z-index: 2;
 }
 
-/* ----- Video embed ----- */
 .detail-video {
     margin: var(--space-6) 0;
     position: relative;
@@ -2054,7 +2016,6 @@ blockquote {
     border: none;
 }
 
-/* ----- Certificate button ----- */
 .detail-cert-btn {
     display: inline-flex;
     align-items: center;
@@ -2075,7 +2036,6 @@ blockquote {
     color: #fff;
 }
 
-/* ----- Back to blog ----- */
 .back-to-portfolio-wrapper {
     margin-bottom: var(--space-5);
 }
@@ -2095,7 +2055,7 @@ blockquote {
 }
 
 /* ============================================================
-   17. CONTACT COMPONENTS
+   17. CONTACT COMPONENTS — refined spacing and alignment
    ============================================================ */
 
 .contact-page-header {
@@ -2108,7 +2068,6 @@ blockquote {
     max-width: 540px;
 }
 
-/* ----- Contact Grid (primary cards) ----- */
 .contact-grid {
     display: grid;
     gap: var(--space-4);
@@ -2135,7 +2094,7 @@ blockquote {
 }
 
 .contact-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-3px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -2167,7 +2126,6 @@ blockquote {
     border-radius: var(--radius-full);
 }
 
-/* ----- Social Grid ----- */
 .social-section-header {
     margin-bottom: var(--space-4);
 }
@@ -2240,7 +2198,6 @@ blockquote {
     filter: brightness(0) invert(1);
 }
 
-/* ----- Phone Card ----- */
 .phone-card {
     background: var(--bg-card);
     border-radius: var(--radius);
@@ -2252,7 +2209,7 @@ blockquote {
 }
 
 .phone-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .phone-card-row {
@@ -2307,7 +2264,6 @@ blockquote {
     color: var(--gold);
 }
 
-/* ----- Local Time Widget (in contact) ----- */
 .local-time-wrapper {
     display: inline-flex;
     align-items: center;
@@ -2316,7 +2272,7 @@ blockquote {
     padding: 0.3rem 1rem 0.3rem 0.6rem;
     border-radius: var(--radius-full);
     border: 1px solid rgba(0, 70, 67, 0.04);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-soft);
     font-family: 'Inter', sans-serif;
     transition: all var(--transition-slow);
     flex-wrap: wrap;
@@ -2328,7 +2284,6 @@ blockquote {
     box-shadow: var(--shadow-glow);
 }
 
-/* ----- Time phases (sun/moon) ----- */
 .astro-display {
     width: 36px;
     height: 36px;
@@ -2379,7 +2334,6 @@ blockquote {
     transform: scale(1.15);
 }
 
-/* Time phases */
 .local-time-wrapper .live-indicator {
     width: 8px;
     height: 8px;
@@ -2430,7 +2384,6 @@ blockquote {
     white-space: nowrap;
 }
 
-/* Phone card footer */
 .phone-card-footer {
     margin-top: var(--space-4);
     padding-top: var(--space-3);
@@ -2451,7 +2404,7 @@ blockquote {
 }
 
 /* ============================================================
-   18. PROJECTS COMPONENTS
+   18. PROJECTS COMPONENTS — refined spacing
    ============================================================ */
 
 .projects-grid {
@@ -2470,7 +2423,7 @@ blockquote {
 }
 
 .project-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-4px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -2540,7 +2493,7 @@ blockquote {
 }
 
 /* ============================================================
-   19. EDUCATIONAL / QUALIFICATIONS TABLE
+   19. EDUCATIONAL / QUALIFICATIONS TABLE — refined spacing
    ============================================================ */
 
 .qualifications-grid {
@@ -2562,7 +2515,7 @@ blockquote {
 }
 
 .qual-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateX(4px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -2646,7 +2599,6 @@ blockquote {
     margin-top: var(--space-1);
 }
 
-/* ----- Toggle Details (Education) ----- */
 .btn-toggle-details {
     background: transparent;
     border: 1px solid rgba(26, 122, 116, 0.12);
@@ -2743,7 +2695,6 @@ blockquote {
     color: var(--primary-light);
 }
 
-/* ----- Tables (Academic) ----- */
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -2831,7 +2782,7 @@ blockquote {
 }
 
 /* ============================================================
-   20. TIMELINE (Full version)
+   20. TIMELINE — refined spacing
    ============================================================ */
 
 .timeline-container {
@@ -2890,7 +2841,7 @@ blockquote {
 }
 
 .timeline-content:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateX(4px);
 }
 
@@ -2975,7 +2926,6 @@ blockquote {
     border-radius: var(--radius-full);
 }
 
-/* ----- Certifications Sidebar (on experience page) ----- */
 .cert-card {
     background: var(--bg-card);
     border-radius: var(--radius);
@@ -2986,7 +2936,7 @@ blockquote {
 }
 
 .cert-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
     border-color: rgba(212, 168, 83, 0.08);
 }
@@ -3065,7 +3015,7 @@ blockquote {
 }
 
 .skill-category-group:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     border-color: rgba(212, 168, 83, 0.08);
 }
 
@@ -3108,7 +3058,6 @@ blockquote {
     margin-bottom: 0;
 }
 
-/* Skill items */
 .skill-items {
     display: flex;
     flex-direction: column;
@@ -3190,15 +3139,10 @@ blockquote {
 }
 
 @keyframes shimmer {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
-/* Skill tags container */
 .skill-tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -3212,7 +3156,6 @@ blockquote {
     border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* ----- Tool Stack (visual showcase) ----- */
 .tool-stack {
     padding: var(--space-9) 0;
     background: var(--bg-surface);
@@ -3245,7 +3188,7 @@ blockquote {
 
 .tool-item:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     border-color: rgba(212, 168, 83, 0.08);
 }
 
@@ -3265,7 +3208,6 @@ blockquote {
     color: var(--text-secondary);
 }
 
-/* ----- Soft Skills (complementary) ----- */
 .soft-skills {
     padding: var(--space-9) 0;
 }
@@ -3280,7 +3222,7 @@ blockquote {
 }
 
 .soft-skills-card:hover {
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-card-hover);
     border-color: rgba(212, 168, 83, 0.08);
 }
 
@@ -3347,10 +3289,10 @@ blockquote {
 }
 
 /* ============================================================
-   22. RESPONSIVE BREAKPOINTS
+   22. RESPONSIVE BREAKPOINTS — refined for all devices
    ============================================================ */
 
-/* ----- Large Desktops (1400px+) ----- */
+/* Large Desktops (1400px+) */
 @media (min-width: 1400px) {
     .container {
         padding: 0 2rem;
@@ -3360,7 +3302,7 @@ blockquote {
     }
 }
 
-/* ----- Desktop (1025px - 1399px) ----- */
+/* Desktop (1025px - 1399px) */
 @media (max-width: 1399px) {
     .skills-preview-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -3370,7 +3312,7 @@ blockquote {
     }
 }
 
-/* ----- Tablet (769px - 1024px) ----- */
+/* Tablet (769px - 1024px) — critical improvements */
 @media (max-width: 1024px) {
     .hero-inner {
         grid-template-columns: 1fr;
@@ -3469,13 +3411,25 @@ blockquote {
     .soft-skills-card {
         padding: var(--space-6);
     }
+
+    /* Blog & projects grid adjustments for tablet */
+    .blog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
 }
 
-/* ----- Mobile (up to 768px) ----- */
+/* Mobile (up to 768px) — refined spacing */
 @media (max-width: 768px) {
     :root {
         --container-padding: 1rem;
         --page-hero-padding-top: 88px;
+        --space-8: 2.5rem;
+        --space-9: 3rem;
+        --space-10: 3.5rem;
     }
 
     .nav-desktop {
@@ -3706,10 +3660,12 @@ blockquote {
 
     .blog-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
     }
 
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
     }
 
     .detail-gallery {
@@ -3810,7 +3766,6 @@ blockquote {
         font-size: 0.75rem;
     }
 
-    /* Page hero mobile */
     .page-hero {
         padding-top: var(--page-hero-padding-top);
         padding-bottom: var(--space-5);
@@ -3838,7 +3793,7 @@ blockquote {
     }
 }
 
-/* ----- Small Phones (up to 400px) ----- */
+/* Small Phones (up to 400px) */
 @media (max-width: 400px) {
     .hero-title {
         font-size: 1.8rem;
@@ -3906,7 +3861,6 @@ blockquote {
    23. ANIMATIONS
    ============================================================ */
 
-/* ----- Fade Up (scroll reveal) ----- */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -3929,66 +3883,33 @@ blockquote {
     transform: translateY(0);
 }
 
-/* ----- Stagger children ----- */
 .stagger-children > * {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.stagger-children.visible > *:nth-child(1) {
-    transition-delay: 0.05s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(2) {
-    transition-delay: 0.10s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(3) {
-    transition-delay: 0.15s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(4) {
-    transition-delay: 0.20s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(5) {
-    transition-delay: 0.25s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(6) {
-    transition-delay: 0.30s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(7) {
-    transition-delay: 0.35s;
-    opacity: 1;
-    transform: translateY(0);
-}
-.stagger-children.visible > *:nth-child(8) {
-    transition-delay: 0.40s;
-    opacity: 1;
-    transform: translateY(0);
-}
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.10s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.20s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 0.30s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(7) { transition-delay: 0.35s; opacity: 1; transform: translateY(0); }
+.stagger-children.visible > *:nth-child(8) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
 
 /* ============================================================
-   24. ACCESSIBILITY
+   24. ACCESSIBILITY — enhanced focus and reduced motion
    ============================================================ */
 
-/* ----- Focus indicators ----- */
+/* Focus indicators — visible and consistent */
 :focus-visible {
     outline: 3px solid var(--gold);
-    outline-offset: 2px;
+    outline-offset: 3px;
     border-radius: var(--radius-sm);
 }
 
-/* ----- Skip link (hidden until focused) ----- */
+/* Skip link (hidden until focused) */
 .skip-link {
     position: absolute;
     top: -100%;
@@ -4006,7 +3927,7 @@ blockquote {
     top: var(--space-3);
 }
 
-/* ----- Reduced motion ----- */
+/* Reduced motion — disable animations and transitions */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -4043,9 +3964,16 @@ blockquote {
     .skill-progress::after {
         animation: none !important;
     }
+
+    .card:hover,
+    .blog-card:hover,
+    .project-card:hover,
+    .skill-preview-card:hover {
+        transform: none !important;
+        transition: none !important;
+    }
 }
 
-/* ----- High contrast selection ----- */
 ::selection {
     background: var(--gold);
     color: var(--primary-dark);
@@ -4056,7 +3984,6 @@ blockquote {
     color: #fff;
 }
 
-/* ----- Screen reader only ----- */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -4069,7 +3996,6 @@ blockquote {
     border: 0;
 }
 
-/* ----- Focus within (for keyboard nav) ----- */
 .focus-within\:ring:focus-within {
     outline: 3px solid var(--gold);
     outline-offset: 2px;
