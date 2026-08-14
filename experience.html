@@ -31,11 +31,14 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css" />
-
-    <!-- Optional: if you have specific experience styles, keep them -->
 </head>
 
 <body>
+
+    <!-- ============================================================
+         SKIP LINK — Keyboard accessibility
+         ============================================================ -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- ============================================================
          TOP NAVIGATION
@@ -85,159 +88,163 @@
     </header>
 
     <!-- ============================================================
-         PAGE HERO
+         MAIN CONTENT
          ============================================================ -->
-    <section class="page-hero" aria-labelledby="page-hero-title">
-        <div class="container">
-            <div class="page-hero-content">
-                <span class="section-tag">Experience</span>
-                <h1 class="page-hero-title" id="page-hero-title">
-                    Professional Journey
-                </h1>
-                <p class="page-hero-subtitle">
-                    Building skills beyond the classroom — leadership, cybersecurity,
-                    and real-world experience.
-                </p>
-                <div class="page-hero-stats" id="experienceStats">
+    <main id="main-content">
+
+        <!-- ============================================================
+             PAGE HERO
+             ============================================================ -->
+        <section class="page-hero" aria-labelledby="page-hero-title">
+            <div class="container">
+                <div class="page-hero-content">
+                    <span class="section-tag">Experience</span>
+                    <h1 class="page-hero-title" id="page-hero-title">
+                        Professional Journey
+                    </h1>
+                    <p class="page-hero-subtitle">
+                        Building skills beyond the classroom — leadership, cybersecurity,
+                        and real-world experience.
+                    </p>
+                    <div class="page-hero-stats" id="experienceStats">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             CAREER OBJECTIVE — with consistent section spacing
+             ============================================================ -->
+        <section class="career-objective section-padding-sm" aria-labelledby="objective-title">
+            <div class="container">
+                <div class="objective-card fade-up">
+                    <div class="objective-icon">
+                        <i class="fas fa-bullseye" aria-hidden="true"></i>
+                    </div>
+                    <div class="objective-content">
+                        <span class="section-tag">Mission</span>
+                        <h2 id="objective-title">Career Objective</h2>
+                        <p>
+                            To join a forward-thinking security team where I can apply my
+                            growing technical knowledge, learn from experienced professionals,
+                            and contribute to protecting critical digital infrastructure.
+                            I'm seeking opportunities that challenge me to grow while making
+                            security more accessible and robust.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             EXPERIENCE TIMELINE — dynamic content, consistent padding
+             ============================================================ -->
+        <section class="experience-timeline section-padding" aria-labelledby="timeline-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Timeline</span>
+                    <h2 class="section-title section-title-underline" id="timeline-title">
+                        Activities &amp; Leadership
+                    </h2>
+                    <p class="section-subtitle">
+                        A chronological journey through my professional and
+                        extracurricular experiences.
+                    </p>
+                </div>
+
+                <div class="timeline-container" id="timelineContainer">
                     <!-- Dynamically populated -->
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============================================================
-         CAREER OBJECTIVE
-         ============================================================ -->
-    <section class="career-objective" aria-labelledby="objective-title">
-        <div class="container">
-            <div class="objective-card fade-up">
-                <div class="objective-icon">
-                    <i class="fas fa-bullseye"></i>
-                
-                <div class="objective-content">
-                    <span class="section-tag">Mission</span>
-                </div>
-                    <h2 id="objective-title">Career Objective</h2>
-                    <p>
-                        To join a forward-thinking security team where I can apply my
-                        growing technical knowledge, learn from experienced professionals,
-                        and contribute to protecting critical digital infrastructure.
-                        I'm seeking opportunities that challenge me to grow while making
-                        security more accessible and robust.
+        <!-- ============================================================
+             CERTIFICATIONS & ACHIEVEMENTS — dynamic content, consistent spacing
+             ============================================================ -->
+        <section class="certifications-section section-padding" aria-labelledby="certs-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Credentials</span>
+                    <h2 class="section-title section-title-underline" id="certs-title">
+                        Certifications &amp; Achievements
+                    </h2>
+                    <p class="section-subtitle">
+                        Professional certifications and recognitions demonstrating
+                        commitment to continuous learning.
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ============================================================
-         EXPERIENCE TIMELINE (Dynamic)
-         ============================================================ -->
-    <section class="experience-timeline" aria-labelledby="timeline-title">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Timeline</span>
-                <br/>
-                <h2 class="section-title section-title-underline" id="timeline-title">
-                    Activities &amp; Leadership
-                </h2>
-                <p class="section-subtitle">
-                    A chronological journey through my professional and
-                    extracurricular experiences.
-                </p>
-            </div>
-
-            <div class="timeline-container" id="timelineContainer">
-                <!-- Dynamically populated -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         CERTIFICATIONS & ACHIEVEMENTS (Dynamic)
-         ============================================================ -->
-    <section class="certifications-section" aria-labelledby="certs-title">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Credentials</span>
-                <br/>
-                <h2 class="section-title section-title-underline" id="certs-title">
-                    Certifications &amp; Achievements
-                </h2>
-                <p class="section-subtitle">
-                    Professional certifications and recognitions demonstrating
-                    commitment to continuous learning.
-                </p>
-            </div>
-
-            <div class="cert-grid" id="certGrid">
-                <!-- Dynamically populated -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-         SKILLS HIGHLIGHT (Static, but can be left as is)
-         ============================================================ -->
-    <section class="skills-highlight" aria-labelledby="skills-highlight-title">
-        <div class="container">
-            <div class="skills-highlight-card fade-up">
-                <div class="skills-highlight-content">
-                    <span class="section-tag">Capabilities</span>
-                    <h2 id="skills-highlight-title">Skills That Drive Results</h2>
-                    <p>
-                        From cybersecurity fundamentals to web development and
-                        professional leadership — here's what I bring to the table.
-                    </p>
-                    <div class="skills-highlight-tags">
-                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Threat Analysis</span>
-                        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Vulnerability Assessment</span>
-                        <span class="skill-tag"><i class="fas fa-code"></i> JavaScript</span>
-                        <span class="skill-tag"><i class="fas fa-code"></i> Python</span>
-                        <span class="skill-tag"><i class="fas fa-network-wired"></i> TCP/IP</span>
-                        <span class="skill-tag"><i class="fas fa-network-wired"></i> DNS</span>
-                        <span class="skill-tag"><i class="fas fa-briefcase"></i> Leadership</span>
-                        <span class="skill-tag"><i class="fas fa-briefcase"></i> Teamwork</span>
-                        <span class="skill-tag"><i class="fas fa-briefcase"></i> Discipline</span>
-                    </div>
-                    <a href="skills.html" class="btn btn-primary">
-                        <i class="fas fa-arrow-right"></i> View All Capabilities
-                    </a>
-                </div>
-                <div class="skills-highlight-decoration" aria-hidden="true">
-                    <i class="fas fa-code-branch"></i>
+                <div class="cert-grid" id="certGrid">
+                    <!-- Dynamically populated -->
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============================================================
-         CALL TO ACTION
-         ============================================================ -->
-    <section class="cta-section" aria-labelledby="cta-title">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-content">
-                    <h2 id="cta-title">Ready to Collaborate?</h2>
-                    <p>
-                        I'm always open to interesting conversations, collaborations,
-                        and opportunities in cybersecurity and technology.
-                    </p>
-                    <div class="cta-actions">
-                        <a href="contact.html" class="btn btn-cta-primary">
-                            <i class="fas fa-paper-plane"></i> Get in Touch
-                        </a>
-                        <a href="projects.html" class="btn btn-cta-secondary">
-                            <i class="fas fa-code-branch"></i> Explore Projects
+        <!-- ============================================================
+             SKILLS HIGHLIGHT — consistent spacing and semantic structure
+             ============================================================ -->
+        <section class="skills-highlight section-padding" aria-labelledby="skills-highlight-title">
+            <div class="container">
+                <div class="skills-highlight-card fade-up">
+                    <div class="skills-highlight-content">
+                        <span class="section-tag">Capabilities</span>
+                        <h2 id="skills-highlight-title">Skills That Drive Results</h2>
+                        <p>
+                            From cybersecurity fundamentals to web development and
+                            professional leadership — here's what I bring to the table.
+                        </p>
+                        <div class="skills-highlight-tags">
+                            <span class="skill-tag"><i class="fas fa-shield-alt" aria-hidden="true"></i> Threat Analysis</span>
+                            <span class="skill-tag"><i class="fas fa-shield-alt" aria-hidden="true"></i> Vulnerability Assessment</span>
+                            <span class="skill-tag"><i class="fas fa-code" aria-hidden="true"></i> JavaScript</span>
+                            <span class="skill-tag"><i class="fas fa-code" aria-hidden="true"></i> Python</span>
+                            <span class="skill-tag"><i class="fas fa-network-wired" aria-hidden="true"></i> TCP/IP</span>
+                            <span class="skill-tag"><i class="fas fa-network-wired" aria-hidden="true"></i> DNS</span>
+                            <span class="skill-tag"><i class="fas fa-briefcase" aria-hidden="true"></i> Leadership</span>
+                            <span class="skill-tag"><i class="fas fa-briefcase" aria-hidden="true"></i> Teamwork</span>
+                            <span class="skill-tag"><i class="fas fa-briefcase" aria-hidden="true"></i> Discipline</span>
+                        </div>
+                        <a href="skills.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i> View All Capabilities
                         </a>
                     </div>
-                </div>
-                <div class="cta-decoration" aria-hidden="true">
-                    <i class="fas fa-briefcase"></i>
+                    <div class="skills-highlight-decoration" aria-hidden="true">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- ============================================================
+             CALL TO ACTION
+             ============================================================ -->
+        <section class="cta-section" aria-labelledby="cta-title">
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-content">
+                        <h2 id="cta-title">Ready to Collaborate?</h2>
+                        <p>
+                            I'm always open to interesting conversations, collaborations,
+                            and opportunities in cybersecurity and technology.
+                        </p>
+                        <div class="cta-actions">
+                            <a href="contact.html" class="btn btn-cta-primary">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i> Get in Touch
+                            </a>
+                            <a href="projects.html" class="btn btn-cta-secondary">
+                                <i class="fas fa-code-branch" aria-hidden="true"></i> Explore Projects
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cta-decoration" aria-hidden="true">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- ============================================================
          FOOTER
