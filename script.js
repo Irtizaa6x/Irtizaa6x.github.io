@@ -1,8 +1,9 @@
 // ============================================================
 //   IRTIJA — MAIN APPLICATION
-//   Version 2.1 · Complete Rewrite + Enhancements
+//   Version 2.2 · Final Polish & Optimization
 //   Vanilla JavaScript · Modular Architecture
 //   Features: Smart Navbar · Dark Mode · Education Toggles
+//   Accessibility: Keyboard Navigation · Reduced Motion · Focus Management
 // ============================================================
 
 (function () {
@@ -60,33 +61,7 @@
     };
 
     // ============================================================
-    //   2.  DOM CACHE (lazy initialization)
-    // ============================================================
-
-    const DOM = {};
-
-    function cacheDom() {
-        DOM.header = document.querySelector('.site-header');
-        DOM.hamburger = document.getElementById('hamburgerToggle');
-        DOM.navMobile = document.getElementById('mobileNav');
-        DOM.navOverlay = document.querySelector('.nav-mobile-overlay');
-        DOM.hero = document.getElementById('hero');
-        DOM.stats = document.querySelectorAll('.stat-number');
-        DOM.revealElements = document.querySelectorAll('.fade-up');
-        DOM.staggerElements = document.querySelectorAll('.stagger-children');
-        DOM.smoothLinks = document.querySelectorAll('a[href^="#"]');
-        DOM.localTimeWrapper = document.getElementById('localTimeWrapper');
-        DOM.astroDisplay = document.getElementById('astroDisplay');
-        DOM.timeDigital = document.querySelector('.dhaka-time');
-        DOM.navLinks = document.querySelectorAll('.nav-link, .nav-mobile-link');
-        DOM.body = document.body;
-        DOM.document = document.documentElement;
-        DOM.themeToggle = document.querySelector('.theme-toggle');
-        DOM.toggleButtons = document.querySelectorAll('.btn-toggle-details');
-    }
-
-    // ============================================================
-    //   3.  UTILITY FUNCTIONS
+    //   2.  UTILITY FUNCTIONS
     // ============================================================
 
     /**
@@ -167,6 +142,46 @@
         return 'light';
     }
 
+    /**
+     * Check if user prefers reduced motion
+     */
+    function prefersReducedMotion() {
+        return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    /**
+     * Check if IntersectionObserver is supported
+     */
+    function supportsIntersectionObserver() {
+        return 'IntersectionObserver' in window && 'IntersectionObserverEntry' in window;
+    }
+
+    // ============================================================
+    //   3.  DOM CACHE (lazy initialization)
+    // ============================================================
+
+    const DOM = {};
+
+    function cacheDom() {
+        DOM.header = document.querySelector('.site-header');
+        DOM.hamburger = document.getElementById('hamburgerToggle');
+        DOM.navMobile = document.getElementById('mobileNav');
+        DOM.navOverlay = document.querySelector('.nav-mobile-overlay');
+        DOM.hero = document.getElementById('hero');
+        DOM.stats = document.querySelectorAll('.stat-number');
+        DOM.revealElements = document.querySelectorAll('.fade-up');
+        DOM.staggerElements = document.querySelectorAll('.stagger-children');
+        DOM.smoothLinks = document.querySelectorAll('a[href^="#"]');
+        DOM.localTimeWrapper = document.getElementById('localTimeWrapper');
+        DOM.astroDisplay = document.getElementById('astroDisplay');
+        DOM.timeDigital = document.querySelector('.dhaka-time');
+        DOM.navLinks = document.querySelectorAll('.nav-link, .nav-mobile-link');
+        DOM.body = document.body;
+        DOM.document = document.documentElement;
+        DOM.themeToggle = document.querySelector('.theme-toggle');
+        DOM.toggleButtons = document.querySelectorAll('.btn-toggle-details');
+    }
+
     // ============================================================
     //   4.  DARK MODE MODULE
     // ============================================================
@@ -223,7 +238,7 @@
                 this.toggle();
             });
 
-            // Also support keyboard
+            // Keyboard support
             DOM.themeToggle.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -305,6 +320,7 @@
                 this.closeMobileNav();
             });
 
+            // Close mobile nav when any link is clicked
             const mobileLinks = getElements('.nav-mobile-link', DOM.navMobile);
             mobileLinks.forEach((link) => {
                 link.addEventListener('click', () => {
@@ -354,8 +370,10 @@
                 const href = link.getAttribute('href');
                 if (href === currentPage) {
                     link.classList.add(CONFIG.CLASSES.ACTIVE);
+                    link.setAttribute('aria-current', 'page');
                 } else {
                     link.classList.remove(CONFIG.CLASSES.ACTIVE);
+                    link.removeAttribute('aria-current');
                 }
             });
         },
@@ -431,7 +449,7 @@
     };
 
     // ============================================================
-    //   6.  SCROLL REVEAL MODULE (enhanced)
+    //   6.  SCROLL REVEAL MODULE (enhanced with reduced motion support)
     // ============================================================
 
     const ScrollReveal = {
@@ -439,7 +457,13 @@
         observedElements: new Set(),
 
         init() {
-            if (!('IntersectionObserver' in window)) {
+            // If reduced motion is preferred, reveal everything immediately
+            if (prefersReducedMotion()) {
+                this.revealAll();
+                return;
+            }
+
+            if (!supportsIntersectionObserver()) {
                 this.fallbackReveal();
                 return;
             }
@@ -496,20 +520,22 @@
             });
         },
 
+        revealAll() {
+            DOM.revealElements.forEach((el) => {
+                el.classList.add(CONFIG.CLASSES.VISIBLE);
+            });
+            DOM.staggerElements.forEach((el) => {
+                el.classList.add(CONFIG.CLASSES.VISIBLE);
+            });
+            const dataReveal = getElements('[data-reveal]');
+            dataReveal.forEach((el) => {
+                el.classList.add(CONFIG.CLASSES.VISIBLE);
+            });
+        },
+
         fallbackReveal() {
-            const revealAll = () => {
-                DOM.revealElements.forEach((el) => {
-                    el.classList.add(CONFIG.CLASSES.VISIBLE);
-                });
-                DOM.staggerElements.forEach((el) => {
-                    el.classList.add(CONFIG.CLASSES.VISIBLE);
-                });
-                const dataReveal = getElements('[data-reveal]');
-                dataReveal.forEach((el) => {
-                    el.classList.add(CONFIG.CLASSES.VISIBLE);
-                });
-            };
-            revealAll();
+            // If IntersectionObserver is not supported, reveal everything after a small delay
+            setTimeout(() => this.revealAll(), 100);
         },
 
         observe(el) {
@@ -534,12 +560,17 @@
 
         // Re-observe any new elements after dynamic content updates
         refresh() {
-            this.observeAll();
+            if (this.observer) {
+                this.observeAll();
+            } else {
+                // If observer was not created (reduced motion or fallback), reveal all
+                this.revealAll();
+            }
         },
     };
 
     // ============================================================
-    //   7.  COUNT-UP ANIMATION MODULE
+    //   7.  COUNT-UP ANIMATION MODULE (with reduced motion support)
     // ============================================================
 
     const CountUp = {
@@ -547,7 +578,13 @@
         animated: new Set(),
 
         init() {
-            if (!('IntersectionObserver' in window)) {
+            // If reduced motion is preferred, set final values immediately
+            if (prefersReducedMotion()) {
+                this.setFinalValues();
+                return;
+            }
+
+            if (!supportsIntersectionObserver()) {
                 this.animateAll();
                 return;
             }
@@ -577,6 +614,20 @@
                     this.observer.observe(el);
                 }
             });
+        },
+
+        setFinalValues() {
+            // For reduced motion, immediately set the final value
+            const allCountElements = document.querySelectorAll('[data-count]');
+            allCountElements.forEach((el) => {
+                const target = parseFloat(el.getAttribute('data-count'));
+                if (!isNaN(target)) {
+                    const isFloat = target % 1 !== 0;
+                    el.textContent = isFloat ? target.toFixed(2) : Math.round(target);
+                }
+            });
+            // Mark all as animated
+            allCountElements.forEach((el) => this.animated.add(el));
         },
 
         animate(el) {
@@ -631,7 +682,7 @@
     };
 
     // ============================================================
-    //   8.  SMOOTH SCROLL MODULE
+    //   8.  SMOOTH SCROLL MODULE (with reduced motion support)
     // ============================================================
 
     const SmoothScroll = {
@@ -653,6 +704,15 @@
         scrollTo(target) {
             const headerHeight = DOM.header ? DOM.header.offsetHeight : 72;
             const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+
+            // If reduced motion is preferred, use instant scroll
+            if (prefersReducedMotion()) {
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'auto',
+                });
+                return;
+            }
 
             window.scrollTo({
                 top: targetPosition,
@@ -860,9 +920,12 @@
         },
 
         showFeedback(btn, originalHTML) {
-            btn.innerHTML = '<i class="fas fa-check"></i> Username Copied!';
+            btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Username Copied!';
+            // Announce to screen readers
+            btn.setAttribute('aria-label', 'Username copied');
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
+                btn.setAttribute('aria-label', 'Copy Discord username');
             }, 1800);
         },
 
@@ -871,6 +934,7 @@
             input.value = text;
             input.style.position = 'fixed';
             input.style.opacity = '0';
+            input.setAttribute('aria-hidden', 'true');
             document.body.appendChild(input);
             input.select();
             try {
@@ -933,12 +997,19 @@
             // Update aria-expanded
             btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
 
-            // Smooth scroll to the content if opening
-            if (!isOpen) {
+            // Smooth scroll to the content if opening (respect reduced motion)
+            if (!isOpen && !prefersReducedMotion()) {
                 setTimeout(() => {
                     const headerHeight = DOM.header ? DOM.header.offsetHeight : 72;
                     const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
                     window.scrollTo({ top, behavior: 'smooth' });
+                }, 50);
+            } else if (!isOpen) {
+                // Reduced motion: instant scroll
+                setTimeout(() => {
+                    const headerHeight = DOM.header ? DOM.header.offsetHeight : 72;
+                    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+                    window.scrollTo({ top, behavior: 'auto' });
                 }, 50);
             }
         },
@@ -969,7 +1040,7 @@
     };
 
     // ============================================================
-    //   12.  THEME UTILITIES (legacy, kept for compatibility)
+    //   12.  THEME UTILITIES (kept for compatibility)
     // ============================================================
 
     const ThemeUtils = {
@@ -991,6 +1062,8 @@
     // ============================================================
 
     const Performance = {
+        resizeHandler: null,
+
         init() {
             this.setupLazyLoading();
             this.setupPassiveListeners();
@@ -1000,37 +1073,33 @@
 
         setupLazyLoading() {
             if ('loading' in HTMLImageElement.prototype) {
-                // Native lazy loading is supported
-                const images = document.querySelectorAll('img[loading="lazy"]');
-                // Already using native lazy-loading
-            } else {
-                if ('IntersectionObserver' in window) {
-                    const lazyImages = document.querySelectorAll('img[data-src]');
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                const img = entry.target;
-                                const src = img.getAttribute('data-src');
-                                if (src) {
-                                    img.src = src;
-                                    img.removeAttribute('data-src');
-                                }
-                                observer.unobserve(img);
+                // Native lazy loading is supported — images already use loading="lazy"
+            } else if (supportsIntersectionObserver()) {
+                // Fallback for older browsers
+                const lazyImages = document.querySelectorAll('img[data-src]');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            const src = img.getAttribute('data-src');
+                            if (src) {
+                                img.src = src;
+                                img.removeAttribute('data-src');
                             }
-                        });
+                            observer.unobserve(img);
+                        }
                     });
-                    lazyImages.forEach((img) => observer.observe(img));
-                }
+                });
+                lazyImages.forEach((img) => observer.observe(img));
             }
         },
 
         setupPassiveListeners() {
-            // All scroll listeners use { passive: true }
-            // This is handled in individual modules
+            // All scroll listeners use { passive: true } — handled in individual modules
         },
 
         setupResizeHandler() {
-            const handleResize = debounce(() => {
+            this.resizeHandler = debounce(() => {
                 // Re-check scroll reveal on resize
                 ScrollReveal.checkNow();
 
@@ -1042,17 +1111,24 @@
                 }
             }, CONFIG.DEBOUNCE_DELAY);
 
-            window.addEventListener('resize', handleResize, { passive: true });
+            window.addEventListener('resize', this.resizeHandler, { passive: true });
         },
 
         setupMemoryOptimization() {
-            // Clean up IntersectionObservers when page is hidden
+            // Clean up when page is hidden to reduce background CPU usage
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
-                    // Page is hidden, but we keep observers running
-                    // No action needed - just a placeholder for future optimizations
+                    // Pause non-critical animations or timers
+                    // For now, just a placeholder
                 }
             });
+        },
+
+        destroy() {
+            if (this.resizeHandler) {
+                window.removeEventListener('resize', this.resizeHandler);
+                this.resizeHandler = null;
+            }
         },
     };
 
@@ -1072,10 +1148,14 @@
             if (skipLink) {
                 skipLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const mainContent = document.querySelector('main');
+                    const mainContent = document.getElementById('main-content') || document.querySelector('main');
                     if (mainContent) {
                         mainContent.setAttribute('tabindex', '-1');
                         mainContent.focus();
+                        // Remove tabindex after focus to avoid issues
+                        setTimeout(() => {
+                            mainContent.removeAttribute('tabindex');
+                        }, 100);
                     }
                 });
             }
@@ -1121,70 +1201,92 @@
     // ============================================================
 
     let isInitialized = false;
+    let mutationObserver = null;
 
     function init() {
         if (isInitialized) return;
-        isInitialized = true;
 
-        // Cache DOM elements
-        cacheDom();
+        try {
+            isInitialized = true;
 
-        // Initialize modules
-        Navigation.init();
-        ScrollReveal.init();
-        CountUp.init();
-        SmoothScroll.init();
-        ClockModule.init();
-        DiscordCopy.init();
-        DarkMode.init();
-        ToggleDetails.init();
-        Performance.init();
-        Accessibility.init();
+            // Cache DOM elements
+            cacheDom();
 
-        // Handle dynamic content loading
-        const observer = new MutationObserver(() => {
-            // Re-check for new fade-up elements
-            const newReveal = document.querySelectorAll('.fade-up:not(.visible)');
-            newReveal.forEach((el) => {
-                ScrollReveal.observe(el);
-            });
+            // Initialize modules
+            Navigation.init();
+            ScrollReveal.init();
+            CountUp.init();
+            SmoothScroll.init();
+            ClockModule.init();
+            DiscordCopy.init();
+            DarkMode.init();
+            ToggleDetails.init();
+            Performance.init();
+            Accessibility.init();
 
-            // Re-check for new stagger elements
-            const newStagger = document.querySelectorAll('.stagger-children:not(.visible)');
-            newStagger.forEach((el) => {
-                ScrollReveal.observe(el);
-            });
+            // Handle dynamic content loading
+            mutationObserver = new MutationObserver(() => {
+                // Re-check for new fade-up elements
+                const newReveal = document.querySelectorAll('.fade-up:not(.visible)');
+                newReveal.forEach((el) => {
+                    ScrollReveal.observe(el);
+                });
 
-            // Re-check for new stat numbers
-            const newStats = document.querySelectorAll('.stat-number:not([data-observed])');
-            newStats.forEach((el) => {
-                el.setAttribute('data-observed', 'true');
-                CountUp.animateElement(el);
-            });
+                // Re-check for new stagger elements
+                const newStagger = document.querySelectorAll('.stagger-children:not(.visible)');
+                newStagger.forEach((el) => {
+                    ScrollReveal.observe(el);
+                });
 
-            // Re-check for new toggle buttons
-            const newToggles = document.querySelectorAll('.btn-toggle-details:not([data-initialized])');
-            newToggles.forEach((btn) => {
-                btn.setAttribute('data-initialized', 'true');
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    ToggleDetails.toggle(btn);
+                // Re-check for new stat numbers
+                const newStats = document.querySelectorAll('.stat-number:not([data-observed])');
+                newStats.forEach((el) => {
+                    el.setAttribute('data-observed', 'true');
+                    CountUp.animateElement(el);
+                });
+
+                // Re-check for new toggle buttons
+                const newToggles = document.querySelectorAll('.btn-toggle-details:not([data-initialized])');
+                newToggles.forEach((btn) => {
+                    btn.setAttribute('data-initialized', 'true');
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        ToggleDetails.toggle(btn);
+                    });
+                    // Keyboard support
+                    btn.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            ToggleDetails.toggle(btn);
+                        }
+                    });
                 });
             });
-        });
 
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-        });
+            mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
 
-        // Log success
-        console.log(
-            '%c✦ IrtiJa · Executive Portfolio %cv2.1',
-            'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
-            'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
-        );
-        console.log('%c🌿 Smart Navbar · Dark Mode · Enhanced Interactions', 'color:#1A7A74;font-weight:500;');
+            // Log success
+            console.log(
+                '%c✦ IrtiJa · Executive Portfolio %cv2.2',
+                'background:#004643;color:#D4A853;padding:6px 14px;border-radius:4px 0 0 4px;font-weight:700;letter-spacing:0.5px;',
+                'background:#D4A853;color:#004643;padding:6px 14px;border-radius:0 4px 4px 0;font-weight:600;'
+            );
+            console.log('%c🌿 Reduced Motion · Keyboard Navigation · Enhanced Performance', 'color:#1A7A74;font-weight:500;');
+
+        } catch (error) {
+            console.error('❌ IrtiJa initialization failed:', error);
+            // Attempt to recover by re-initializing core modules
+            try {
+                Navigation.init();
+                ScrollReveal.init();
+                DarkMode.init();
+            } catch (recoveryError) {
+                console.error('❌ Recovery failed:', recoveryError);
+            }
+        }
     }
 
     // ============================================================
@@ -1221,6 +1323,7 @@
         debounce,
         throttle,
         isInViewport,
+        prefersReducedMotion,
 
         // Re-init (for dynamic content)
         reinit() {
@@ -1247,6 +1350,17 @@
 
         getCurrentTheme() {
             return DarkMode.currentTheme;
+        },
+
+        // Cleanup (for testing)
+        destroy() {
+            if (mutationObserver) {
+                mutationObserver.disconnect();
+                mutationObserver = null;
+            }
+            Performance.destroy();
+            ClockModule.destroy();
+            isInitialized = false;
         },
     };
 
